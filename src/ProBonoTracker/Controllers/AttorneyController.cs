@@ -8,25 +8,25 @@ namespace ProBonoTracker.Controllers
 {
     public class AttorneyController : Controller
     {
-        // GET: Attorney
+        // GET: Volunteer
         public ActionResult Index(bool? assigning)
         {
             return View();
         }
 
-        // GET: Attorney/Details/5
+        // GET: Volunteer/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Attorney/Create
+        // GET: Volunteer/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Attorney/Create
+        // POST: Volunteer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -43,13 +43,13 @@ namespace ProBonoTracker.Controllers
             }
         }
 
-        // GET: Attorney/Edit/5
+        // GET: Volunteer/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Attorney/Edit/5
+        // POST: Volunteer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -66,13 +66,13 @@ namespace ProBonoTracker.Controllers
             }
         }
 
-        // GET: Attorney/Delete/5
+        // GET: Volunteer/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Attorney/Delete/5
+        // POST: Volunteer/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

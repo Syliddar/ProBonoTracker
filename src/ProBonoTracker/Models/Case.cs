@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using static ProBonoTracker.Models.Enums;
 
 namespace ProBonoTracker.Models
 {
     public class Case
     {
         public int Id { get; set; }
-        public string ClientName { get; set; }
-        public Address ClientAddress { get; set; }
-        public List<PhoneNumber> ClientPhoneNumbers { get; set; }
-        public Attorney AssigningAttorney { get; set; }
-        public Attorney CaseAttorney { get; set; }
         public bool Active { get; set; }
-        //Accessor Methods
-        public PhoneNumber PrimaryPhoneNumber()
-        {
-            return ClientPhoneNumbers.Find(x => x.PrimaryContactNumber);
-        }
+        public Person LeadClient { get; set; }
+        public List<AssociatedPerson> AssociatedPeopleList { get; set; }
+
+        public Volunteer AssigningVolunteer { get; set; }
+        public Volunteer VolunteerWorker { get; set; }
+        public double VolunteerWorkHours { get; set; }
+        public CaseType Type { get; set; }
+        public Dictionary<DateTime, string> MajorDates { get; set; }
+        public List<ContactLogEntry> ContactLogEntries { get; set; }
+        public string CaseNotes { get; set; }
     }
 }

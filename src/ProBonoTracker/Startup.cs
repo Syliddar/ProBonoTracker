@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using ProBonoTracker.Data;
 using ProBonoTracker.Models;
 using ProBonoTracker.Services;
+using ProBonoTracker.Services.Interfaces;
 
 namespace ProBonoTracker
 {
@@ -46,8 +47,7 @@ namespace ProBonoTracker
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IContextService, ContextService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

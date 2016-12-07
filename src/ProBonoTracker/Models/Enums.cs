@@ -3,6 +3,22 @@ namespace ProBonoTracker.Models
 {
     public static class Enums
     {
+        public enum CaseType
+        {
+            SIJSPredicateOrder,
+            SIJSAdjustmentApplication,
+            UACAsylum,
+            AWCAsylum,
+            AsylumOother,
+            UVisa,
+            VAWASelfPetition,
+            VAWACancellation,
+            AsyleeAdjustmentofStatus,
+            Naturalization,
+            DACA,
+            FamilyBasedPetition,
+            RemovalDefense
+        }
         public enum States
         {
             AL,
@@ -55,6 +71,16 @@ namespace ProBonoTracker.Models
             WV,
             WI,
             WY
+        }
+        public enum Gender
+        {
+            Agender,
+            Female,
+            Male,
+            TransMale,
+            TransFemale,
+            GenderFluid,
+            Other
         }
     }
 }
