@@ -10,7 +10,7 @@ namespace ProBonoTracker.Models
         public List<PhoneNumber> ClientPhoneNumbers { get; set; }
         public Attorney AssigningAttorney { get; set; }
         public Attorney CaseAttorney { get; set; }
-
+        public bool Active { get; set; }
         //Accessor Methods
         public PhoneNumber PrimaryPhoneNumber()
         {

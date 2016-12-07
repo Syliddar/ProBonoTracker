@@ -31,8 +31,38 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Cases<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Case" asp-action="Index" asp-route-active="true">Active Cases</a></li>
+                            <li><a asp-controller="Case" asp-action="Index" asp-route-active="false">Closed Cases</a></li>
+                            <li><a asp-controller="Case" asp-action="Index">All Cases</a></li>
+                            <li><a asp-controller="Case" asp-action="Create">Add Case</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Attorneys<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="true">Assigning Attorneys</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="false">Volunteer Attorneys</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Index">All Attorneys</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Create">Add Attorney</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Reports<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Attorney" asp-action="Create">Add Attorney</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -42,7 +72,9 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2016 - ProBonoTracker</p>
+            <p>
+                <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">&copy; 2016 - ProBonoTracker</a>
+            </p>
         </footer>
     </div>
 
