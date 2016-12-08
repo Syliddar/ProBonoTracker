@@ -82,5 +82,10 @@ namespace ProBonoTracker.Models
             GenderFluid,
             Other
         }
+
+        public enum RecruitmentMethod
+        {
+            
+        }
     }
 }

@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/src/ProBonoTracker/bin/Debug/netcoreapp1.0
-/src/ProBonoTracker/obj/Debug/netcoreapp1.0
+/src/ProBonoTracker/bin/
+/src/ProBonoTracker/obj/
 /.vs/*
+ProBonoTracker.xprog.user
