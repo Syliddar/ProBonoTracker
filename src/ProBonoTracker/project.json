@@ -1,7 +1,8 @@
-﻿{
+{
   "userSecretsId": "aspnet-WebApplication1-79bc7cd5-ced9-4df6-b3f9-192377fe2c0b",
 
   "dependencies": {
+    "Autofac": "4.2.1",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",

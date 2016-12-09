@@ -18,5 +18,14 @@ namespace ProBonoTracker.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Attorney> Attorneys { get; set; }
+        public DbSet<Case> Cases { get; set; }
+        public DbSet<CaseEventDate> CaseEvents { get; set; }
+        public DbSet<ContactLogEntry> LogEntries { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
+
     }
 }

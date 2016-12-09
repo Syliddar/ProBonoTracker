@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static ProBonoTracker.Models.Enums;
 
 namespace ProBonoTracker.Models
@@ -17,12 +16,5 @@ namespace ProBonoTracker.Models
         public List<CaseEventDate> MajorDates { get; set; }
         public List<ContactLogEntry> ContactLogEntries { get; set; }
         public string CaseNotes { get; set; }
-    }
-
-    public class CaseEventDate
-    {
-        public int Id { get; set; }
-        public string Event { get; set; }
-        public DateTime EventDate { get; set; }
     }
 }
