@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -6,3 +6,4 @@
 /src/ProBonoTracker/obj/
 /.vs/*
 ProBonoTracker.xprog.user
+src/ProBonoTracker/project.lock.json

@@ -1,0 +1,163 @@
+@model MemigrationProBonoTracker.Models.Attorney
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Attorney</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="AssignedCases" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AssignedCases" class="form-control" />
+                <span asp-validation-for="AssignedCases" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="BarNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="BarNumber" class="form-control" />
+                <span asp-validation-for="BarNumber" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ClcContribution" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ClcContribution" class="form-control" />
+                <span asp-validation-for="ClcContribution" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="DesiredVolunteer" />
+                    <label asp-for="DesiredVolunteer"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Gender" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Gender" class="form-control"></select>
+                <span asp-validation-for="Gender" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="HasImmigrationExperience" />
+                    <label asp-for="HasImmigrationExperience"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="HasJuvenileExperience" />
+                    <label asp-for="HasJuvenileExperience"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="HasProbateExperience" />
+                    <label asp-for="HasProbateExperience"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="InterestedVolunteer" />
+                    <label asp-for="InterestedVolunteer"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="IsAssigningAttorney" />
+                    <label asp-for="IsAssigningAttorney"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LatinoMemContribution" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LatinoMemContribution" class="form-control" />
+                <span asp-validation-for="LatinoMemContribution" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MiaContribution" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MiaContribution" class="form-control" />
+                <span asp-validation-for="MiaContribution" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Notes" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="OrganizationName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="OrganizationName" class="form-control" />
+                <span asp-validation-for="OrganizationName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="RecruitmentDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="RecruitmentDate" class="form-control" />
+                <span asp-validation-for="RecruitmentDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="RecruitmentMethod" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="RecruitmentMethod" class="form-control"></select>
+                <span asp-validation-for="RecruitmentMethod" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="SpeaksSpanish" />
+                    <label asp-for="SpeaksSpanish"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
