@@ -1,44 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
-using MemigrationProBonoTracker.Models.CaseViewModels;
+using MemigrationProBonoTracker.Services;
 
 namespace MemigrationProBonoTracker.Controllers
 {
     public class CaseController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IContextService _context;
 
-        public CaseController(ApplicationDbContext context)
+        public CaseController(IContextService contextService)
         {
-            _context = context;
+            _context = contextService;
         }
 
         // GET: Cases
         public async Task<IActionResult> Index(bool? open)
         {
-            var model = new CaseListViewModel();
-            if (open.HasValue)
-            {
-                model.Title = open.Value ? "Active Cases" : "Closed Cases";
-                model.Cases = await _context.Cases.Where(c => c.Active == open.Value)
-                    .Include(c => c.LeadClient)
-                    .Include(c => c.AssigningAttorney)
-                    .Include(c => c.AttorneyWorker)
-                    .Include(c => c.MajorDates)
-                    .ToListAsync();
-            }
-            else
-            {
-                model.Title = "All Cases";
-                model.Cases = await _context.Cases.ToListAsync();
-            }
+            var model = await _context.GetCaseListViewModel(open);
             return View(model);
         }
 
@@ -49,8 +28,7 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 return NotFound();
             }
-
-            var @case = await _context.Cases.SingleOrDefaultAsync(m => m.Id == id);
+            var @case = await _context.GetCaseDetails(id.Value);
             if (@case == null)
             {
                 return NotFound();
@@ -70,12 +48,11 @@ namespace MemigrationProBonoTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Active,AttorneyWorkedHours,CaseNotes,Type")] Case @case)
+        public async Task<IActionResult> Create(Case @case)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@case);
-                await _context.SaveChangesAsync();
+                _context.AddCase(@case);
                 return RedirectToAction("Index");
             }
             return View(@case);
@@ -88,8 +65,7 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 return NotFound();
             }
-
-            var @case = await _context.Cases.SingleOrDefaultAsync(m => m.Id == id);
+            var @case = await _context.GetCaseDetails(id.Value);
             if (@case == null)
             {
                 return NotFound();
@@ -98,55 +74,17 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // POST: Cases/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Active,AttorneyWorkedHours,CaseNotes,Type")] Case @case)
+        public async Task<IActionResult> Edit(Case @case)
         {
-            if (id != @case.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(@case);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CaseExists(@case.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.UpdateCase(@case);
                 return RedirectToAction("Index");
             }
             return View(@case);
-        }
 
-        // GET: Cases/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @case = await _context.Cases.SingleOrDefaultAsync(m => m.Id == id);
-            if (@case == null)
-            {
-                return NotFound();
-            }
-
-            return View(@case);
         }
 
         // POST: Cases/Delete/5
@@ -154,15 +92,11 @@ namespace MemigrationProBonoTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @case = await _context.Cases.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Cases.Remove(@case);
-            await _context.SaveChangesAsync();
+            _context.DeleteCase(id);
+
             return RedirectToAction("Index");
         }
 
-        private bool CaseExists(int id)
-        {
-            return _context.Cases.Any(e => e.Id == id);
-        }
+
     }
 }
