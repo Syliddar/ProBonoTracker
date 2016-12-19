@@ -13,7 +13,6 @@ namespace MemigrationProBonoTracker.Models
         public double AttorneyWorkedHours { get; set; }
         public Enums.CaseType Type { get; set; }
         public List<CaseEventDate> MajorDates { get; set; }
-        public List<ContactLogEntry> ContactLogEntries { get; set; }
         public string CaseNotes { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
+using MemigrationProBonoTracker.Models.CaseViewModels;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -22,7 +23,23 @@ namespace MemigrationProBonoTracker.Controllers
         // GET: Cases
         public async Task<IActionResult> Index(bool? open)
         {
-            return open.HasValue ? View(await _context.Cases.Where(x => x.Active == open.Value).ToListAsync()) : View(await _context.Cases.ToListAsync());
+            var model = new CaseListViewModel();
+            if (open.HasValue)
+            {
+                model.Title = open.Value ? "Active Cases" : "Closed Cases";
+                model.Cases = await _context.Cases.Where(c => c.Active == open.Value)
+                    .Include(c => c.LeadClient)
+                    .Include(c => c.AssigningAttorney)
+                    .Include(c => c.AttorneyWorker)
+                    .Include(c => c.MajorDates)
+                    .ToListAsync();
+            }
+            else
+            {
+                model.Title = "All Cases";
+                model.Cases = await _context.Cases.ToListAsync();
+            }
+            return View(model);
         }
 
         // GET: Cases/Details/5
