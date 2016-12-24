@@ -1,92 +1,62 @@
-@model IEnumerable<MemigrationProBonoTracker.Models.Attorney>
 
-@{
-    
-}
+@model IEnumerable<Attorney>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table" id="AttorneyTable">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AssignedCases)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BarNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClcContribution)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DesiredVolunteer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasImmigrationExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasJuvenileExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasProbateExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InterestedVolunteer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsAssigningAttorney)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LatinoMemContribution)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MiaContribution)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrganizationName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecruitmentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecruitmentMethod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpeaksSpanish)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedCases)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DesiredVolunteer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasImmigrationExperience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasJuvenileExperience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasProbateExperience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterestedVolunteer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAssigningAttorney)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpeaksSpanish)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.AssignedCases)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BarNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClcContribution)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DesiredVolunteer)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Gender)
@@ -107,35 +77,26 @@
                 @Html.DisplayFor(modelItem => item.IsAssigningAttorney)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LatinoMemContribution)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MiaContribution)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.OrganizationName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecruitmentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecruitmentMethod)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SpeaksSpanish)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <td >
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br/>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<script>
+    $(document).ready(function () {
+        console.log('datatable');
+        $('#AttorneyTable').DataTable();
+    });
+</script>

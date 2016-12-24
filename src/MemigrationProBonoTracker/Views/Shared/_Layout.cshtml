@@ -30,16 +30,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Cases<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Case" asp-action="Index" asp-route-active="true">Active Cases</a></li>
+                            <li><a asp-controller="Case" asp-action="Create">Add Case</a></li>
                             <li><a asp-controller="Case" asp-action="Index" asp-route-active="false">Closed Cases</a></li>
                             <li><a asp-controller="Case" asp-action="Index">All Cases</a></li>
-                            <li><a asp-controller="Case" asp-action="Create">Add Case</a></li>
                         </ul>
                     </li>
 
@@ -49,9 +48,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="true">Assigning Attorneys</a></li>
-                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="false">Attorney Attorneys</a></li>
-                            <li><a asp-controller="Attorney" asp-action="Index">Search Attorneys</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="false">Volunteer Attorneys</a></li>
                             <li><a asp-controller="Attorney" asp-action="Create">Add Attorney</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Index">Search Attorneys</a></li>
                         </ul>
                     </li>
 
@@ -82,6 +81,9 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

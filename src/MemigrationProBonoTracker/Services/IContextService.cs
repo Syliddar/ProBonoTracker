@@ -10,12 +10,17 @@ namespace MemigrationProBonoTracker.Services
 {
     public interface IContextService
     {
-        Task<CaseListViewModel> GetCaseListViewModel(bool? openCases);
+        CaseListViewModel GetCaseListViewModel(bool? openCases);
 
-        Task<Case> GetCaseDetails(int id);
+        Case GetCaseDetails(int id);
 
-        void AddCase(Case @case);
-        void UpdateCase(Case @case);
-        void DeleteCase(int id);
+        int AddCase(Case @case);
+        int UpdateCase(Case @case);
+        int DeleteCase(int id);
+        List<Person> GetPeopleList();
+        Person GetPerson(int id);
+        int AddPerson(Person @person);
+        int UpdatePerson(Person @person);
+        int DeletePerson(int id);
     }
 }

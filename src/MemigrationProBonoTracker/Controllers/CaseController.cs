@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -15,20 +15,20 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // GET: Cases
-        public async Task<IActionResult> Index(bool? open)
+        public IActionResult Index(bool? open)
         {
-            var model = await _context.GetCaseListViewModel(open);
+            var model = _context.GetCaseListViewModel(open);
             return View(model);
         }
 
         // GET: Cases/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var @case = await _context.GetCaseDetails(id.Value);
+            var @case = _context.GetCaseDetails(id.Value);
             if (@case == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace MemigrationProBonoTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Case @case)
+        public IActionResult Create(Case @case)
         {
             if (ModelState.IsValid)
             {
@@ -59,13 +59,13 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // GET: Cases/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var @case = await _context.GetCaseDetails(id.Value);
+            var @case = _context.GetCaseDetails(id.Value);
             if (@case == null)
             {
                 return NotFound();
@@ -76,7 +76,7 @@ namespace MemigrationProBonoTracker.Controllers
         // POST: Cases/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Case @case)
+        public IActionResult Edit(Case @case)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace MemigrationProBonoTracker.Controllers
         // POST: Cases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             _context.DeleteCase(id);
 
