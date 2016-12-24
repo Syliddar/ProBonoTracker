@@ -1,86 +1,55 @@
-@model IEnumerable<Attorney>
+@model MemigrationProBonoTracker.Models.AttorneyViewModels.AttorneyListingViewModel
 
+<h1>@Model.Title</h1>
 <table class="table" id="AttorneyTable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AssignedCases)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DesiredVolunteer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasImmigrationExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasJuvenileExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasProbateExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InterestedVolunteer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsAssigningAttorney)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrganizationName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpeaksSpanish)
-            </th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Organization Name</th>
+            <th>Assigned Cases</th>
+            <th>Immigration Experience</th>
+            <th>Juvenile Experience</th>
+            <th>Probate Experience</th>
+            <th>Interested Volunteer</th>
+            <th>Desired Volunteer</th>
+            <th>Speaks Spanish</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.AttorneyList)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedCases)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DesiredVolunteer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HasImmigrationExperience)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HasJuvenileExperience)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HasProbateExperience)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InterestedVolunteer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsAssigningAttorney)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.OrganizationName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SpeaksSpanish)
+                    @Html.DisplayFor(modelItem => item.AssignedCases)
+                </td>
+                <td>
+                    @(item.HasImmigrationExperience ? "Yes" : "No")
+                </td>
+                <td>
+                    @(item.HasJuvenileExperience ? "Yes" : "No")
+                </td>
+                <td>
+                    @(item.HasProbateExperience ? "Yes" : "No")
+                </td>
+                <td>
+                    @(item.InterestedVolunteer ? "Yes" : "No")
+                </td>
+                <td>
+                    @(item.DesiredVolunteer ? "Yes" : "No")
+                </td>
+                <td>
+                    @(item.SpeaksSpanish ? "Yes" : "No")
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br />

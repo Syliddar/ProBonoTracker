@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MemigrationProBonoTracker.Models;
+using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 
 namespace MemigrationProBonoTracker.Services
@@ -11,6 +12,7 @@ namespace MemigrationProBonoTracker.Services
     public interface IContextService
     {
         CaseListViewModel GetCaseListViewModel(bool? openCases);
+        AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney);
 
         Case GetCaseDetails(int id);
 

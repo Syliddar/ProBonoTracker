@@ -18,6 +18,7 @@ namespace MemigrationProBonoTracker.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        public string FullName { get { return FirstName + " " + LastName; } }
 
         //[Display(Name = "AddressList")]
         ////TFW TPC Inheritance isn't supported yet
