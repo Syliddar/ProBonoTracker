@@ -1,10 +1,17 @@
 @model Attorney
-<form asp-action="Create">
+<form asp-action="Save" asp-controller="Attorney">
     <div class="form">
-        <h4>Attorney</h4>
+        @if (Model.Id == 0)
+        {
+            <h4>Create Attorney</h4>
+        }
+        else
+        {
+            <h4>Edit Attorney</h4>
+        }
         <hr />
+        <input asp-for="Id" hidden=""/>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">

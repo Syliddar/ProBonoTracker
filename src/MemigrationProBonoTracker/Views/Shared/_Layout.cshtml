@@ -15,11 +15,11 @@
         <script src="~/js/jquery.dataTables.min.js"></script>
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"/>
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
@@ -65,7 +65,7 @@
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="true">Assigning Attorneys</a></li>
                             <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="false">Volunteer Attorneys</a></li>
-                            <li><a asp-controller="Attorney" asp-action="Create">Add Attorney</a></li>
+                            <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
                             <li><a asp-controller="Attorney" asp-action="Index">Search Attorneys</a></li>
                         </ul>
                     </li>
@@ -75,7 +75,7 @@
                             Reports<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a asp-controller="Attorney" asp-action="Create">Add Attorney</a></li>
+                            <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -84,7 +84,9 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div id="ContentBody">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>
