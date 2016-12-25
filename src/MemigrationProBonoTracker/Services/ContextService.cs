@@ -19,6 +19,7 @@ namespace MemigrationProBonoTracker.Services
             _context = context;
         }
 
+        #region BasicCaseMethods 
         public CaseListViewModel GetCaseListViewModel(bool? openCases)
         {
             var model = new CaseListViewModel();
@@ -40,7 +41,56 @@ namespace MemigrationProBonoTracker.Services
 
             return model;
         }
+        public Case GetCaseDetails(int id)
+        {
+            return _context.Cases.Find(id);
+        }
+        public int AddCase(Case @case)
+        {
+            _context.Cases.Add(@case);
+            return _context.SaveChanges();
+        }
+        public int UpdateCase(Case @case)
+        {
+            _context.Cases.Update(@case);
+            return _context.SaveChanges();
+        }
+        public int DeleteCase(int id)
+        {
+            var @case = _context.Cases.First(c => c.Id == id);
+            _context.Cases.Remove(@case);
+            return _context.SaveChanges();
+        }
+        #endregion
 
+        #region BasicPersonMethods
+        public List<Person> GetPeopleList()
+        {
+            return _context.People.ToList();
+        }
+        public Person GetPerson(int id)
+        {
+            return _context.People.Find(id);
+        }
+        public int AddPerson(Person person)
+        {
+            _context.People.Add(person);
+            return _context.SaveChanges();
+        }
+        public int UpdatePerson(Person person)
+        {
+            _context.People.Update(@person);
+            return _context.SaveChanges();
+        }
+        public int DeletePerson(int id)
+        {
+            var @person = _context.People.First(p => p.Id == id);
+            _context.People.Remove(@person);
+            return _context.SaveChanges();
+        }
+        #endregion
+
+        #region BasicAttorneyMethods
         public AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney)
         {
             var model = new AttorneyListingViewModel();
@@ -86,49 +136,30 @@ namespace MemigrationProBonoTracker.Services
             return model;
         }
 
-        public Case GetCaseDetails(int id)
+        public Attorney GetAttorneyDetails(int id)
         {
-            return _context.Cases.Find(id);
+            return _context.Attorneys.Find(id);
         }
-        public int AddCase(Case @case)
+
+        public int AddAttorney(Attorney attorney)
         {
-            _context.Add(@case);
+            _context.Attorneys.Add(attorney);
             return _context.SaveChanges();
         }
-        public int UpdateCase(Case @case)
+
+        public int UpdateAttorney(Attorney attorney)
         {
-            _context.Update(@case);
+            _context.Attorneys.Update(attorney);
+            return _context.SaveChanges();
+
+        }
+
+        public int DeleteAttorney(int id)
+        {
+            var @attorney = _context.Attorneys.Find(id);
+            _context.Attorneys.Remove(@attorney);
             return _context.SaveChanges();
         }
-        public int DeleteCase(int id)
-        {
-            var @case = _context.Cases.First(c => c.Id == id);
-            _context.Cases.Remove(@case);
-            return _context.SaveChanges();
-        }
-        public List<Person> GetPeopleList()
-        {
-            return _context.People.ToList();
-        }
-        public Person GetPerson(int id)
-        {
-            return _context.People.Find(id);
-        }
-        public int AddPerson(Person person)
-        {
-            _context.Add(person);
-            return _context.SaveChanges();
-        }
-        public int UpdatePerson(Person person)
-        {
-            _context.Update(@person);
-            return _context.SaveChanges();
-        }
-        public int DeletePerson(int id)
-        {
-            var @person = _context.People.First(p => p.Id == id);
-            _context.People.Remove(@person);
-            return _context.SaveChanges();
-        }
+        #endregion
     }
 }

@@ -12,17 +12,22 @@ namespace MemigrationProBonoTracker.Services
     public interface IContextService
     {
         CaseListViewModel GetCaseListViewModel(bool? openCases);
-        AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney);
-
         Case GetCaseDetails(int id);
-
         int AddCase(Case @case);
         int UpdateCase(Case @case);
         int DeleteCase(int id);
+
         List<Person> GetPeopleList();
         Person GetPerson(int id);
         int AddPerson(Person @person);
         int UpdatePerson(Person @person);
         int DeletePerson(int id);
+
+        AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney);
+        Attorney GetAttorneyDetails(int id);
+        int AddAttorney(Attorney @attorney);
+        int UpdateAttorney(Attorney @attorney);
+        int DeleteAttorney(int id);
+
     }
 }
