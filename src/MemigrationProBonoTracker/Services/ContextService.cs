@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
-using Microsoft.Data.Entity;
 using System.Linq;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MemigrationProBonoTracker.Services
 {
@@ -26,12 +26,7 @@ namespace MemigrationProBonoTracker.Services
             if (openCases.HasValue)
             {
                 model.Title = openCases.Value ? "Active Cases" : "Closed Cases";
-                model.Cases = _context.Cases.Where(c => c.Active == openCases.Value)
-                    .Include(c => c.LeadClient)
-                    .Include(c => c.AssigningAttorney)
-                    .Include(c => c.AttorneyWorker)
-                    .Include(c => c.MajorDates)
-                    .ToList();
+                model.Cases = _context.Cases.Where(c => c.Active == openCases.Value && c.LeadClient != null).Include(c=>c.LeadClient).ToList();
             }
             else
             {

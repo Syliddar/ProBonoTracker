@@ -22,25 +22,22 @@
     <tbody>
         @foreach (var item in Model.Cases)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Active)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AttorneyWorkedHours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CaseNotes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="DeleteConfirmed" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeadClient.FullName)
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="DeleteConfirmed" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
