@@ -13,6 +13,8 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/moment.min.js"></script>
+        <script src="~/js/datetime-moment.js"></script>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
@@ -23,6 +25,13 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
+        </script>
+
+        <script src="~/js/moment.min.js"
+                asp-fallback-src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js">
+        </script>
+        <script src="~/js/datetime-moment.js"
+                asp-fallback-src="//cdn.datatables.net/plug-ins/1.10.13/sorting/datetime-moment.js">
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"

@@ -1,43 +1,63 @@
 @model MemigrationProBonoTracker.Models.CaseViewModels.CaseListViewModel
 
 <h2>@Model.Title</h2>
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" id="CaseTable">
     <thead>
         <tr>
             <th>
-
+                Client Name
             </th>
             <th>
-
+                Case Type
             </th>
             <th>
-
+                Working Attorney
             </th>
             <th>
-
+                Assigning Attorney
             </th>
+            <th>
+                Next Case Event
+            </th>
+            <th>Next Case Event Date</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Cases)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LeadClient.FullName)
-                    </td>
-                    <td>
-                        
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="DeleteConfirmed" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CaseType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssigningAttorneyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VolunteerAttorneyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextCaseEventString)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextCaseDateString)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br/>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a><br/>
+                    <a asp-action="DeleteConfirmed" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<script>
+    $().ready(function () {
+        $.fn.dataTable.moment('DD MMM, YY');
+        $('#CaseTable').DataTable();
+    });
+</script>

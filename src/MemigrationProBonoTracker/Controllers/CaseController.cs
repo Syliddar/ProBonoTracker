@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Services;
@@ -15,7 +16,7 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // GET: Cases
-        public IActionResult Index(bool? open)
+        public IActionResult Index(bool? open = true)
         {
             var model = _context.GetCaseListViewModel(open);
             return View(model);
