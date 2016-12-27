@@ -70,9 +70,29 @@ namespace MemigrationProBonoTracker.Services
         {
             return _context.Cases.Find(id);
         }
-        public int AddCase(Case @case)
+        public int AddCase(CreateCaseViewModel @case)
         {
-            _context.Cases.Add(@case);
+            var LeadClient = @case.LeadClient.Id == 0 ? new Person
+            {
+                Age = @case.LeadClient.Age,
+                FirstName = @case.LeadClient.FirstName,
+                LastName = @case.LeadClient.LastName,
+                Gender = @case.LeadClient.Gender,
+                Nationality = @case.LeadClient.Nationality,
+                Notes = @case.LeadClient.Notes
+            } : GetPerson(@case.LeadClient.Id);
+            _context.People.Add(LeadClient);
+            _context.SaveChanges();
+            var assigningAttorney = GetAttorneyDetails(@case.AssigningAttorneyId);
+            var newCase = new Case
+            {
+                Active = true,
+                AssigningAttorney = assigningAttorney,
+                CaseNotes = @case.CaseNotes,
+                LeadClient = LeadClient,
+                Type = @case.Type
+            };
+            _context.Cases.Add(newCase);
             return _context.SaveChanges();
         }
         public int UpdateCase(Case @case)

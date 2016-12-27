@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
+using MemigrationProBonoTracker.Models.CaseViewModels;
 using MemigrationProBonoTracker.Services;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -49,7 +50,7 @@ namespace MemigrationProBonoTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Case @case)
+        public IActionResult Create(CreateCaseViewModel @case)
         {
             if (ModelState.IsValid)
             {

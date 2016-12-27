@@ -52,8 +52,7 @@
                 var fullname = $(this).closest('tr').children('td.FullName').text();
                 var orgname = $(this).closest('tr').children('td.OrgName').text();
                 var id = this.id;
-                console.log(id);
-                $("#AssigningAttorney_Id").val(id);
+                $("#AssigningAttorneyId").val(id);
                 $("#AssigningFullName").text(fullname);
                 $("#AssigningOrgName").text(orgname);
                 $('#modalWrapper').modal('hide');

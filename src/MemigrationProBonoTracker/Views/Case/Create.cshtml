@@ -1,7 +1,7 @@
-@model Case
+@model MemigrationProBonoTracker.Models.CaseViewModels.CreateCaseViewModel
 <form asp-action="Create">
     <div class="form">
-        <h2>New Case</h2>
+        <h1>New Case</h1>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
@@ -72,13 +72,12 @@
                 <div class="col-lg-6">
                     <h3>
                         <button type="button" id="LaunchAssigningAttorneySearchModal" class="btn btn-primary pull-right">
+                            Search
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </h3>
                 </div>
-                <div class="col-lg-6"></div>
-                <div class="col-lg-6"></div>
-                <input asp-for="@Model.AssigningAttorney.Id" hidden="" />
+                <input asp-for="@Model.AssigningAttorneyId" hidden="" />
             </div>
             <div class="col-lg-6">
                 <h4 id="AssigningFullName"></h4>
