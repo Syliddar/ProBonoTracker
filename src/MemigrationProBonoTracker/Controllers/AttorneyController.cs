@@ -71,5 +71,11 @@ namespace MemigrationProBonoTracker.Controllers
             ModelState.AddModelError(string.Empty, "An internal error occurred. Please try again later.");
             return RedirectToAction("Index");
         }
+
+        public PartialViewResult GetAttorneyLookupPartial(bool? assigning)
+        {
+            var model = _context.GetAttorneyListingViewModel(assigning);
+            return PartialView("_AttorneySearch", model);
+        }
     }
 }

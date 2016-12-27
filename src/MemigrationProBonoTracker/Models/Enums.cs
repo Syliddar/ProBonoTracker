@@ -10,7 +10,7 @@ namespace MemigrationProBonoTracker.Models
             SIJSAdjustmentApplication,
             UACAsylum,
             AWCAsylum,
-            AsylumOother,
+            AsylumOther,
             UVisa,
             VAWASelfPetition,
             VAWACancellation,

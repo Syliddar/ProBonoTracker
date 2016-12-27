@@ -1,57 +1,57 @@
 @model Case
 <form asp-action="Create">
     <div class="form">
-        <h2>New Case</h2>
-        <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-            <div class="form-group">
-                <label asp-for="Type" class="col-md-4 control-label"></label>
-                <div class="col-md-10">
-                    <select asp-for="Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
-                    <span asp-validation-for="Type" class="text-danger"></span>
+            <div class="col-lg-6">
+                <h2>New Case</h2>
+            </div>
+                <div class="form-group col-lg-6">
+                    <label asp-for="Type" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>
         <hr />
-        <div class="row well">
+        <div class="row">
             <div class="col-lg-12">
                 <div class="col-lg-6">
                     <h3>Lead Client</h3>
                 </div>
                 <div class="col-lg-6">
-                    <h3>
-                        <button type="button" id="LaunchClientSearchModal" class="btn btn-primary pull-right">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </h3>
+                    <button type="button" class="btn btn-primary pull-right">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
                 </div>
             </div>
             <div class="form-group col-lg-6">
                 <label asp-for="@Model.LeadClient.FirstName" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <input asp-for="@Model.LeadClient.FirstName" class="form-control" />
+                    <input asp-for="@Model.LeadClient.FirstName" class="form-control"/>
                     <span asp-validation-for="@Model.LeadClient.FirstName" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group col-lg-6">
                 <label asp-for="@Model.LeadClient.LastName" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <input asp-for="@Model.LeadClient.LastName" class="form-control" />
+                    <input asp-for="@Model.LeadClient.LastName" class="form-control"/>
                     <span asp-validation-for="@Model.LeadClient.LastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group col-lg-6">
                 <label asp-for="@Model.LeadClient.Age" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <input asp-for="@Model.LeadClient.Age" class="form-control" />
+                    <input asp-for="@Model.LeadClient.Age" class="form-control"/>
                     <span asp-validation-for="@Model.LeadClient.Age" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group col-lg-6">
                 <label asp-for="@Model.LeadClient.Gender" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                    <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()"class="form-control"></select>
                     <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
                 </div>
             </div>
@@ -62,31 +62,6 @@
                     <span asp-validation-for="@Model.LeadClient.Nationality" class="text-danger"></span>
                 </div>
             </div>
-        </div>
-        <hr />
-        <div class="row well">
-            <div class="col-lg-12">
-                <div class="col-lg-6">
-                    <h3>Assigning Attorney</h3>
-                </div>
-                <div class="col-lg-6">
-                    <h3>
-                        <button type="button" id="LaunchAssigningAttorneySearchModal" class="btn btn-primary pull-right">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </h3>
-                </div>
-                <div class="col-lg-6"></div>
-                <div class="col-lg-6"></div>
-                <input asp-for="@Model.AssigningAttorney.Id" hidden="" />
-            </div>
-            <div class="col-lg-6">
-                <h4 id="AssigningFullName"></h4>
-            </div>
-            <div class="col-lg-6">
-                <h4 id="AssigningOrgName"></h4>
-            </div>
-
         </div>
         <hr />
         <div class="form-group">
@@ -103,27 +78,12 @@
         </div>
     </div>
 </form>
+
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-<div id="modalWrapper" class="modal fade" tabindex="-1" role="dialog"></div>
-
-<script>
-    $(function () {
-        $("#LaunchAssigningAttorneySearchModal")
-            .click(function () {
-                $.ajax({
-                    url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + true,
-                    success: function (data) {
-                        $('#modalWrapper').html(data);
-                    }
-                });
-            });
-
-    });
-</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
 }

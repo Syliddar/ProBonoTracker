@@ -1,0 +1,62 @@
+﻿@model MemigrationProBonoTracker.Models.AttorneyViewModels.AttorneyListingViewModel
+
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">AttorneySearch</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table" id="AttorneyTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Organization Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.AttorneyList)
+                    {
+                        <tr>
+                            <td class="FullName">
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td class="OrgName">
+                                @Html.DisplayFor(modelItem => item.OrganizationName)
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary AttorneySearchModalChoose" id="@item.Id">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $().ready(function () {
+        $('.table').DataTable();
+        $('#modalWrapper').modal('show');
+        $(".AttorneySearchModalChoose")
+            .click(function () {
+                var fullname = $(this).closest('tr').children('td.FullName').text();
+                var orgname = $(this).closest('tr').children('td.OrgName').text();
+                var id = this.id;
+                console.log(id);
+                $("#AssigningAttorney_Id").val(id);
+                $("#AssigningFullName").text(fullname);
+                $("#AssigningOrgName").text(orgname);
+                $('#modalWrapper').modal('hide');
+            });
+    });
+</script>

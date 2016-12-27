@@ -10,7 +10,7 @@
             <h4>Edit Attorney</h4>
         }
         <hr />
-        <input asp-for="Id" hidden=""/>
+        <input asp-for="Id" hidden="" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-lg-6">
@@ -89,22 +89,37 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="LatinoMemContribution" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="LatinoMemContribution" class="form-control" />
+                        <span asp-validation-for="LatinoMemContribution" class="text-danger" />
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="MiaContribution" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="MiaContribution" class="form-control" />
+                        <span asp-validation-for="MiaContribution" class="text-danger" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="ClcContribution" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="ClcContribution" class="form-control" />
+                        <span asp-validation-for="ClcContribution" class="text-danger" />
+                    </div>
+                </div>
             </div>
         </div>
 
 
-
-
-        <div class="form-group">
-            <label asp-for="ClcContribution" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ClcContribution" class="form-control" />
-                <span asp-validation-for="ClcContribution" class="text-danger" />
-            </div>
-        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
@@ -151,20 +166,6 @@
                     <input asp-for="IsAssigningAttorney" />
                     <label asp-for="IsAssigningAttorney"></label>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LatinoMemContribution" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="LatinoMemContribution" class="form-control" />
-                <span asp-validation-for="LatinoMemContribution" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="MiaContribution" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="MiaContribution" class="form-control" />
-                <span asp-validation-for="MiaContribution" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

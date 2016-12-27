@@ -21,7 +21,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
 
         public string NextCaseEventString => NextCaseEventDate == null ? "" : NextCaseEventDate.Event;
 
-        public string NextCaseDateString => NextCaseEventDate?.EventDate.ToShortDateString() ?? "";
+        public string NextCaseDateString => NextCaseEventDate?.EventDate.ToString("dd MMM yyyy") ?? "";
 
         public CaseEventDate NextCaseEventDate { get; set; }
     }
