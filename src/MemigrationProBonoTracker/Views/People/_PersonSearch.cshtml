@@ -8,7 +8,7 @@
             <h4 class="modal-title" id="myModalLabel">Person Search</h4>
         </div>
         <div class="modal-body">
-            <table class="table" id="AttorneyTable">
+            <table class="table" id="PersonTable">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -20,14 +20,16 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            @Html.HiddenFor(i => item.Age)
+                            @Html.HiddenFor(i => item.Gender)
                             <td class="FullName">
                                 @Html.DisplayFor(modelItem => item.FullName)
                             </td>
-                            <td class="OrgName">
+                            <td class="Nationality">
                                 @Html.DisplayFor(modelItem => item.Nationality)
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary AttorneySearchModalChoose" id="@item.Id">
+                                <button type="button" class="btn btn-primary PersonSearchModalChoose" id="@item.Id">
                                     <span class="glyphicon glyphicon-check"></span>
                                 </button>
                             </td>
@@ -37,7 +39,7 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
         </div>
     </div>
 </div>
@@ -45,15 +47,25 @@
 
 <script>
     $().ready(function () {
+        $("#PersonTable").DataTable();
         $('#modalWrapper').modal('show');
-        $(".AttorneySearchModalChoose")
+        $(".PersonSearchModalChoose")
             .click(function () {
                 var fullname = $(this).closest('tr').children('td.FullName').text();
-                var orgname = $(this).closest('tr').children('td.OrgName').text();
+                var nationality = $(this).closest('tr').children('td.Nationality').text().trim();
+                var age = $(this).closest('tr').children('#item_Age').val();
+                var gender = $(this).closest('tr').children('#item_Gender').val();
                 var id = this.id;
-                $("#AssigningAttorneyId").val(id);
-                $("#AssigningFullName").text(fullname);
-                $("#AssigningOrgName").text(orgname);
+                var name = fullname.trim().split(" ");
+                console.log(nationality);
+                $("#LeadClient_FirstName").val(name[0]);
+                $("#LeadClient_FirstName").text(name[0]);
+                $("#LeadClient_LastName").val(name[1]);
+                $("#LeadClient_LastName").text(name[1]);
+                $("#LeadClient_Id").val(id);
+                $("#LeadClient_Age").val(age);
+                $("#LeadClient_Gender option").filter(function() {return this.text == gender;}).attr('selected', true);
+                $("#LeadClient_Nationality option").filter(function() {return this.text == nationality;}).attr('selected', true);
                 $('#modalWrapper').modal('hide');
             });
     });

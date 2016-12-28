@@ -18,6 +18,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Lead Client</h3>
             </div>
+            <input asp-for="@Model.LeadClient.Id" type="hidden"/>
             <div class="panel-body">
                 <div class="form-group col-lg-5">
                     <label asp-for="@Model.LeadClient.FirstName" class="col-md-2 control-label"></label>
@@ -108,7 +109,6 @@
             </tbody>
         </table>
     </div>
-    <hr />
     <div class="row panel panel-primary">
         <div class="panel-heading">
             <h2 class="panel-title">Case Notes</h2>
