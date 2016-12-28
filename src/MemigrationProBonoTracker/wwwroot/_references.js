@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/bootstrap-datepicker.js" />
 /// <reference path="js/datetime-moment.js" />
 /// <reference path="js/jquery.datatables.min.js" />
 /// <reference path="js/moment.min.js" />

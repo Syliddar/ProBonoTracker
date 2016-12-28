@@ -1,23 +1,60 @@
-﻿@model MemigrationProBonoTracker.Models.PersonViewModel.PersonSearchViewModel
+﻿@model List<Person>
 
-<div class="modal fade" id="editModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Lookup Person</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm())
-                {
-                    <input type="text" id="FirstName" value="@Model.FirstName" />
-                    <input type="text" id="LastName" value="@Model.LastName" />
-                    <input type="submit" />
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Person Search</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table" id="AttorneyTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nationality</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="FullName">
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td class="OrgName">
+                                @Html.DisplayFor(modelItem => item.Nationality)
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary AttorneySearchModalChoose" id="@item.Id">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
     </div>
 </div>
+
+
+<script>
+    $().ready(function () {
+        $('#modalWrapper').modal('show');
+        $(".AttorneySearchModalChoose")
+            .click(function () {
+                var fullname = $(this).closest('tr').children('td.FullName').text();
+                var orgname = $(this).closest('tr').children('td.OrgName').text();
+                var id = this.id;
+                $("#AssigningAttorneyId").val(id);
+                $("#AssigningFullName").text(fullname);
+                $("#AssigningOrgName").text(orgname);
+                $('#modalWrapper').modal('hide');
+            });
+    });
+</script>

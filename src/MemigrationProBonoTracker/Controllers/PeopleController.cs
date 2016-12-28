@@ -120,5 +120,13 @@ namespace MemigrationProBonoTracker.Controllers
             _context.DeletePerson(id);
             return RedirectToAction("Index");
         }
+
+
+
+        public PartialViewResult PersonLookupPartial()
+        {
+            var model = _context.GetPeopleList();
+            return PartialView("_PersonSearch", model);
+        }
     }
 }

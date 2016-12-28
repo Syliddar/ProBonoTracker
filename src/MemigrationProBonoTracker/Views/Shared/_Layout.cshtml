@@ -8,12 +8,14 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/bootstrap-datepicker3.css" rel="stylesheet" />
         <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/jquery.dataTables.min.js"></script>
         <script src="~/js/moment.min.js"></script>
+        <script src="~/js/bootstrap-datepicker.js"></script>
         <script src="~/js/datetime-moment.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -26,13 +28,6 @@
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
-
-        <script src="~/js/moment.min.js"
-                asp-fallback-src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js">
-        </script>
-        <script src="~/js/datetime-moment.js"
-                asp-fallback-src="//cdn.datatables.net/plug-ins/1.10.13/sorting/datetime-moment.js">
-        </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
@@ -42,7 +37,7 @@
     </environment>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
