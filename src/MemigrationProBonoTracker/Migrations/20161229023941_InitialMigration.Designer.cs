@@ -4,22 +4,24 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using MemigrationProBonoTracker.Data;
+using MemigrationProBonoTracker.Models;
 
 namespace MemigrationProBonoTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161211043645_Initial")]
-    partial class Initial
+    [Migration("20161229023941_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -27,7 +29,7 @@ namespace MemigrationProBonoTracker.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -36,10 +38,10 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -52,7 +54,7 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -143,11 +145,9 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<bool>("PrimaryAddress");
 
-                    b.Property<int?>("State");
+                    b.Property<string>("State");
 
-                    b.Property<string>("StreetAddress1");
-
-                    b.Property<string>("StreetAddress2");
+                    b.Property<string>("StreetAddress");
 
                     b.Property<string>("ZipCode");
 
@@ -275,11 +275,9 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<bool>("PrimaryAddress");
 
-                    b.Property<int?>("State");
+                    b.Property<string>("State");
 
-                    b.Property<string>("StreetAddress1");
-
-                    b.Property<string>("StreetAddress2");
+                    b.Property<string>("StreetAddress");
 
                     b.Property<string>("ZipCode");
 
@@ -310,20 +308,22 @@ namespace MemigrationProBonoTracker.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -395,8 +395,6 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -458,14 +456,14 @@ namespace MemigrationProBonoTracker.Migrations
             modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEventDate", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Case")
-                        .WithMany("MajorDates")
+                        .WithMany("CaseEventDates")
                         .HasForeignKey("CaseId");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.ContactLogEntry", b =>
                 {
-                    b.HasOne("MemigrationProBonoTracker.Models.Case")
-                        .WithMany("ContactLogEntries")
+                    b.HasOne("MemigrationProBonoTracker.Models.Case", "Case")
+                        .WithMany()
                         .HasForeignKey("CaseId");
                 });
 

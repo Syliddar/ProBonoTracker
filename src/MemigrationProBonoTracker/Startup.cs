@@ -24,7 +24,6 @@ namespace MemigrationProBonoTracker
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
             }
 
             builder.AddEnvironmentVariables();
@@ -64,7 +63,6 @@ namespace MemigrationProBonoTracker
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
-                SeedData.Initialize(app.ApplicationServices);
             }
             else
             {

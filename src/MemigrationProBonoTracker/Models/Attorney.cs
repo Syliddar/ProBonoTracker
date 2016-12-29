@@ -20,12 +20,12 @@ namespace MemigrationProBonoTracker.Models
         public string LastName { get; set; }
         public string FullName { get { return FirstName + " " + LastName; } }
 
-        //[Display(Name = "AddressList")]
-        ////TFW TPC Inheritance isn't supported yet
-        //public List<Address> AddressList { get; set; }
+        [Display(Name = "AddressList")]
+        //TFW TPC Inheritance isn't supported yet
+        public List<AttorneyAddress> AddressList { get; set; }
 
-        //[Display(Name = "Phone Number")]
-        //public List<PhoneNumber> PhoneList { get; set; }
+        [Display(Name = "Phone Number")]
+        public List<AttorneyPhoneNumber> PhoneList { get; set; }
 
         [Display(Name = "Notes")]
         public string Notes { get; set; }

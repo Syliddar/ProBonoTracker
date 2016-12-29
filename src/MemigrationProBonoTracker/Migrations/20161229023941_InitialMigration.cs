@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MemigrationProBonoTracker.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,9 +160,8 @@ namespace MemigrationProBonoTracker.Migrations
                     AttorneyId = table.Column<int>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     PrimaryAddress = table.Column<bool>(nullable: false),
-                    State = table.Column<int>(nullable: true),
-                    StreetAddress1 = table.Column<string>(nullable: true),
-                    StreetAddress2 = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    StreetAddress = table.Column<string>(nullable: true),
                     ZipCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -243,9 +242,8 @@ namespace MemigrationProBonoTracker.Migrations
                     City = table.Column<string>(nullable: true),
                     PersonId = table.Column<int>(nullable: true),
                     PrimaryAddress = table.Column<bool>(nullable: false),
-                    State = table.Column<int>(nullable: true),
-                    StreetAddress1 = table.Column<string>(nullable: true),
-                    StreetAddress2 = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    StreetAddress = table.Column<string>(nullable: true),
                     ZipCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -463,7 +461,8 @@ namespace MemigrationProBonoTracker.Migrations
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -484,11 +483,6 @@ namespace MemigrationProBonoTracker.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

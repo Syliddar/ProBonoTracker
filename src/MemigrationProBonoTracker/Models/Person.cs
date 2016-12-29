@@ -13,22 +13,11 @@ namespace MemigrationProBonoTracker.Models
         public string LastName { get; set; }
 
         public string FullName { get { return FirstName + " " + LastName; } }
-        //public List<Address> AddressList { get; set; }
-        //public List<PhoneNumber> PhoneList { get; set; }
+        public List<PersonAddress> AddressList { get; set; }
+        public List<PersonPhoneNumber> PhoneList { get; set; }
         public string Notes { get; set; }
         public int Age { get; set; }
         public NationalOrigin Nationality { get; set; }
         public Gender Gender { get; set; }
-
-
-        ////Accessor Methods
-        //public PhoneNumber PrimaryPhoneNumber()
-        //{
-        //    return PhoneList.Find(x => x.PrimaryContactNumber);
-        //}
-        //public Address PrimaryAddress()
-        //{
-        //    return AddressList.Find(x => x.PrimaryAddress);
-        //}
     }
 }

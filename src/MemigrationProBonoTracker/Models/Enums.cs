@@ -25,7 +25,15 @@ namespace MemigrationProBonoTracker.Models
         {
             Female,
             Male,
-            NonBinary,
+            Other
+        }
+
+        public enum NumberType
+        {
+            Office,
+            Cell,
+            Fax,
+            Home,
             Other
         }
 
@@ -92,11 +100,6 @@ namespace MemigrationProBonoTracker.Models
             InPersonSeminar,
             Webinar,
             PersonalContact
-        }
-
-        public enum SpecialSkills
-        {
-            
         }
     }
 }
