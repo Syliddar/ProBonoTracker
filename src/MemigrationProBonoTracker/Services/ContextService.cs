@@ -105,7 +105,7 @@ namespace MemigrationProBonoTracker.Services
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
             var now = DateTime.Today;
-            var dbResult = _context.CaseEvents.Include(e=>e.ParentCase).ThenInclude(c=>c.AttorneyWorker).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.AttorneyWorker).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
             var result = dbResult.Select(e => new CaseEventViewModel
             {
                 CaseId = e.ParentCase.Id,
@@ -234,12 +234,13 @@ namespace MemigrationProBonoTracker.Services
 
         public AttorneyContactInfoViewModel GetAttorneyContactInfo(int id)
         {
-            var attorney = _context.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).First(a => a.Id == id);
+            var attorney = _context.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).Include(a => a.EmailList).First(a => a.Id == id);
             var result = new AttorneyContactInfoViewModel
             {
                 AttorneyName = attorney.FullName,
                 AttorneyAddresses = attorney.AddressList,
                 Notes = attorney.Notes,
+                EmailList = attorney.EmailList,
                 PhoneNumbers = attorney.PhoneList
             };
             return result;

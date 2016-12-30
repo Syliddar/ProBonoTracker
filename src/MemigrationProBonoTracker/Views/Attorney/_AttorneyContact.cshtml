@@ -15,6 +15,12 @@
                         <li>@Html.DisplayFor(i => item.Number) -  @Html.DisplayFor(i => item.Type)</li>
                     }
                 </ul>
+                <ul>
+                    @foreach (var email in Model.EmailList)
+                    {
+                        <li><a href="mailto:@email.Address"  target="_blank">@email.Address</a></li>
+                    }
+                </ul>
             </div>
             <div class="col-md-6">
                 <ul>
@@ -29,10 +35,12 @@
                     }
                 </ul>
             </div>
-            @Html.DisplayFor(a => a.Notes)
+            <div class="col-md-12">
+                @Html.DisplayFor(a => a.Notes)
+            </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <div class="col-md-12"><button type="button" class="btn btn-primary" data-dismiss="modal">Close</button></div>
         </div>
     </div>
 </div>

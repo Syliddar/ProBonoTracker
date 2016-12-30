@@ -26,6 +26,7 @@ namespace MemigrationProBonoTracker.Models
 
         [Display(Name = "Phone Number")]
         public List<AttorneyPhoneNumber> PhoneList { get; set; }
+        public List<Email> EmailList { get; set; }
 
         [Display(Name = "Notes")]
         public string Notes { get; set; }

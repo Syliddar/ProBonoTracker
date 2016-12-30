@@ -7,6 +7,7 @@ namespace MemigrationProBonoTracker.Models.AttorneyViewModels
         public string AttorneyName { get; set; }
         public List<AttorneyPhoneNumber> PhoneNumbers { get; set; }
         public List<AttorneyAddress> AttorneyAddresses { get; set; }
+        public List<Email> EmailList { get; set; }
         public string Notes { get; set; }
     }
 }
