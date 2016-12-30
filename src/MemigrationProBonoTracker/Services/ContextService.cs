@@ -41,7 +41,7 @@ namespace MemigrationProBonoTracker.Services
                     CaseType = c.Type,
                     AssigningAttorneyName = c.AssigningAttorney.FullName,
                     VolunteerAttorneyName = c.AttorneyWorker == null ? "Not yet assigned." : c.AttorneyWorker.FullName,
-                    NextCaseEventDate = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+                    NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
                 }).ToList();
             }
             else
@@ -58,21 +58,18 @@ namespace MemigrationProBonoTracker.Services
                         CaseType = c.Type,
                         AssigningAttorneyName = c.AssigningAttorney.FullName,
                         VolunteerAttorneyName = c.AttorneyWorker == null ? "Not yet assigned." : c.AttorneyWorker.FullName,
-                        NextCaseEventDate = c.CaseEventDates.OrderBy(e => e.EventDate > DateTime.Now ? e.EventDate - DateTime.Now : DateTime.Now - e.EventDate).FirstOrDefault()
+                        NextCaseEvent = c.CaseEventDates.OrderBy(e => e.EventDate > DateTime.Now ? e.EventDate - DateTime.Now : DateTime.Now - e.EventDate).FirstOrDefault()
                     }).ToList();
             }
             return model;
         }
-
-
-
         public Case GetCaseDetails(int id)
         {
             return _context.Cases.Find(id);
         }
         public int AddCase(CreateCaseViewModel @case)
         {
-            var LeadClient = @case.LeadClient.Id == 0 ? new Person
+            var leadClient = @case.LeadClient.Id == 0 ? new Person
             {
                 Age = @case.LeadClient.Age,
                 FirstName = @case.LeadClient.FirstName,
@@ -81,7 +78,7 @@ namespace MemigrationProBonoTracker.Services
                 Nationality = @case.LeadClient.Nationality,
                 Notes = @case.LeadClient.Notes
             } : GetPerson(@case.LeadClient.Id);
-            _context.People.Add(LeadClient);
+            _context.People.Add(leadClient);
             _context.SaveChanges();
             var assigningAttorney = GetAttorneyDetails(@case.AssigningAttorneyId);
             var newCase = new Case
@@ -89,7 +86,7 @@ namespace MemigrationProBonoTracker.Services
                 Active = true,
                 AssigningAttorney = assigningAttorney,
                 CaseNotes = @case.CaseNotes,
-                LeadClient = LeadClient,
+                LeadClient = leadClient,
                 Type = @case.Type
             };
             _context.Cases.Add(newCase);
@@ -106,6 +103,21 @@ namespace MemigrationProBonoTracker.Services
             _context.Cases.Remove(@case);
             return _context.SaveChanges();
         }
+        public List<CaseEventViewModel> GetUpcomingCaseEvents()
+        {
+            var now = DateTime.Today;
+            var dbResult = _context.CaseEvents.Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            var result = dbResult.Select(e => new CaseEventViewModel
+            {
+                CaseId = e.ParentCase.Id,
+                ClientName = e.ParentCase.LeadClient.FullName,
+                EventDate = e.EventDate,
+                Event = e.Event
+
+            }).ToList();
+            return result;
+        }
+
         #endregion
 
         #region BasicPersonMethods

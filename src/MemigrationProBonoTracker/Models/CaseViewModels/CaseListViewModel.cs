@@ -19,10 +19,10 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public string AssigningAttorneyName { get; set; }
         public string VolunteerAttorneyName { get; set; }
 
-        public string NextCaseEventString => NextCaseEventDate == null ? "" : NextCaseEventDate.Event;
+        public string NextCaseEventString => NextCaseEvent == null ? "" : NextCaseEvent.Event;
 
-        public string NextCaseDateString => NextCaseEventDate?.EventDate.ToString("dd MMM yyyy") ?? "";
+        public string NextCaseDateString => NextCaseEvent?.EventDate.ToString("dd MMM yyyy") ?? "";
 
-        public CaseEventDate NextCaseEventDate { get; set; }
+        public CaseEvent NextCaseEvent { get; set; }
     }
 }

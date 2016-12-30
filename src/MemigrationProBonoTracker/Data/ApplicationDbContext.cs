@@ -18,7 +18,7 @@ namespace MemigrationProBonoTracker.Data
         public DbSet<PersonPhoneNumber> PersonPhoneNumbers { get; set; }
         public DbSet<Attorney> Attorneys { get; set; }
         public DbSet<Case> Cases { get; set; }
-        public DbSet<CaseEventDate> CaseEvents { get; set; }
+        public DbSet<CaseEvent> CaseEvents { get; set; }
         public DbSet<ContactLogEntry> LogEntries { get; set; }
         public DbSet<Person> People { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -36,6 +36,8 @@ namespace MemigrationProBonoTracker.Data
             builder.Entity<Case>().HasOne(c => c.AttorneyWorker);
             builder.Entity<Case>().HasMany(c => c.CaseEventDates);
             builder.Entity<Case>().HasMany(c => c.AssociatedPeopleList);
+
+            builder.Entity<CaseEvent>().HasOne(e => e.ParentCase);
 
             builder.Entity<Attorney>().HasMany(a => a.AddressList);
             builder.Entity<Attorney>().HasMany(a => a.PhoneList);

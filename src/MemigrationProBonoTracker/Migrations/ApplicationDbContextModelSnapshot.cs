@@ -205,7 +205,7 @@ namespace MemigrationProBonoTracker.Migrations
                     b.ToTable("Cases");
                 });
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEventDate", b =>
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEvent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -452,9 +452,9 @@ namespace MemigrationProBonoTracker.Migrations
                         .HasForeignKey("LeadClientId");
                 });
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEventDate", b =>
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEvent", b =>
                 {
-                    b.HasOne("MemigrationProBonoTracker.Models.Case")
+                    b.HasOne("MemigrationProBonoTracker.Models.Case", "ParentCase")
                         .WithMany("CaseEventDates")
                         .HasForeignKey("CaseId");
                 });
