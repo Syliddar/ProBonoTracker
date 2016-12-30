@@ -7,7 +7,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
     {
         public int CaseId { get; set; }
         public string ClientName { get; set; }
-
+        public int AssignedAttorneyId { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EventDate { get; set; }
         public string Event { get; set; }

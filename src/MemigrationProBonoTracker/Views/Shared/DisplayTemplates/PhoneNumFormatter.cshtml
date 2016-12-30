@@ -1,0 +1,25 @@
+﻿@model String
+@if (Model != null)
+{
+    var value = String.Format("{0:(###) ###-#### x}{1}", Model.Substring(0, 10), Model.Substring(10));
+
+    Int64 phoneDigits;
+    if (!string.IsNullOrEmpty(value))
+    {
+        if (Int64.TryParse(value.ToString(), out phoneDigits))
+        {
+            string cleanPhoneDigits = phoneDigits.ToString();
+            int digitCount = cleanPhoneDigits.Length;
+
+            if (digitCount == 10)
+            {
+                <text>@String.Format("{0:(###) ###-####}", phoneDigits)</text>}
+            else if (digitCount > 10)
+            {
+                <text>@String.Format("{0:(###) ###-#### x#########}", phoneDigits)</text>}
+            else
+            {
+                <text>@cleanPhoneDigits</text>}
+        }
+    }
+}

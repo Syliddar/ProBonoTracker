@@ -77,5 +77,11 @@ namespace MemigrationProBonoTracker.Controllers
             var model = _context.GetAttorneyListingViewModel(assigning);
             return PartialView("_AttorneySearch", model);
         }
+
+        public PartialViewResult GetAttorneyContactInfoPartial(int id)
+        {
+            var model = _context.GetAttorneyContactInfo(id);
+            return PartialView("_AttorneyContact", model);
+        }
     }
 }

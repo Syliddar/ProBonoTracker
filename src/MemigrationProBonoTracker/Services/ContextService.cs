@@ -21,7 +21,6 @@ namespace MemigrationProBonoTracker.Services
         }
 
         #region BasicCaseMethods 
-
         public CaseListViewModel GetCaseListViewModel(bool? openCases)
         {
             var model = new CaseListViewModel();
@@ -58,7 +57,7 @@ namespace MemigrationProBonoTracker.Services
                         CaseType = c.Type,
                         AssigningAttorneyName = c.AssigningAttorney.FullName,
                         VolunteerAttorneyName = c.AttorneyWorker == null ? "Not yet assigned." : c.AttorneyWorker.FullName,
-                        NextCaseEvent = c.CaseEventDates.OrderBy(e => e.EventDate > DateTime.Now ? e.EventDate - DateTime.Now : DateTime.Now - e.EventDate).FirstOrDefault()
+                        NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
                     }).ToList();
             }
             return model;
@@ -106,11 +105,12 @@ namespace MemigrationProBonoTracker.Services
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
             var now = DateTime.Today;
-            var dbResult = _context.CaseEvents.Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            var dbResult = _context.CaseEvents.Include(e=>e.ParentCase).ThenInclude(c=>c.AttorneyWorker).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
             var result = dbResult.Select(e => new CaseEventViewModel
             {
                 CaseId = e.ParentCase.Id,
                 ClientName = e.ParentCase.LeadClient.FullName,
+                AssignedAttorneyId = e.ParentCase.AttorneyWorker == null ? 0 : e.ParentCase.AttorneyWorker.Id,
                 EventDate = e.EventDate,
                 Event = e.Event
 
@@ -210,30 +210,39 @@ namespace MemigrationProBonoTracker.Services
 
             return model;
         }
-
         public Attorney GetAttorneyDetails(int id)
         {
             return _context.Attorneys.Find(id);
         }
-
         public int AddAttorney(Attorney attorney)
         {
             _context.Attorneys.Add(attorney);
             return _context.SaveChanges();
         }
-
         public int UpdateAttorney(Attorney attorney)
         {
             _context.Attorneys.Update(attorney);
             return _context.SaveChanges();
 
         }
-
         public int DeleteAttorney(int id)
         {
             var @attorney = _context.Attorneys.Find(id);
             _context.Attorneys.Remove(@attorney);
             return _context.SaveChanges();
+        }
+
+        public AttorneyContactInfoViewModel GetAttorneyContactInfo(int id)
+        {
+            var attorney = _context.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).First(a => a.Id == id);
+            var result = new AttorneyContactInfoViewModel
+            {
+                AttorneyName = attorney.FullName,
+                AttorneyAddresses = attorney.AddressList,
+                Notes = attorney.Notes,
+                PhoneNumbers = attorney.PhoneList
+            };
+            return result;
         }
         #endregion
     }

@@ -1,30 +1,30 @@
 ﻿@model HomeViewModel
 <hr />
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6">
         <h2>Active Cases without Volunteers</h2>
         <table class="table table-striped table-hover">
             <thead>
-            <tr>
-                <th>Client Name</th>
-                <th>Case Type</th>
-                <th>Assigning Attorney</th>
-            </tr>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Case Type</th>
+                    <th>Assigning Attorney</th>
+                </tr>
             </thead>
             <tbody>
                 @foreach (var modelOpenCase in Model.OpenCases)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(m=>modelOpenCase.ClientName)</td>
-                        <td>@Html.DisplayFor(m=>modelOpenCase.CaseType)</td>
-                        <td>@Html.DisplayFor(m=>modelOpenCase.AssigningAttorneyName)</td>
+                        <td>@Html.DisplayFor(m => modelOpenCase.ClientName)</td>
+                        <td>@Html.DisplayFor(m => modelOpenCase.CaseType)</td>
+                        <td>@Html.DisplayFor(m => modelOpenCase.AssigningAttorneyName)</td>
                         <td><a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@modelOpenCase.CaseId">Go To Case</a><br /></td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
         <h2>Upcoming Case Events</h2>
         <table class="table table-hover table-striped">
             <thead>
@@ -49,12 +49,37 @@
                             @Html.DisplayFor(e => eventItem.EventDate)
                         </td>
                         <td>
-                            <a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@eventItem.CaseId">Go To Case</a><br />
+                            @if (eventItem.AssignedAttorneyId != 0)
+                            {
+                                <a id="@eventItem.AssignedAttorneyId" href="#" class="AttorneyContactInfo">Attorney Contact</a><br/>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">No Volunteer Attorney</span><br />
+                            }
+                            <a asp-action="Details" asp-controller="Case" asp-route-id="@eventItem.CaseId">Go To Case</a><br />
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
     </div>
 </div>
+
+
+<div id="modalWrapper" class="modal fade" tabindex="-1" role="dialog"></div>
+
+<script>
+
+    $(".AttorneyContactInfo").click(function () {
+        var id = this.id;
+        console.log(id);
+
+        $.ajax({
+            url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + id,
+            success: function (data) {
+                $('#modalWrapper').html(data);
+            }
+        });
+    });
+</script>

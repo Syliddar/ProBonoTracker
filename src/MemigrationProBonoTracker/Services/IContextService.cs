@@ -30,6 +30,6 @@ namespace MemigrationProBonoTracker.Services
         int AddAttorney(Attorney @attorney);
         int UpdateAttorney(Attorney @attorney);
         int DeleteAttorney(int id);
-
+        AttorneyContactInfoViewModel GetAttorneyContactInfo(int id);
     }
 }
