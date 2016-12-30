@@ -47,9 +47,9 @@
                     @Html.DisplayFor(modelItem => item.NextCaseDateString)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br/>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a><br/>
-                    <a asp-action="DeleteConfirmed" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.CaseId">Edit</a><br/>
+                    <a asp-action="Details" asp-route-id="@item.CaseId">Details</a><br/>
+                    <a asp-action="DeleteConfirmed" asp-route-id="@item.CaseId">Delete</a>
                 </td>
             </tr>
         }

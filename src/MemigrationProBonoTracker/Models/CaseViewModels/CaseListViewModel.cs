@@ -13,7 +13,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
 
     public class CaseListItem
     {
-        public int Id { get; set; }
+        public int CaseId { get; set; }
         public string ClientName { get; set; }
         public Enums.CaseType CaseType { get; set; }
         public string AssigningAttorneyName { get; set; }

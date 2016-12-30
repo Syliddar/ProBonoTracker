@@ -1,27 +1,30 @@
 ﻿@model HomeViewModel
-<hr/>
+<hr />
 <div class="row">
-    <div class="col-md-4">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
+    <div class="col-md-7">
+        <h2>Active Cases without Volunteers</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Case Type</th>
+                <th>Assigning Attorney</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var modelOpenCase in Model.OpenCases)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m=>modelOpenCase.ClientName)</td>
+                        <td>@Html.DisplayFor(m=>modelOpenCase.CaseType)</td>
+                        <td>@Html.DisplayFor(m=>modelOpenCase.AssigningAttorneyName)</td>
+                        <td><a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@modelOpenCase.CaseId">Go To Case</a><br /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-    <div class="col-md-4">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=699562">Add an appsetting in config and access it in app.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <h2>Upcoming Case Events</h2>
         <table class="table table-hover table-striped">
             <thead>
@@ -46,7 +49,7 @@
                             @Html.DisplayFor(e => eventItem.EventDate)
                         </td>
                         <td>
-                            <a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@eventItem.CaseId">Go To Case</a><br/>
+                            <a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@eventItem.CaseId">Go To Case</a><br />
                         </td>
                     </tr>
                 }

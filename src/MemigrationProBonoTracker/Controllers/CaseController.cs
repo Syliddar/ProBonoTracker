@@ -17,7 +17,7 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // GET: Cases
-        public IActionResult Index(bool? open = true)
+        public IActionResult Index(bool? open)
         {
             var model = _context.GetCaseListViewModel(open);
             return View(model);

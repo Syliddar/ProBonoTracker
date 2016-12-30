@@ -15,6 +15,7 @@ namespace MemigrationProBonoTracker.Controllers
         {
             var model = new HomeViewModel
             {
+                OpenCases = _context.GetOpenCasesWithoutVolunteerAttorneys(),
                 UpcomingCaseEvents = _context.GetUpcomingCaseEvents()
             };
             return View(model);

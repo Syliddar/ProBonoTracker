@@ -8,6 +8,6 @@ namespace MemigrationProBonoTracker.Models
     public class HomeViewModel
     {
         public List<CaseEventViewModel> UpcomingCaseEvents { get; set; }
-
+        public List<CaseListItem> OpenCases { get; set; }
     }
 }

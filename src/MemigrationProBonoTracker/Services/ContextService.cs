@@ -36,7 +36,7 @@ namespace MemigrationProBonoTracker.Services
                     .Include(c => c.CaseEventDates);
                 model.Cases = modelCases.Select(c => new CaseListItem
                 {
-                    Id = c.Id,
+                    CaseId = c.Id,
                     ClientName = c.LeadClient.FullName,
                     CaseType = c.Type,
                     AssigningAttorneyName = c.AssigningAttorney.FullName,
@@ -53,7 +53,7 @@ namespace MemigrationProBonoTracker.Services
                     .Include(c => c.LeadClient)
                     .Include(c => c.CaseEventDates).Select(c => new CaseListItem
                     {
-                        Id = c.Id,
+                        CaseId = c.Id,
                         ClientName = c.LeadClient.FullName,
                         CaseType = c.Type,
                         AssigningAttorneyName = c.AssigningAttorney.FullName,
@@ -118,6 +118,24 @@ namespace MemigrationProBonoTracker.Services
             return result;
         }
 
+        public List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys()
+        {
+            var today = DateTime.Today;
+            var modelCases = _context.Cases.Where(c => c.Active && c.AttorneyWorker == null)
+                       .Include(c => c.AssigningAttorney)
+                       .Include(c => c.LeadClient)
+                       .Include(c => c.CaseEventDates);
+            return modelCases.Select(c => new CaseListItem
+            {
+                CaseId = c.Id,
+                ClientName = c.LeadClient.FullName,
+                CaseType = c.Type,
+                AssigningAttorneyName = c.AssigningAttorney.FullName,
+                VolunteerAttorneyName = "Not yet assigned.",
+                NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+            }).ToList();
+        }
+
         #endregion
 
         #region BasicPersonMethods
@@ -158,7 +176,7 @@ namespace MemigrationProBonoTracker.Services
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    //AssignedCases = _context.Cases.Count(y => y.AttorneyWorker.Id == x.Id),
+                    //AssignedCases = _context.Cases.Count(y => y.AttorneyWorker.Id == x.CaseId),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
