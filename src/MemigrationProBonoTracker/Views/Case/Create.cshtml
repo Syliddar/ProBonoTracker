@@ -135,8 +135,7 @@
         $("#LaunchAssigningAttorneySearchModal").click(function () { $.ajax({ url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + true, success: function (data) { $('#modalWrapper').html(data); } }); });
         $("#LaunchClientSearchModal").click(function () { $.ajax({ url: '/People/PersonLookupPartial/', success: function (data) { $('#modalWrapper').html(data); } }); });
         $("#AddCaseEvent").click(function () {
-            var len = $('#CaseEventsTable tr').length - 1;
-            console.log(len);
+            var len = $('#HiddenTableInput').val();
             var datecell = '<input class="form-control datepicker" type="datetime" data-val="true" id="CaseEventDates_' + len + '__EventDate" name="CaseEventDates[' + len + '].EventDate" value="">';
             var eventcell = '<input class="form-control" type="text" id="CaseEventDates_' + len + '__Event" name="CaseEventDates[' + len + '].Event" value="">';
             var btncell = '<button type="button" class="btn btn-primary caseEventRemove"><span class="glyphicon glyphicon-remove"></span></button>';

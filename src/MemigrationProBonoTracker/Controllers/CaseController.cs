@@ -54,8 +54,8 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.AddCase(@case);
-                return RedirectToAction("Index");
+                //_context.AddCase(@case);
+                //return RedirectToAction("Index");
             }
             return View(@case);
         }

@@ -64,6 +64,8 @@
                             <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
                         </ul>
                     </li>
+                
+                    
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -80,8 +82,6 @@
             </p>
         </footer>
     </div>
-
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

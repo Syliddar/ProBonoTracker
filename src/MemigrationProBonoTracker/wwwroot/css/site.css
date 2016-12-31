@@ -1,6 +1,10 @@
 ﻿.form-control {
-    border: 3px solid #2c3e50;
+    border: 1px solid #2c3e50;
 }
 body { 
     padding-top: 65px; 
+}
+
+.ajaxLoader {
+    padding-top: 15%
 }
