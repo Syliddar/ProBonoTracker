@@ -7,6 +7,7 @@ using MemigrationProBonoTracker.Models.CaseViewModels;
 using System.Linq;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 
 namespace MemigrationProBonoTracker.Services
 {
@@ -29,42 +30,48 @@ namespace MemigrationProBonoTracker.Services
             {
                 model.Title = openCases.Value ? "Active Cases" : "Closed Cases";
                 var modelCases = _context.Cases.Where(c => c.Active == openCases.Value)
-                    .Include(c => c.AttorneyWorker)
+                    .Include(c => c.VolunteerAttorney)
                     .Include(c => c.AssigningAttorney)
                     .Include(c => c.LeadClient)
-                    .Include(c => c.CaseEventDates);
+                    .Include(c => c.CaseEvents);
                 model.Cases = modelCases.Select(c => new CaseListItem
                 {
                     CaseId = c.Id,
                     ClientName = c.LeadClient.FullName,
                     CaseType = c.Type,
                     AssigningAttorneyName = c.AssigningAttorney.FullName,
-                    VolunteerAttorneyName = c.AttorneyWorker == null ? "Not yet assigned." : c.AttorneyWorker.FullName,
-                    NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+                    VolunteerAttorneyName = c.VolunteerAttorney == null ? "Not yet assigned." : c.VolunteerAttorney.FullName,
+                    NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
                 }).ToList();
             }
             else
             {
                 model.Title = "All Cases";
                 model.Cases = _context.Cases
-                    .Include(c => c.AttorneyWorker)
+                    .Include(c => c.VolunteerAttorney)
                     .Include(c => c.AssigningAttorney)
                     .Include(c => c.LeadClient)
-                    .Include(c => c.CaseEventDates).Select(c => new CaseListItem
+                    .Include(c => c.CaseEvents).Select(c => new CaseListItem
                     {
                         CaseId = c.Id,
                         ClientName = c.LeadClient.FullName,
                         CaseType = c.Type,
                         AssigningAttorneyName = c.AssigningAttorney.FullName,
-                        VolunteerAttorneyName = c.AttorneyWorker == null ? "Not yet assigned." : c.AttorneyWorker.FullName,
-                        NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+                        VolunteerAttorneyName = c.VolunteerAttorney == null ? "Not yet assigned." : c.VolunteerAttorney.FullName,
+                        NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
                     }).ToList();
             }
             return model;
         }
         public Case GetCaseDetails(int id)
         {
-            return _context.Cases.Find(id);
+            return _context.Cases
+                .Include(c => c.LeadClient)
+                .Include(c=>c.AssigningAttorney)
+                .Include(c => c.VolunteerAttorney)
+                .Include(c => c.CaseEvents)
+                .Include(c => c.AssociatedPeopleList).ThenInclude(p => p.Person)
+                .FirstOrDefault(c => c.Id == id);
         }
         public int AddCase(CreateCaseViewModel @case)
         {
@@ -105,12 +112,12 @@ namespace MemigrationProBonoTracker.Services
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
             var now = DateTime.Today;
-            var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.AttorneyWorker).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
             var result = dbResult.Select(e => new CaseEventViewModel
             {
                 CaseId = e.ParentCase.Id,
                 ClientName = e.ParentCase.LeadClient.FullName,
-                AssignedAttorneyId = e.ParentCase.AttorneyWorker == null ? 0 : e.ParentCase.AttorneyWorker.Id,
+                AssignedAttorneyId = e.ParentCase.VolunteerAttorney == null ? 0 : e.ParentCase.VolunteerAttorney.Id,
                 EventDate = e.EventDate,
                 Event = e.Event
 
@@ -121,10 +128,10 @@ namespace MemigrationProBonoTracker.Services
         public List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys()
         {
             var today = DateTime.Today;
-            var modelCases = _context.Cases.Where(c => c.Active && c.AttorneyWorker == null)
+            var modelCases = _context.Cases.Where(c => c.Active && c.VolunteerAttorney == null)
                        .Include(c => c.AssigningAttorney)
                        .Include(c => c.LeadClient)
-                       .Include(c => c.CaseEventDates);
+                       .Include(c => c.CaseEvents);
             return modelCases.Select(c => new CaseListItem
             {
                 CaseId = c.Id,
@@ -132,7 +139,7 @@ namespace MemigrationProBonoTracker.Services
                 CaseType = c.Type,
                 AssigningAttorneyName = c.AssigningAttorney.FullName,
                 VolunteerAttorneyName = "Not yet assigned.",
-                NextCaseEvent = c.CaseEventDates.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+                NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
             }).ToList();
         }
 
@@ -176,7 +183,7 @@ namespace MemigrationProBonoTracker.Services
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    //AssignedCases = _context.Cases.Count(y => y.AttorneyWorker.Id == x.CaseId),
+                    //AssignedCases = _context.Cases.Count(y => y.VolunteerAttorney.Id == x.CaseId),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -195,7 +202,7 @@ namespace MemigrationProBonoTracker.Services
                 model.AttorneyList = _context.Attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    AssignedCases = _context.Cases.Count(y => y.AttorneyWorker.Id == x.Id),
+                    AssignedCases = _context.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,

@@ -1,35 +1,24 @@
-@model MemigrationProBonoTracker.Models.Case
+@model Case
 
-<div>
-    <h4>Case</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AttorneyWorkedHours)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AttorneyWorkedHours)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CaseNotes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CaseNotes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-    </dl>
+
+
+<div class="row panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Lead Client</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-lg-4">
+            <dl>
+                <dt>First Name</dt>
+                <dd>@Html.DisplayFor(x => x.LeadClient.FirstName)</dd>
+            </dl>
+            
+        </div>
+        <div class="col-lg-4">@Html.DisplayFor(x => x.LeadClient.LastName)</div>
+        <div class="col-lg-4">@Html.DisplayFor(x => x.LeadClient.Gender)</div>
+    </div>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

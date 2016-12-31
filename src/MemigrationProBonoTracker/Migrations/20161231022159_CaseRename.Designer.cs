@@ -9,9 +9,10 @@ using MemigrationProBonoTracker.Models;
 namespace MemigrationProBonoTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161231022159_CaseRename")]
+    partial class CaseRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -186,21 +187,21 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<double>("AttorneyWorkedHours");
 
+                    b.Property<int?>("AttorneyWorkerId");
+
                     b.Property<string>("CaseNotes");
 
                     b.Property<int?>("LeadClientId");
 
                     b.Property<int>("Type");
 
-                    b.Property<int?>("VolunteerAttorneyId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AssigningAttorneyId");
 
-                    b.HasIndex("LeadClientId");
+                    b.HasIndex("AttorneyWorkerId");
 
-                    b.HasIndex("VolunteerAttorneyId");
+                    b.HasIndex("LeadClientId");
 
                     b.ToTable("Cases");
                 });
@@ -459,13 +460,13 @@ namespace MemigrationProBonoTracker.Migrations
                         .WithMany()
                         .HasForeignKey("AssigningAttorneyId");
 
+                    b.HasOne("MemigrationProBonoTracker.Models.Attorney", "AttorneyWorker")
+                        .WithMany()
+                        .HasForeignKey("AttorneyWorkerId");
+
                     b.HasOne("MemigrationProBonoTracker.Models.Person", "LeadClient")
                         .WithMany()
                         .HasForeignKey("LeadClientId");
-
-                    b.HasOne("MemigrationProBonoTracker.Models.Attorney", "VolunteerAttorney")
-                        .WithMany()
-                        .HasForeignKey("VolunteerAttorneyId");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.CaseEvent", b =>

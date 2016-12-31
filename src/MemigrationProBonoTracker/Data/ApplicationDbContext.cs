@@ -33,8 +33,8 @@ namespace MemigrationProBonoTracker.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<Case>().HasOne(c => c.LeadClient);
             builder.Entity<Case>().HasOne(c => c.AssigningAttorney);
-            builder.Entity<Case>().HasOne(c => c.AttorneyWorker);
-            builder.Entity<Case>().HasMany(c => c.CaseEventDates);
+            builder.Entity<Case>().HasOne(c => c.VolunteerAttorney);
+            builder.Entity<Case>().HasMany(c => c.CaseEvents);
             builder.Entity<Case>().HasMany(c => c.AssociatedPeopleList);
 
             builder.Entity<CaseEvent>().HasOne(e => e.ParentCase);
