@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MemigrationProBonoTracker.Models
@@ -9,6 +10,8 @@ namespace MemigrationProBonoTracker.Models
         [ForeignKey("CaseId")]
         public Case ParentCase { get; set; }
         public string Event { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EventDate { get; set; }
     }
 }

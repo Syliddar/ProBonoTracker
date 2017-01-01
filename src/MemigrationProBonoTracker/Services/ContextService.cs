@@ -22,7 +22,7 @@ namespace MemigrationProBonoTracker.Services
             _context = context;
         }
 
-        #region BasicCaseMethods 
+        #region CaseMethods 
         public CaseListViewModel GetCaseListViewModel(bool? openCases)
         {
             var model = new CaseListViewModel();
@@ -64,15 +64,22 @@ namespace MemigrationProBonoTracker.Services
             }
             return model;
         }
-        public Case GetCaseDetails(int id)
+        public CaseDetailsViewModel GetCaseDetails(int id)
         {
-            return _context.Cases
+            
+            var dbResult = _context.Cases
                 .Include(c => c.LeadClient)
-                .Include(c=>c.AssigningAttorney)
+                .Include(c => c.AssigningAttorney)
                 .Include(c => c.VolunteerAttorney)
                 .Include(c => c.CaseEvents)
                 .Include(c => c.AssociatedPeopleList).ThenInclude(p => p.Person)
                 .FirstOrDefault(c => c.Id == id);
+
+            return new CaseDetailsViewModel
+            {
+                Case = dbResult,
+                ContactLogEntries = _context.LogEntries.Where(l=>l.Case == dbResult).ToList()
+            };
         }
         public int AddCase(CreateCaseViewModel @case)
         {
