@@ -6,6 +6,7 @@ using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 using System.Linq;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
+using MemigrationProBonoTracker.Models.PersonViewModel;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
 
@@ -145,7 +146,7 @@ namespace MemigrationProBonoTracker.Services
 
         #endregion
 
-        #region BasicPersonMethods
+        #region PersonMethods
         public List<Person> GetPeopleList()
         {
             return _context.People.ToList();
@@ -170,9 +171,23 @@ namespace MemigrationProBonoTracker.Services
             _context.People.Remove(@person);
             return _context.SaveChanges();
         }
+        public PersonContactInfoViewModel GetPersonContactInfo(int id)
+        {
+            var person = _context.People
+                .Include(p => p.AddressList)
+                .Include(p => p.PhoneList)
+                .FirstOrDefault(p => p.Id == id);
+            var result = new PersonContactInfoViewModel
+            {
+                PersonAddresses = person.AddressList,
+                PersonName = person.FullName,
+                PhoneNumbers = person.PhoneList
+            };
+            return result;
+        }
         #endregion
 
-        #region BasicAttorneyMethods
+        #region AttorneyMethods
         public AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney)
         {
             var model = new AttorneyListingViewModel();
@@ -252,6 +267,7 @@ namespace MemigrationProBonoTracker.Services
             };
             return result;
         }
+
         #endregion
     }
 }

@@ -34,10 +34,10 @@ namespace MemigrationProBonoTracker.Models
         [Display(Name = "Gender")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "Bar ID Number")]
+        [Display(Name = "Bar Number")]
         public string BarNumber { get; set; }
 
-        [Display(Name = "Organization Name")]
+        [Display(Name = "Organization")]
         public string OrganizationName { get; set; }
 
         [Display(Name = "Recruitment Method")]

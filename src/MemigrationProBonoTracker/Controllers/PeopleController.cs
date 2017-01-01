@@ -121,7 +121,11 @@ namespace MemigrationProBonoTracker.Controllers
             return RedirectToAction("Index");
         }
 
-
+        public PartialViewResult PersonContactPartial(int id)
+        {
+            var model = _context.GetPersonContactInfo(id);
+            return PartialView("_PersonContact", model);
+        }
 
         public PartialViewResult PersonLookupPartial()
         {

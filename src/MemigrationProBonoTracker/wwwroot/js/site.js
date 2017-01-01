@@ -22,3 +22,20 @@ function initDatePickers() {
         todayHighlight: true
     });
 }
+function PersonContactInfoModal(personId) {
+    $.ajax({
+        url: '/People/PersonContactPartial/?id=' + personId,
+        success: function (data) {
+            $('#modalWrapper').html(data);
+        }
+    });
+}
+
+function AttorneyContactInfoModal(attorneyId) {
+    $.ajax({
+        url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + attorneyId,
+        success: function (data) {
+            $('#modalWrapper').html(data);
+        }
+    });
+}

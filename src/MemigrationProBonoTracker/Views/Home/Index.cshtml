@@ -72,13 +72,6 @@
 
     $(".AttorneyContactInfo").click(function () {
         var id = this.id;
-        console.log(id);
-
-        $.ajax({
-            url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + id,
-            success: function (data) {
-                $('#modalWrapper').html(data);
-            }
-        });
+        AttorneyContactInfoModal(id);
     });
 </script>

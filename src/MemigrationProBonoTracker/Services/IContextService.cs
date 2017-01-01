@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Models.CaseViewModels;
+using MemigrationProBonoTracker.Models.PersonViewModel;
 
 namespace MemigrationProBonoTracker.Services
 {
@@ -31,5 +32,6 @@ namespace MemigrationProBonoTracker.Services
         int UpdateAttorney(Attorney @attorney);
         int DeleteAttorney(int id);
         AttorneyContactInfoViewModel GetAttorneyContactInfo(int id);
+        PersonContactInfoViewModel GetPersonContactInfo(int id);
     }
 }
