@@ -1,0 +1,150 @@
+﻿@model Attorney
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Create Attorney</h4>
+        </div>
+        <div class="modal-body">
+            <form id="AttorneyCreatePartialForm">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="BarNumber" class="control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="BarNumber" class="form-control" />
+                                <span asp-validation-for="BarNumber" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="OrganizationName" class="control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="OrganizationName" class="form-control" />
+                                <span asp-validation-for="OrganizationName" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                                <span asp-validation-for="Gender" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="RecruitmentDate" class="control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="RecruitmentDate" class="form-control datepicker" />
+                                <span asp-validation-for="RecruitmentDate" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="RecruitmentMethod" class="control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="RecruitmentMethod" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
+                                <span asp-validation-for="RecruitmentMethod" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label asp-for="HasImmigrationExperience"></label>
+                        <div class="col-md-10">
+                            <input asp-for="HasImmigrationExperience" type="checkbox" data-toggle="toggle" />
+                        </div>
+
+                        <label asp-for="HasJuvenileExperience"></label>
+                        <div class="col-md-10">
+                            <input asp-for="HasJuvenileExperience" type="checkbox" data-toggle="toggle" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HasProbateExperience"></label>
+                        <div class="col-md-10">
+                            <input asp-for="HasProbateExperience" type="checkbox" data-toggle="toggle" />
+                        </div>
+                        <label asp-for="SpeaksSpanish"></label>
+                        <div class="col-md-10">
+                            <input asp-for="SpeaksSpanish" type="checkbox" data-toggle="toggle" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label asp-for="Notes" class="control-label"></label>
+
+                    <textarea style="max-width: 1080px" cols="2" rows="4" asp-for="Notes" class="form-control"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary pull-right" id="AttorneyCreatePartialSave">Save</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+        initDatePickers();
+        $(':checkbox').bootstrapToggle({
+            on: 'Yes',
+            off: 'No'
+        });
+        $('#modalWrapper').modal('show');
+        $("#AttorneyCreatePartialSave")
+            .click(function () {
+                var formdata = $("#AttorneyCreatePartialForm").serialize();
+                $.ajax({
+                    url: '/Attorney/ModalCreateSave/',
+                    type: "POST",
+                    data: formdata,
+                    success: function (data) {
+                        $("#VolunteerAttorneyId").val(data.value.id);
+                        $("#VolunteerFullName").text(data.value.fullName);
+                        $("#VolunteerOrgName").text(data.value.organizationName);
+                        $('#modalWrapper').modal('hide');
+                    }
+                });
+            });
+    });
+</script>

@@ -43,6 +43,23 @@ namespace MemigrationProBonoTracker.Controllers
             }
             return View("CreateEdit", model);
         }
+
+        public PartialViewResult CreatePartial()
+        {
+            var model = new Attorney
+            {
+                IsAssigningAttorney = false,
+                RecruitmentDate = DateTime.Today
+            };
+            return PartialView("_AttorneyCreate", model);
+        }
+
+        public JsonResult ModalCreateSave(Attorney newAtty)
+        {
+            _context.AddAttorney(newAtty);
+            var jsonResult = Json(newAtty);
+            return new JsonResult(jsonResult);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Save(Attorney attorney)

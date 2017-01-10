@@ -20,7 +20,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            @Html.HiddenFor(i => item.Age)
+                            @Html.HiddenFor(i => item.DateOfBirth)
                             @Html.HiddenFor(i => item.Gender)
                             <td class="FullName">
                                 @Html.DisplayFor(modelItem => item.FullName)

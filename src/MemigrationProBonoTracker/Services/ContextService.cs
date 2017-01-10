@@ -66,7 +66,6 @@ namespace MemigrationProBonoTracker.Services
         }
         public CaseDetailsViewModel GetCaseDetails(int id)
         {
-            
             var dbResult = _context.Cases
                 .Include(c => c.LeadClient)
                 .Include(c => c.AssigningAttorney)
@@ -75,23 +74,37 @@ namespace MemigrationProBonoTracker.Services
                 .Include(c => c.AssociatedPeopleList).ThenInclude(p => p.Person)
                 .FirstOrDefault(c => c.Id == id);
 
-            return new CaseDetailsViewModel
-            {
-                Case = dbResult,
-                ContactLogEntries = _context.LogEntries.Where(l=>l.Case == dbResult).ToList()
-            };
+            if (dbResult != null)
+                return new CaseDetailsViewModel
+                {
+                    Id = dbResult.Id,
+                    LeadClient = dbResult.LeadClient,
+                    Active = dbResult.Active,
+                    AssociatedPeopleList = dbResult.AssociatedPeopleList,
+                    AssigningAttorney = dbResult.AssigningAttorney,
+                    VolunteerAttorney = dbResult.VolunteerAttorney,
+                    VolunteerAttorneyId = dbResult.VolunteerAttorney?.Id ?? 0,
+                    AssigningAttorneyId = dbResult.AssigningAttorney.Id,
+
+                    AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
+                    CaseEvents = dbResult.CaseEvents,
+                    CaseNotes = dbResult.CaseNotes,
+                    ContactLogEntries = _context.LogEntries.Where(l => l.Case == dbResult).ToList(),
+                };
+            return new CaseDetailsViewModel();
         }
         public int AddCase(CreateCaseViewModel @case)
         {
             var leadClient = @case.LeadClient.Id == 0 ? new Person
             {
-                Age = @case.LeadClient.Age,
                 FirstName = @case.LeadClient.FirstName,
                 LastName = @case.LeadClient.LastName,
+                DateOfBirth = @case.LeadClient.DateOfBirth,
                 Gender = @case.LeadClient.Gender,
                 Nationality = @case.LeadClient.Nationality,
                 Notes = @case.LeadClient.Notes
-            } : GetPerson(@case.LeadClient.Id);
+            }
+                : GetPerson(@case.LeadClient.Id);
             _context.People.Add(leadClient);
             _context.SaveChanges();
             var assigningAttorney = GetAttorneyDetails(@case.AssigningAttorneyId);

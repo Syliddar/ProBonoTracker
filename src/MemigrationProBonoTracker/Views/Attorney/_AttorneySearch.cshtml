@@ -5,8 +5,9 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Assigning Attorney Search</h4>
+            <h4 class="modal-title" id="myModalLabel">@Model.Title</h4>
         </div>
+        <input type="hidden" asp-for="@Model.Title" />
         <div class="modal-body">
             <table class="table" id="AttorneyTable">
                 <thead>
@@ -47,15 +48,22 @@
     $().ready(function () {
         $('#AttorneyTable').DataTable();
         $('#modalWrapper').modal('show');
-        $(".AttorneySearchModalChoose")
-            .click(function () {
-                var fullname = $(this).closest('tr').children('td.FullName').text();
-                var orgname = $(this).closest('tr').children('td.OrgName').text();
-                var id = this.id;
+        $(".AttorneySearchModalChoose").click(function () {
+            var fullname = $(this).closest('tr').children('td.FullName').text();
+            var orgname = $(this).closest('tr').children('td.OrgName').text();
+            var id = this.id;
+            var assigning = $("#myModalLabel").text() == "Assigning Attorneys";
+
+            if (assigning) {
                 $("#AssigningAttorneyId").val(id);
                 $("#AssigningFullName").text(fullname);
                 $("#AssigningOrgName").text(orgname);
-                $('#modalWrapper').modal('hide');
-            });
+            } else {
+                $("#VolunteerAttorneyId").val(id);
+                $("#VolunteerFullName").text(fullname);
+                $("#VolunteerOrgName").text(orgname);
+            }
+            $('#modalWrapper').modal('hide');
+        });
     });
 </script>

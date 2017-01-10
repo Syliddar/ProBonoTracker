@@ -1,52 +1,262 @@
-@model MemigrationProBonoTracker.Models.Case
-
+@model MemigrationProBonoTracker.Models.CaseViewModels.CaseDetailsViewModel
 <form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Case</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <input asp-for="Active" />
-                    <label asp-for="Active"></label>
+    <div class="form">
+        <div class="row">
+            <h1>Edit Case</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <select asp-for="@Model.Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
+                    <span asp-validation-for="@Model.Type" class="text-danger"></span>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="AttorneyWorkedHours" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="AttorneyWorkedHours" class="form-control" />
-                <span asp-validation-for="AttorneyWorkedHours" class="text-danger" />
+        <hr />
+        @* LEAD CLIENT PANEL *@
+        <div class="row panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lead Client</h3>
+            </div>
+            <input asp-for="@Model.LeadClient.Id" type="hidden" />
+            <div class="panel-body">
+                <div class="form-group col-lg-5">
+                    <label asp-for="@Model.LeadClient.FirstName" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="@Model.LeadClient.FirstName" class="form-control" />
+                        <span asp-validation-for="@Model.LeadClient.FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label asp-for="@Model.LeadClient.LastName" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="@Model.LeadClient.LastName" class="form-control" />
+                        <span asp-validation-for="@Model.LeadClient.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <button type="button" id="LaunchClientSearchModal" class="btn btn-primary pull-right col-lg-1">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <div class="form-group col-lg-5">
+                    <label asp-for="@Model.LeadClient.DateOfBirth" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepicker" />
+                        <span asp-validation-for="@Model.LeadClient.DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label asp-for="@Model.LeadClient.Gender" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                        <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-5">
+                    <label asp-for="@Model.LeadClient.Nationality" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<Enums.NationalOrigin>()" class="form-control"></select>
+                        <span asp-validation-for="@Model.LeadClient.Nationality" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="CaseNotes" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="CaseNotes" class="form-control" />
-                <span asp-validation-for="CaseNotes" class="text-danger" />
+
+        @* ASSIGNING ATTORNEY PANEL *@
+        <div class="row panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Assigning Attorney</h2>
+            </div>
+            <div class="panel-body">
+                <input id="AssigningAttorneyId" asp-for="@Model.AssigningAttorneyId" hidden="" />
+                <div class="col-lg-5">
+                    <h4 id="AssigningFullName">@Model.AssigningAttorney.FullName</h4>
+                </div>
+                <div class="col-lg-5">
+                    <h4 id="AssigningOrgName">@Model.AssigningAttorney.OrganizationName</h4>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" id="LaunchAssigningAttorneySearchModal" class="btn btn-primary pull-right">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Type" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="Type" class="form-control"></select>
-                <span asp-validation-for="Type" class="text-danger" />
+        @* ASSIGNING ATTORNEY PANEL *@
+        <div class="row panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Volunteer Attorney</h2>
+            </div>
+            <div class="panel-body">
+                <input id="VolunteerAttorneyId" asp-for="@Model.VolunteerAttorneyId" hidden="" />
+                <div class="col-lg-5">
+                    <h4 id="VolunteerFullName">@Html.DisplayFor(x => x.VolunteerAttorney.FullName)</h4>
+                </div>
+                <div class="col-lg-5">
+                    <h4 id="VolunteerOrgName">@Html.DisplayFor(x => x.VolunteerAttorney.OrganizationName)</h4>
+                </div>
+                <div class="col-lg-2 pull-right">
+                    <button type="button" id="LaunchAddVolunteerAttorneyModal" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button type="button" id="LaunchVolunteerAttorneySearchModal" class="btn btn-primary ">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+
+        <div class="row panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Case Events</h2>
             </div>
+            <table id="CaseEventsTable" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Event</th>
+                        <th>
+                            <button type="button" id="AddCaseEvent" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var caseEvent in Model.CaseEvents)
+                    {
+                        <tr>
+                            <td><input class="form-control datepicker" asp-for="@caseEvent.EventDate" /></td>
+                            <td><input class="form-control" asp-for="@caseEvent.Event" /></td>
+                            <td>
+                                <button type="button" class="btn btn-primary caseEventRemove">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>
+                            <input class="form-control datepicker" type="datetime">
+                        </td>
+                        <td>
+                            <input class="form-control" type="text">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary caseEventRemove">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Case Notes</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12 textwrapper">
+                    <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="CaseNotes" class="form-control"></textarea>
+                    <span asp-validation-for="CaseNotes" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <a asp-action="Index">Back to List</a>
+            <div class="pull-right">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
         </div>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<div id="modalWrapper" class="modal fade" tabindex="-1" role="dialog"></div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    $(function () {
+        $("#LaunchAssigningAttorneySearchModal").click(function () {
+            $.ajax({
+                url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + true, success: function (data) {
+                    $('#modalWrapper').html(data);
+                    BindAttorneySearchModalSelectButtons();
+                }
+            });
+        });
+        $("#LaunchVolunteerAttorneySearchModal").click(function () {
+            $.ajax({
+                url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + false, success: function (data) {
+                    $('#modalWrapper').html(data);
+                    BindAttorneySearchModalSelectButtons();
+                }
+            });
+        });
+        $("#LaunchClientSearchModal").click(function () {
+            $.ajax({
+                url: '/People/PersonLookupPartial/',
+                success: function (data) {
+                    $('#modalWrapper').html(data);
+                }
+            });
+        });
+
+        $("#LaunchAddVolunteerAttorneyModal").click(function () {
+            $.ajax({
+                url: '/Attorney/CreatePartial/',
+                success: function (data) {
+                    $('#modalWrapper').html(data);
+                }
+            });
+        });
+
+
+        $("#AddCaseEvent").click(function () {
+            var len = $('#HiddenTableInput').val();
+            $(".caseEventRemove").prop("disabled", true);
+            var datecell = '<input class="form-control datepicker" type="datetime" data-val="true" id="CaseEvents_' + len + '__EventDate" name="CaseEvents[' + len + '].EventDate" value="">';
+            var eventcell = '<input class="form-control" type="text" id="CaseEvents_' + len + '__Event" name="CaseEvents[' + len + '].Event" value="">';
+            var btncell = '<button type="button" class="btn btn-primary caseEventRemove"><span class="glyphicon glyphicon-remove"></span></button>';
+            $("#CaseEventsTable").append('<tr><td>' + datecell + '</td><td>' + eventcell + '</td><td>' + btncell + '</td></tr>');
+            initDatePickers();
+            bindRemoveEventRow();
+        });
+        bindRemoveEventRow();
+    });
+
+
+    function bindRemoveEventRow() {
+        $(".caseEventRemove")
+            .click(function () {
+                var tr = $(this).closest('tr');
+                tr.css("background-color", "#FF3700");
+                tr.fadeOut(400,
+                    function () {
+                        tr.remove();
+                        $('#CaseEventsTable tr:last-child td:last-child button').removeAttr("disabled");
+                    });
+            });
+    }
+
+    function BindAttorneySearchModalSelectButtons() {
+        $(".AttorneySearchModalChoose").click(function () {
+            console.log('foo');
+            var fullname = $(this).closest('tr').children('td.FullName').text();
+            var orgname = $(this).closest('tr').children('td.OrgName').text();
+            var id = this.id;
+            var assigning = $("#myModalLabel").text() == "Assigning Attorneys";
+            console.log(assigning);
+            if (assigning) {
+                $("#AssigningAttorneyId").val(id);
+                $("#AssigningFullName").text(fullname);
+                $("#AssigningOrgName").text(orgname);
+            } else {
+                $("#VolunteerAttorneyId").val(id);
+                $("#VolunteerFullName").text(fullname);
+                $("#VolunteerOrgName").text(orgname);
+            }
+            $('#modalWrapper').modal('hide');
+        });
+    }
+</script>

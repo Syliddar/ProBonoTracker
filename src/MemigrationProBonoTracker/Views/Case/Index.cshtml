@@ -27,25 +27,12 @@
         @foreach (var item in Model.Cases)
             {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClientName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CaseType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AssigningAttorneyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VolunteerAttorneyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NextCaseEventString)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.NextCaseDateString)
-                </td>
+                <td>@item.ClientName</td>
+                <td>@item.CaseType</td>
+                <td>@item.AssigningAttorneyName</td>
+                <td>@item.VolunteerAttorneyName</td>
+                <td>@item.NextCaseEventString</td>
+                <td>@item.NextCaseDateString</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.CaseId">Edit</a><br/>
                     <a asp-action="Details" asp-route-id="@item.CaseId">Details</a><br/>
@@ -57,7 +44,13 @@
 </table>
 <script>
     $().ready(function () {
-        $.fn.dataTable.moment('dd MMM yyyy');
-        $('#CaseTable').DataTable();
+        $.fn.dataTable.moment('DD MMM YYYY');
+
+        var table = $('#CaseTable').DataTable({
+            columnDefs: [
+                { type: 'non-empty-string', targets: 4 },
+               { type: 'non-empty-string', targets: 5 } 
+            ]
+        });
     });
 </script>
