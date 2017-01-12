@@ -12,10 +12,19 @@ $().ready(function () {
 
 
 function initDatePickers() {
-    $(".datepicker").datepicker({
+    $(".datepicker.future").datepicker({
         format: "mm/dd/yyyy",
         startDate: "-1d",
         todayBtn: "linked",
+        keyboardNavigation: "true",
+        autoclose: true,
+        todayHighlight: true
+    });
+    $(".datepicker.past").datepicker({
+        format: "mm/dd/yyyy",
+        endDate: "0d",
+        todayBtn: "linked",
+        keyboardNavigation: "true",
         autoclose: true,
         todayHighlight: true
     });

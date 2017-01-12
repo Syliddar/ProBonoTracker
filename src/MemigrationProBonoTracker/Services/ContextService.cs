@@ -119,9 +119,31 @@ namespace MemigrationProBonoTracker.Services
             _context.Cases.Add(newCase);
             return _context.SaveChanges();
         }
-        public int UpdateCase(Case @case)
+        public int UpdateCase(CaseDetailsViewModel viewModel)
         {
-            _context.Cases.Update(@case);
+            var @case = _context.Cases.Find(viewModel.Id);
+            foreach (var caseEvent in viewModel.CaseEvents)
+            {
+                if (caseEvent.Id == 0)
+                {
+                    caseEvent.ParentCase = @case;
+                    _context.CaseEvents.Add(caseEvent);
+                }
+                else
+                {
+                    var @event = _context.CaseEvents.Find(caseEvent.Id);
+                    @event.EventDate = caseEvent.EventDate;
+                    @event.Event = caseEvent.Event;
+                }
+
+                _context.SaveChanges();
+            }
+            @case.Active = viewModel.Active;
+            @case.AssociatedPeopleList = viewModel.AssociatedPeopleList;
+            @case.AssigningAttorney = _context.Attorneys.Find(viewModel.AssigningAttorneyId);
+            @case.VolunteerAttorney = _context.Attorneys.Find(viewModel.VolunteerAttorneyId);
+            @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
+            @case.CaseNotes = viewModel.CaseNotes;
             return _context.SaveChanges();
         }
         public int DeleteCase(int id)

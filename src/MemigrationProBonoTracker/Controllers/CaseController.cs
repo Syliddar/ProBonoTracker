@@ -78,10 +78,11 @@ namespace MemigrationProBonoTracker.Controllers
         // POST: Cases/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Case @case)
+        public IActionResult Edit(CaseDetailsViewModel @case)
         {
             if (ModelState.IsValid)
             {
+                _context.UpdatePerson(@case.LeadClient);
                 _context.UpdateCase(@case);
                 return RedirectToAction("Index");
             }

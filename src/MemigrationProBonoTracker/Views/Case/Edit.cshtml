@@ -8,6 +8,8 @@
                 <div class="col-md-6">
                     <select asp-for="@Model.Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
                     <span asp-validation-for="@Model.Type" class="text-danger"></span>
+                    <input hidden asp-for="Active" />
+                    <input hidden asp-for="Id" />
                 </div>
             </div>
         </div>
@@ -39,7 +41,7 @@
                 <div class="form-group col-lg-5">
                     <label asp-for="@Model.LeadClient.DateOfBirth" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepicker" />
+                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepicker past" />
                         <span asp-validation-for="@Model.LeadClient.DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
@@ -74,7 +76,7 @@
                     <h4 id="AssigningOrgName">@Model.AssigningAttorney.OrganizationName</h4>
                 </div>
                 <div class="col-lg-2">
-                    <button type="button" id="LaunchAssigningAttorneySearchModal" class="btn btn-primary pull-right">
+                    <button type="button" id="LaunchAssigningAttorneySearchModal" class="btn btn-primary">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
 
@@ -94,12 +96,12 @@
                 <div class="col-lg-5">
                     <h4 id="VolunteerOrgName">@Html.DisplayFor(x => x.VolunteerAttorney.OrganizationName)</h4>
                 </div>
-                <div class="col-lg-2 pull-right">
+                <div class="col-lg-2">
+                    <button type="button" id="LaunchVolunteerAttorneySearchModal" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
                     <button type="button" id="LaunchAddVolunteerAttorneyModal" class="btn btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                    <button type="button" id="LaunchVolunteerAttorneySearchModal" class="btn btn-primary ">
-                        <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
             </div>
@@ -122,11 +124,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var caseEvent in Model.CaseEvents)
+                    @for (var i = 0; i < Model.CaseEvents.Count(); i++)
                     {
                         <tr>
-                            <td><input class="form-control datepicker" asp-for="@caseEvent.EventDate" /></td>
-                            <td><input class="form-control" asp-for="@caseEvent.Event" /></td>
+                            <td>
+                                <input hidden="" asp-for="@Model.CaseEvents[i].Id"/>
+                                <input hidden="" asp-for="@Model.CaseEvents[i].ParentCase"/>
+                                <input class="form-control datepicker future" asp-for="@Model.CaseEvents[i].EventDate"/>
+                            </td>
+                            <td>
+                                <input class="form-control" asp-for="@Model.CaseEvents[i].Event"/>
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-primary caseEventRemove">
                                     <span class="glyphicon glyphicon-remove"></span>
@@ -134,19 +142,6 @@
                             </td>
                         </tr>
                     }
-                    <tr>
-                        <td>
-                            <input class="form-control datepicker" type="datetime">
-                        </td>
-                        <td>
-                            <input class="form-control" type="text">
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary caseEventRemove">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -164,7 +159,7 @@
         <div class="col-lg-12">
             <a asp-action="Index">Back to List</a>
             <div class="pull-right">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
 
         </div>
@@ -213,9 +208,9 @@
 
 
         $("#AddCaseEvent").click(function () {
-            var len = $('#HiddenTableInput').val();
+            var len = $('#CaseEventsTable tr').length -1;
             $(".caseEventRemove").prop("disabled", true);
-            var datecell = '<input class="form-control datepicker" type="datetime" data-val="true" id="CaseEvents_' + len + '__EventDate" name="CaseEvents[' + len + '].EventDate" value="">';
+            var datecell = '<input class="form-control datepicker future" type="datetime" data-val="true" id="CaseEvents_' + len + '__EventDate" name="CaseEvents[' + len + '].EventDate" value="">';
             var eventcell = '<input class="form-control" type="text" id="CaseEvents_' + len + '__Event" name="CaseEvents[' + len + '].Event" value="">';
             var btncell = '<button type="button" class="btn btn-primary caseEventRemove"><span class="glyphicon glyphicon-remove"></span></button>';
             $("#CaseEventsTable").append('<tr><td>' + datecell + '</td><td>' + eventcell + '</td><td>' + btncell + '</td></tr>');
@@ -223,6 +218,7 @@
             bindRemoveEventRow();
         });
         bindRemoveEventRow();
+        $("#AddCaseEvent").click();
     });
 
 

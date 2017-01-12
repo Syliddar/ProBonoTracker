@@ -15,7 +15,7 @@ namespace MemigrationProBonoTracker.Services
         CaseListViewModel GetCaseListViewModel(bool? openCases);
         CaseDetailsViewModel GetCaseDetails(int id);
         int AddCase(CreateCaseViewModel @case);
-        int UpdateCase(Case @case);
+        int UpdateCase(CaseDetailsViewModel @case);
         int DeleteCase(int id);
         List<CaseEventViewModel> GetUpcomingCaseEvents();
         List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys();
