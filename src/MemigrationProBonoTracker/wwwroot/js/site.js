@@ -22,6 +22,7 @@ function initDatePickers() {
     });
     $(".datepicker.past").datepicker({
         format: "mm/dd/yyyy",
+        startDate: "1/1/1900",
         endDate: "0d",
         todayBtn: "linked",
         keyboardNavigation: "true",

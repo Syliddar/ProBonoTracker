@@ -82,10 +82,10 @@ namespace MemigrationProBonoTracker.Services
                     Active = dbResult.Active,
                     AssociatedPeopleList = dbResult.AssociatedPeopleList,
                     AssigningAttorney = dbResult.AssigningAttorney,
-                    VolunteerAttorney = dbResult.VolunteerAttorney,
+                    VolunteerAttorneyFullName = dbResult.VolunteerAttorney?.FullName ?? "",
+                    VolunteerAttorneyOrganizationName = dbResult.VolunteerAttorney?.OrganizationName ?? "",
                     VolunteerAttorneyId = dbResult.VolunteerAttorney?.Id ?? 0,
                     AssigningAttorneyId = dbResult.AssigningAttorney.Id,
-
                     AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
                     CaseEvents = dbResult.CaseEvents,
                     CaseNotes = dbResult.CaseNotes,
@@ -154,20 +154,20 @@ namespace MemigrationProBonoTracker.Services
         }
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
-            var now = DateTime.Today;
-            var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
-            var result = dbResult.Select(e => new CaseEventViewModel
-            {
-                CaseId = e.ParentCase.Id,
-                ClientName = e.ParentCase.LeadClient.FullName,
-                AssignedAttorneyId = e.ParentCase.VolunteerAttorney == null ? 0 : e.ParentCase.VolunteerAttorney.Id,
-                EventDate = e.EventDate,
-                Event = e.Event
+            var result = new List<CaseEventViewModel>();
+            //var now = DateTime.Today;
+            //var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            ////var result = dbResult.Select(e => new CaseEventViewModel
+            //{
+            //    CaseId = e.CaseId,
+            //    ClientName = e.ParentCase.LeadClient.FullName,
+            //    AssignedAttorneyId = e.ParentCase.VolunteerAttorney == null ? 0 : e.ParentCase.VolunteerAttorney.Id,
+            //    EventDate = e.EventDate,
+            //    Event = e.Event
 
-            }).ToList();
+            //}).ToList();
             return result;
         }
-
         public List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys()
         {
             var today = DateTime.Today;
@@ -184,6 +184,31 @@ namespace MemigrationProBonoTracker.Services
                 VolunteerAttorneyName = "Not yet assigned.",
                 NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
             }).ToList();
+        }
+
+        public int UpsertCaseEvent(CaseEvent @event)
+        {
+            if (@event.Id == 0)
+            {
+                _context.Add(@event);
+            }
+            else
+            {
+                _context.Update(@event);
+            }
+            return _context.SaveChanges();
+        }
+
+        public int DeleteCaseEvent(int eventId)
+        {
+            var @caseEvent = _context.CaseEvents.Find(eventId);
+            _context.CaseEvents.Remove(@caseEvent);
+            return _context.SaveChanges();
+        }
+
+        public CaseEvent GetCaseEvent(int eventId)
+        {
+            return _context.CaseEvents.Find(eventId);
         }
 
         #endregion

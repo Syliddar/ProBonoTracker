@@ -11,10 +11,10 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public List<AssociatedPerson> AssociatedPeopleList { get; set; }
         [Display(Name = "Assigning Attorney")]
         public Attorney AssigningAttorney { get; set; }
-        [Display(Name = "Volunteer Attorney")]
-        public Attorney VolunteerAttorney { get; set; }
         public int AssigningAttorneyId { get; set; }
         public int VolunteerAttorneyId { get; set; }
+        public string VolunteerAttorneyFullName { get; set; }
+        public string VolunteerAttorneyOrganizationName { get; set; }
         [Display(Name = "Case Type")]
         public Enums.CaseType Type { get; set; }
         [Display(Name = "Case Events")]

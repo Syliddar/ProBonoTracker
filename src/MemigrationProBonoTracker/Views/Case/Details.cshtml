@@ -48,29 +48,25 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Volunteer Attorney</h3>
             </div>
-            @if (Model.VolunteerAttorney != null)
+            @if (Model.VolunteerAttorneyFullName != "")
             {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-3">
-                            @Html.LabelFor(x => x.VolunteerAttorney.FullName) <br />
-                            @Html.DisplayFor(x => x.VolunteerAttorney.FullName)
+                            @Html.LabelFor(x => x.VolunteerAttorneyFullName) <br />
+                            @Html.DisplayFor(x => x.VolunteerAttorneyFullName)
                         </div>
                         <div class="col-lg-3">
                             @Html.LabelFor(x => x.AttorneyWorkedHours)
                             @Html.DisplayFor(x => x.AttorneyWorkedHours)
                         </div>
                         <div class="col-lg-3">
-                            @Html.LabelFor(x => x.VolunteerAttorney.OrganizationName)<br />
-                            @Html.DisplayFor(x => x.VolunteerAttorney.OrganizationName)
+                            @Html.LabelFor(x => x.VolunteerAttorneyOrganizationName)<br />
+                            @Html.DisplayFor(x => x.VolunteerAttorneyOrganizationName)
                         </div>
                         <div class="col-lg-3">
-                            <button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorney.Id)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-certificate"></span></button>
+                            <button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-certificate"></span></button>
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        @Html.LabelFor(x => x.VolunteerAttorney.Notes)
-                        <textarea style="max-width: 1080px" readonly cols="2" rows="8" asp-for="@Model.VolunteerAttorney.Notes" class="form-control"></textarea>
                     </div>
                 </div>
             }

@@ -1,0 +1,63 @@
+﻿@model CaseEvent
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Case Event</h4>
+        </div>
+        <div class="modal-body">
+            <form id="CaseEventPartialForm">
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.CaseId)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="EventDate" class="control-label"></label>
+                            <input asp-for="EventDate" class="form-control datepicker future" />
+                            <span asp-validation-for="EventDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="Event" class="control-label"></label>
+                            <input asp-for="Event" class="form-control" />
+                            <span asp-validation-for="Event" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary pull-right" id="CaseEventSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+        initDatePickers();
+        $('#modalWrapper').modal('show');
+        $("#CaseEventSave").click(function () {
+            var formdata = $("#CaseEventPartialForm").serialize();
+            $.ajax({
+                url: '/Case/ModalCaseEventCreateSave/',
+                type: "POST",
+                data: formdata,
+                success: function (data) {
+                    var btn1 = '<button type="button" id="' + data.id + '" class="btn btn-primary caseEventedit"><span class="glyphicon glyphicon-pencil"></span></button>';
+                    var btn2 = '<button type="button" id="' + data.id + '" class="btn btn-primary caseEventRemove"><span class="glyphicon glyphicon-remove"></span></button>';
+                    $("#CaseEventsTable").append('<tr><td>' + data.eventDate + '</td><td>' + data.event + '</td><td>' + btn1 + btn2 + '</td></tr>');
+                    initDatePickers();
+                    bindRemoveEventRow();
+                    $('#modalWrapper').modal('hide');
+                }
+            });
+
+        });
+    });
+
+</script>

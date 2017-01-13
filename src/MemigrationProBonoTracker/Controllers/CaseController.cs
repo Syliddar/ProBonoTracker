@@ -1,3 +1,5 @@
+using System;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
@@ -100,6 +102,33 @@ namespace MemigrationProBonoTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public void DeleteCaseEvent(int id)
+        {
+            _context.DeleteCaseEvent(id);
+        }
 
+        public PartialViewResult CreateCaseEventPartial(int parentId)
+        {
+            var model = new CaseEvent
+            {
+                EventDate = DateTime.Today,
+                CaseId = parentId
+            };
+            return PartialView("_CreateEditCaseEvent", model);
+        }
+        public PartialViewResult EditCaseEventPartial(int eventId)
+        {
+            var model = _context.GetCaseEvent(eventId);
+            return PartialView("_CreateEditCaseEvent", model);
+        }
+
+        [HttpPost]
+        public JsonResult ModalCaseEventCreateSave(CaseEvent @caseEvent)
+        {
+            if (!ModelState.IsValid) return new JsonResult("Failure");
+            _context.UpsertCaseEvent(@caseEvent);
+            return new JsonResult(@caseEvent);
+        }
     }
 }

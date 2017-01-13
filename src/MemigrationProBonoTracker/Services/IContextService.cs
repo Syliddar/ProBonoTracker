@@ -19,6 +19,9 @@ namespace MemigrationProBonoTracker.Services
         int DeleteCase(int id);
         List<CaseEventViewModel> GetUpcomingCaseEvents();
         List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys();
+        int UpsertCaseEvent(CaseEvent @event);
+        int DeleteCaseEvent(int eventId);
+        CaseEvent GetCaseEvent(int eventId);
 
         List<Person> GetPeopleList();
         Person GetPerson(int id);

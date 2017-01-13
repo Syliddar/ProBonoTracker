@@ -8,10 +8,12 @@ namespace MemigrationProBonoTracker.Models
     {
         public int Id { get; set; }
         [ForeignKey("CaseId")]
-        public Case ParentCase { get; set; }
+        public int CaseId { get; set; }
         public string Event { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EventDate { get; set; }
+
+        public virtual Case ParentCase { get; set; }
     }
 }
