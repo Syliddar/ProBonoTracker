@@ -48,9 +48,7 @@
                 type: "POST",
                 data: formdata,
                 success: function (data) {
-                    var btn1 = '<button type="button" id="' + data.id + '" class="btn btn-primary caseEventedit"><span class="glyphicon glyphicon-pencil"></span></button>';
-                    var btn2 = '<button type="button" id="' + data.id + '" class="btn btn-primary caseEventRemove"><span class="glyphicon glyphicon-remove"></span></button>';
-                    $("#CaseEventsTable").append('<tr><td>' + data.eventDate + '</td><td>' + data.event + '</td><td>' + btn1 + btn2 + '</td></tr>');
+                    $("#CaseEventsTableBody").html(data);
                     initDatePickers();
                     bindRemoveEventRow();
                     $('#modalWrapper').modal('hide');

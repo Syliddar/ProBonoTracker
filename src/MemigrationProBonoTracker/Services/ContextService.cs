@@ -211,6 +211,11 @@ namespace MemigrationProBonoTracker.Services
             return _context.CaseEvents.Find(eventId);
         }
 
+        public List<CaseEvent> GetCaseEventList(int caseId)
+        {
+            return _context.CaseEvents.Where(c => c.CaseId == caseId).ToList();
+        }
+
         #endregion
 
         #region PersonMethods

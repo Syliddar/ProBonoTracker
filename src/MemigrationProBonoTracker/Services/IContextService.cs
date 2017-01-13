@@ -22,6 +22,7 @@ namespace MemigrationProBonoTracker.Services
         int UpsertCaseEvent(CaseEvent @event);
         int DeleteCaseEvent(int eventId);
         CaseEvent GetCaseEvent(int eventId);
+        List<CaseEvent> GetCaseEventList(int caseId);
 
         List<Person> GetPeopleList();
         Person GetPerson(int id);

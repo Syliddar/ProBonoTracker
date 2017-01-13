@@ -124,11 +124,11 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         [HttpPost]
-        public JsonResult ModalCaseEventCreateSave(CaseEvent @caseEvent)
+        public PartialViewResult ModalCaseEventCreateSave(CaseEvent @caseEvent)
         {
-            if (!ModelState.IsValid) return new JsonResult("Failure");
             _context.UpsertCaseEvent(@caseEvent);
-            return new JsonResult(@caseEvent);
+            var model = _context.GetCaseEventList(@caseEvent.CaseId);
+            return PartialView("_CaseEventList", model);
         }
     }
 }
