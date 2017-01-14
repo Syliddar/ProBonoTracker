@@ -117,9 +117,11 @@
                         <th>Date</th>
                         <th>Event</th>
                         <th>
-                            <button type="button" id="AddCaseEvent" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
+                            <div class="pull-right">
+                                <button type="button" id="AddCaseEvent" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -134,12 +136,14 @@
                                 @caseEvent.Event
                             </td>
                             <td>
-                                <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventEdit">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventRemove">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
+                                <div class="pull-right">
+                                    <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventEdit">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventRemove">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -206,54 +210,14 @@
                 }
             });
         });
-
-        $(".caseEventEdit").click(function () {
-            var id = this.id;
-            $.ajax({
-                url: '/Case/EditCaseEventPartial/',
-                data: { eventId: id },
-                type: 'POST',
-                success: function (data) {
-                    $('#modalWrapper').html(data);
-                }
-            });
-        });
         $("#AddCaseEvent").click(function () {
             var id = $("#Id").val();
-            $.ajax({
-                url: '/Case/CreateCaseEventPartial/',
-                type: 'POST',
-                data: { parentId: id },
-                success: function (data) {
-                    $('#modalWrapper').html(data);
-                }
-            });
         });
-        bindRemoveEventRow();
+        BindCaseEventRow();
     });
 
 
-    function bindRemoveEventRow() {
-        $(".caseEventRemove")
-            .click(function () {
-                if (confirm('Are you sure you want to delete this Case Event?')) {
-                    var id = this.id;
-                    $.ajax({
-                        url: '/Case/DeleteCaseEvent/',
-                        data: { id: id },
-                        type: 'POST'
-                    });
-                    var tr = $(this).closest('tr');
-                    tr.css("background-color", "#FF3700");
-                    tr.fadeOut(400,
-                        function () {
-                            tr.remove();
-                            $('#CaseEventsTable tr:last-child td:last-child button').removeAttr("disabled");
-                        });
-                }
-            });
-    }
-
+    
     function BindAttorneySearchModalSelectButtons() {
         $(".AttorneySearchModalChoose").click(function () {
             var fullname = $(this).closest('tr').children('td.FullName').text();

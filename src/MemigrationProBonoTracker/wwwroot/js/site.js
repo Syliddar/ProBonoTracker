@@ -10,6 +10,49 @@ $().ready(function () {
     });
 });
 
+function CaseEventCreatLaunch(id) {
+    $.ajax({
+        url: '/Case/CreateCaseEventPartial/',
+        type: 'POST',
+        data: { parentId: id },
+        success: function (data) {
+            $('#modalWrapper').html(data);
+        }
+    });
+}
+
+function bindRemoveEventRow() {
+    $(".caseEventEdit").click(function () {
+        var id = this.id;
+        $.ajax({
+            url: '/Case/EditCaseEventPartial/',
+            data: { eventId: id },
+            type: 'POST',
+            success: function (data) {
+                $('#modalWrapper').html(data);
+            }
+        });
+    });
+    $(".caseEventRemove")
+        .click(function () {
+            if (confirm('Are you sure you want to delete this Case Event?')) {
+                var id = this.id;
+                $.ajax({
+                    url: '/Case/DeleteCaseEvent/',
+                    data: { id: id },
+                    type: 'POST'
+                });
+                var tr = $(this).closest('tr');
+                tr.css("background-color", "#FF3700");
+                tr.fadeOut(400,
+                    function () {
+                        tr.remove();
+                        $('#CaseEventsTable tr:last-child td:last-child button').removeAttr("disabled");
+                    });
+            }
+        });
+}
+
 
 function initDatePickers() {
     $(".datepicker.future").datepicker({

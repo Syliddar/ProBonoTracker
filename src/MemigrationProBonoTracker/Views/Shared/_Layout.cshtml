@@ -10,9 +10,9 @@
     <link href="~/css/bootstrap-toggle.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
 
-    
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>   
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/jquery.dataTables.min.js"></script>
     <script src="~/js/moment.js"></script>
     <script src="~/js/bootstrap-toggle.min.js"></script>
@@ -67,8 +67,8 @@
                             <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
                         </ul>
                     </li>
-                
-                    
+
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -78,13 +78,15 @@
         <div id="ContentBody">
             @RenderBody()
         </div>
+        <div id="modalWrapper" class="modal fade" tabindex="-1" role="dialog"></div>
         <hr />
         <footer>
             <p>
-                <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">&copy; 2016 - ProBonoTracker</a>
+                <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">&copy; 2017 - ProBonoTracker</a>
             </p>
         </footer>
     </div>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

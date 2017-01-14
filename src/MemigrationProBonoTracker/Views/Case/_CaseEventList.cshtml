@@ -1,23 +1,23 @@
 ﻿@model List<CaseEvent>
 
-<tbody id="CaseEventsTableBody">
-    @foreach (var caseEvent in Model)
-    {
-        <tr>
-            <td>
-                @caseEvent.EventDate.ToString("MM/dd/yyyy")
-            </td>
-            <td>
-                @caseEvent.Event
-            </td>
-            <td>
+@foreach (var caseEvent in Model)
+{
+    <tr>
+        <td>
+            @caseEvent.EventDate.ToString("MM/dd/yyyy")
+        </td>
+        <td>
+            @caseEvent.Event
+        </td>
+        <td>
+            <div class="pull-right">
                 <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventEdit">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button type="button" id="@caseEvent.Id" class="btn btn-primary caseEventRemove">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
-            </td>
-        </tr>
-    }
-</tbody>
+            </div>
+        </td>
+    </tr>
+}
