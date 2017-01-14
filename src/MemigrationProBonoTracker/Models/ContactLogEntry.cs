@@ -6,9 +6,10 @@ namespace MemigrationProBonoTracker.Models
 {
     public class ContactLogEntry
     {
+        [Key]
         public int Id { get; set; }
         [ForeignKey("CaseId")]
-        public Case Case { get; set; }
+        public int CaseId { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Entry Date")]
@@ -16,5 +17,7 @@ namespace MemigrationProBonoTracker.Models
 
         [Display(Name = "Entry Notes")]
         public string EntryNotes { get; set; }
+
+        public virtual Case Case { get; set; }
     }
 }

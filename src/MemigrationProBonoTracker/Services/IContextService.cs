@@ -37,5 +37,11 @@ namespace MemigrationProBonoTracker.Services
         int DeleteAttorney(int id);
         AttorneyContactInfoViewModel GetAttorneyContactInfo(int id);
         PersonContactInfoViewModel GetPersonContactInfo(int id);
+
+        List<ContactLogEntry> GetCaseContactLogEntries(int caseId);
+        ContactLogEntry GetLogEntry(int logId);
+        int AddLogEntry(ContactLogEntry log);
+        int UpdateLogEntry(ContactLogEntry log);
+        int DeleteLogEntry(int logId);
     }
 }

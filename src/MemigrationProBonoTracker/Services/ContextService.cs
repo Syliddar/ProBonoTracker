@@ -15,11 +15,11 @@ namespace MemigrationProBonoTracker.Services
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ContextService : IContextService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public ContextService(ApplicationDbContext context)
+        public ContextService(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         #region CaseMethods 
@@ -30,7 +30,7 @@ namespace MemigrationProBonoTracker.Services
             if (openCases.HasValue)
             {
                 model.Title = openCases.Value ? "Active Cases" : "Closed Cases";
-                var modelCases = _context.Cases.Where(c => c.Active == openCases.Value)
+                var modelCases = _db.Cases.Where(c => c.Active == openCases.Value)
                     .Include(c => c.VolunteerAttorney)
                     .Include(c => c.AssigningAttorney)
                     .Include(c => c.LeadClient)
@@ -48,7 +48,7 @@ namespace MemigrationProBonoTracker.Services
             else
             {
                 model.Title = "All Cases";
-                model.Cases = _context.Cases
+                model.Cases = _db.Cases
                     .Include(c => c.VolunteerAttorney)
                     .Include(c => c.AssigningAttorney)
                     .Include(c => c.LeadClient)
@@ -66,7 +66,7 @@ namespace MemigrationProBonoTracker.Services
         }
         public CaseDetailsViewModel GetCaseDetails(int id)
         {
-            var dbResult = _context.Cases
+            var dbResult = _db.Cases
                 .Include(c => c.LeadClient)
                 .Include(c => c.AssigningAttorney)
                 .Include(c => c.VolunteerAttorney)
@@ -89,7 +89,7 @@ namespace MemigrationProBonoTracker.Services
                     AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
                     CaseEvents = dbResult.CaseEvents,
                     CaseNotes = dbResult.CaseNotes,
-                    ContactLogEntries = _context.LogEntries.Where(l => l.Case == dbResult).ToList(),
+                    ContactLogEntries = _db.LogEntries.Where(l => l.Case == dbResult).ToList(),
                 };
             return new CaseDetailsViewModel();
         }
@@ -105,8 +105,8 @@ namespace MemigrationProBonoTracker.Services
                 Notes = @case.LeadClient.Notes
             }
                 : GetPerson(@case.LeadClient.Id);
-            _context.People.Add(leadClient);
-            _context.SaveChanges();
+            _db.People.Add(leadClient);
+            _db.SaveChanges();
             var assigningAttorney = GetAttorneyDetails(@case.AssigningAttorneyId);
             var newCase = new Case
             {
@@ -116,47 +116,47 @@ namespace MemigrationProBonoTracker.Services
                 LeadClient = leadClient,
                 Type = @case.Type
             };
-            _context.Cases.Add(newCase);
-            return _context.SaveChanges();
+            _db.Cases.Add(newCase);
+            return _db.SaveChanges();
         }
         public int UpdateCase(CaseDetailsViewModel viewModel)
         {
-            var @case = _context.Cases.Find(viewModel.Id);
+            var @case = _db.Cases.Find(viewModel.Id);
             foreach (var caseEvent in viewModel.CaseEvents)
             {
                 if (caseEvent.Id == 0)
                 {
                     caseEvent.ParentCase = @case;
-                    _context.CaseEvents.Add(caseEvent);
+                    _db.CaseEvents.Add(caseEvent);
                 }
                 else
                 {
-                    var @event = _context.CaseEvents.Find(caseEvent.Id);
+                    var @event = _db.CaseEvents.Find(caseEvent.Id);
                     @event.EventDate = caseEvent.EventDate;
                     @event.Event = caseEvent.Event;
                 }
 
-                _context.SaveChanges();
+                _db.SaveChanges();
             }
             @case.Active = viewModel.Active;
             @case.AssociatedPeopleList = viewModel.AssociatedPeopleList;
-            @case.AssigningAttorney = _context.Attorneys.Find(viewModel.AssigningAttorneyId);
-            @case.VolunteerAttorney = _context.Attorneys.Find(viewModel.VolunteerAttorneyId);
+            @case.AssigningAttorney = _db.Attorneys.Find(viewModel.AssigningAttorneyId);
+            @case.VolunteerAttorney = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
             @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
             @case.CaseNotes = viewModel.CaseNotes;
-            return _context.SaveChanges();
+            return _db.SaveChanges();
         }
         public int DeleteCase(int id)
         {
-            var @case = _context.Cases.First(c => c.Id == id);
-            _context.Cases.Remove(@case);
-            return _context.SaveChanges();
+            var @case = _db.Cases.First(c => c.Id == id);
+            _db.Cases.Remove(@case);
+            return _db.SaveChanges();
         }
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
             var result = new List<CaseEventViewModel>();
             //var now = DateTime.Today;
-            //var dbResult = _context.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            //var dbResult = _db.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
             ////var result = dbResult.Select(e => new CaseEventViewModel
             //{
             //    CaseId = e.CaseId,
@@ -171,7 +171,7 @@ namespace MemigrationProBonoTracker.Services
         public List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys()
         {
             var today = DateTime.Today;
-            var modelCases = _context.Cases.Where(c => c.Active && c.VolunteerAttorney == null)
+            var modelCases = _db.Cases.Where(c => c.Active && c.VolunteerAttorney == null)
                        .Include(c => c.AssigningAttorney)
                        .Include(c => c.LeadClient)
                        .Include(c => c.CaseEvents);
@@ -190,30 +190,30 @@ namespace MemigrationProBonoTracker.Services
         {
             if (@event.Id == 0)
             {
-                _context.Add(@event);
+                _db.Add(@event);
             }
             else
             {
-                _context.Update(@event);
+                _db.Update(@event);
             }
-            return _context.SaveChanges();
+            return _db.SaveChanges();
         }
 
         public int DeleteCaseEvent(int eventId)
         {
-            var @caseEvent = _context.CaseEvents.Find(eventId);
-            _context.CaseEvents.Remove(@caseEvent);
-            return _context.SaveChanges();
+            var @caseEvent = _db.CaseEvents.Find(eventId);
+            _db.CaseEvents.Remove(@caseEvent);
+            return _db.SaveChanges();
         }
 
         public CaseEvent GetCaseEvent(int eventId)
         {
-            return _context.CaseEvents.Find(eventId);
+            return _db.CaseEvents.Find(eventId);
         }
 
         public List<CaseEvent> GetCaseEventList(int caseId)
         {
-            return _context.CaseEvents.Where(c => c.CaseId == caseId).ToList();
+            return _db.CaseEvents.Where(c => c.CaseId == caseId).ToList();
         }
 
         #endregion
@@ -221,31 +221,31 @@ namespace MemigrationProBonoTracker.Services
         #region PersonMethods
         public List<Person> GetPeopleList()
         {
-            return _context.People.ToList();
+            return _db.People.ToList();
         }
         public Person GetPerson(int id)
         {
-            return _context.People.Find(id);
+            return _db.People.Find(id);
         }
         public int AddPerson(Person person)
         {
-            _context.People.Add(person);
-            return _context.SaveChanges();
+            _db.People.Add(person);
+            return _db.SaveChanges();
         }
         public int UpdatePerson(Person person)
         {
-            _context.People.Update(@person);
-            return _context.SaveChanges();
+            _db.People.Update(@person);
+            return _db.SaveChanges();
         }
         public int DeletePerson(int id)
         {
-            var @person = _context.People.First(p => p.Id == id);
-            _context.People.Remove(@person);
-            return _context.SaveChanges();
+            var @person = _db.People.First(p => p.Id == id);
+            _db.People.Remove(@person);
+            return _db.SaveChanges();
         }
         public PersonContactInfoViewModel GetPersonContactInfo(int id)
         {
-            var person = _context.People
+            var person = _db.People
                 .Include(p => p.AddressList)
                 .Include(p => p.PhoneList)
                 .FirstOrDefault(p => p.Id == id);
@@ -257,6 +257,42 @@ namespace MemigrationProBonoTracker.Services
             };
             return result;
         }
+
+
+        #endregion
+
+        #region ContactLogMethods
+
+        public List<ContactLogEntry> GetCaseContactLogEntries(int caseId)
+        {
+            return _db.LogEntries.Where(x => x.CaseId == caseId).OrderBy(x => x.EntryDate).ToList();
+        }
+
+        public ContactLogEntry GetLogEntry(int logId)
+        {
+            return _db.LogEntries.FirstOrDefault(x => x.Id == logId);
+        }
+
+        public int AddLogEntry(ContactLogEntry log)
+        {
+            _db.LogEntries.Add(log);
+            return _db.SaveChanges();
+        }
+
+        public int UpdateLogEntry(ContactLogEntry log)
+        {
+            _db.LogEntries.Update(log);
+            return _db.SaveChanges();
+        }
+
+        public int DeleteLogEntry(int logId)
+        {
+            var log = _db.LogEntries.Find(logId);
+            _db.LogEntries.Remove(log);
+            return _db.SaveChanges();
+        }
+
+
         #endregion
 
         #region AttorneyMethods
@@ -266,11 +302,11 @@ namespace MemigrationProBonoTracker.Services
             if (assigningAttorney.HasValue)
             {
                 model.Title = assigningAttorney.Value ? "Assigning Attorneys" : "Volunteer Attorney";
-                var attorneys = _context.Attorneys.Where(c => c.IsAssigningAttorney == assigningAttorney.Value);
+                var attorneys = _db.Attorneys.Where(c => c.IsAssigningAttorney == assigningAttorney.Value);
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    //AssignedCases = _context.Cases.Count(y => y.VolunteerAttorney.Id == x.CaseId),
+                    //AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.CaseId),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -286,10 +322,10 @@ namespace MemigrationProBonoTracker.Services
             else
             {
                 model.Title = "All Attorneys";
-                model.AttorneyList = _context.Attorneys.Select(x => new AttorneyListItem
+                model.AttorneyList = _db.Attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    AssignedCases = _context.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
+                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -306,29 +342,29 @@ namespace MemigrationProBonoTracker.Services
         }
         public Attorney GetAttorneyDetails(int id)
         {
-            return _context.Attorneys.Find(id);
+            return _db.Attorneys.Find(id);
         }
         public int AddAttorney(Attorney attorney)
         {
-            _context.Attorneys.Add(attorney);
-            return _context.SaveChanges();
+            _db.Attorneys.Add(attorney);
+            return _db.SaveChanges();
         }
         public int UpdateAttorney(Attorney attorney)
         {
-            _context.Attorneys.Update(attorney);
-            return _context.SaveChanges();
+            _db.Attorneys.Update(attorney);
+            return _db.SaveChanges();
 
         }
         public int DeleteAttorney(int id)
         {
-            var @attorney = _context.Attorneys.Find(id);
-            _context.Attorneys.Remove(@attorney);
-            return _context.SaveChanges();
+            var @attorney = _db.Attorneys.Find(id);
+            _db.Attorneys.Remove(@attorney);
+            return _db.SaveChanges();
         }
 
         public AttorneyContactInfoViewModel GetAttorneyContactInfo(int id)
         {
-            var attorney = _context.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).Include(a => a.EmailList).First(a => a.Id == id);
+            var attorney = _db.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).Include(a => a.EmailList).First(a => a.Id == id);
             var result = new AttorneyContactInfoViewModel
             {
                 AttorneyName = attorney.FullName,
