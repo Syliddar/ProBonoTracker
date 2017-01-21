@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MemigrationProBonoTracker.Models
 {
-    public class ContactLogEntry
+    public class CaseLogEntry
     {
         [Key]
         public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace MemigrationProBonoTracker.Models
         [Display(Name = "Entry Date")]
         public DateTime EntryDate { get; set; }
 
-        [Display(Name = "Entry Notes")]
+        [Display(Name = "Log Entry")]
         public string EntryNotes { get; set; }
 
         public virtual Case Case { get; set; }

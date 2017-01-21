@@ -1,0 +1,84 @@
+﻿@model MemigrationProBonoTracker.Models.CaseViewModels.CaseLogListViewModel
+<h2>Case Log entries for Case</h2>
+
+<input hidden asp-for="CaseId" />
+@Html.AntiForgeryToken()
+<table class="table table-hover table-striped dataTable" id="CaseLogTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Notes</th>
+            <th>
+                <div class="pull-right">
+                    <button type="button" id="AdeCaseLogEntry" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LogList)
+        {
+
+            <tr class="@item.Id">
+                <td>
+                    @item.EntryDate.ToShortDateString()
+                </td>
+                <td>@item.EntryNotes</td>
+                <td>
+                    <a class="CaseLogEdit" id="@item.Id">Edit</a><br />
+                    <a class="CaseLogDelete" id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    $().ready(function () {
+        $("#AdeCaseLogEntry").click(function () {
+            var id = $("#CaseId").val();
+            $.ajax({
+                url: '/CaseLog/Create/',
+                data: { caseId: id },
+                success: function (data) {
+                    $('#modalWrapper').html(data);
+                }
+            });
+        });
+        $(".CaseLogEdit").click(function () {
+            var id = this.id;
+            $.ajax({
+                url: '/CaseLog/Edit/',
+                data: { logId: id },
+                success: function (data) {
+                    $('#modalWrapper').html(data);
+                }
+            });
+        });
+        $(".CaseLogDelete").click(function () {
+            var id = this.id;
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    url: '/CaseLog/Delete/',
+                    type: 'POST',
+                    data: {
+                        "__RequestVerificationToken": $("input[name=__RequestVerificationToken]").val(),
+                        logId: id
+                    },
+                    success: function () {
+                        var tr = $("." + id).closest('tr');
+                        tr.css("background-color", "#FF3700");
+                        tr.fadeOut(400,function () {tr.remove();});
+                    }
+                });
+            }
+        });
+        $.fn.dataTable.moment('MM/dd/YYYY');
+        $('.dataTable').DataTable();
+    });
+</script>

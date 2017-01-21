@@ -40,7 +40,7 @@
                 <div class="form-group col-lg-5">
                     <label asp-for="@Model.LeadClient.DateOfBirth" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepicker past" />
+                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepickerpast" />
                         <span asp-validation-for="@Model.LeadClient.DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input class="form-control datepicker future" asp-for="@Model.CaseEvents[0].EventDate" /></td>
+                    <td><input class="form-control datepickerfuture" asp-for="@Model.CaseEvents[0].EventDate" /></td>
                     <td><input class="form-control" asp-for="@Model.CaseEvents[0].Event" /></td>
                     <td>
                         <button type="button" class="btn btn-primary caseEventRemove">

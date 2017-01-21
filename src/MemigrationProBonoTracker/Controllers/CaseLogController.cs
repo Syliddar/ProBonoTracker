@@ -10,21 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MemigrationProBonoTracker.Controllers
 {
-    public class ContactLogController : Controller
+    public class CaseLogController : Controller
     {
         private readonly IContextService _context;
-        public ContactLogController(IContextService contextService)
+        public CaseLogController(IContextService contextService)
         {
             _context = contextService;
         }
 
-        public IActionResult Index()
-        {
-            return RedirectToAction("Index", "Home");
-        }
         public IActionResult Index(int caseId)
         {
-            var model = _context.GetCaseContactLogEntries(caseId);
+            var model = _context.GetCaseLogEntries(caseId);
             return View(model);
         }
 
@@ -33,41 +29,38 @@ namespace MemigrationProBonoTracker.Controllers
             var model = _context.GetLogEntry(logId);
             return View(model);
         }
-        public IActionResult Create(int caseId)
+        public PartialViewResult Create(int caseId)
         {
-            var model = new ContactLogEntry
+            var model = new CaseLogEntry
             {
-                CaseId = caseId
+                CaseId = caseId,
+                EntryDate = DateTime.Today
 
             };
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(ContactLogEntry log)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.AddLogEntry(log);
-            }
-            return Index(log.CaseId);
+            return PartialView("_CaseLog", model);
         }
 
         [HttpGet]
-        public IActionResult Edit(int logId)
+        public PartialViewResult Edit(int logId)
         {
             var model = _context.GetLogEntry(logId);
-            return View(model);
+            return PartialView("_CaseLog", model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ContactLogEntry log)
+        public void Save(CaseLogEntry log)
         {
             if (ModelState.IsValid)
             {
-                _context.UpdateLogEntry(log);
+                if (log.Id == 0)
+                {
+                    _context.AddLogEntry(log);
+                }
+                else
+                {
+                    _context.UpdateLogEntry(log);
+                }
             }
-            return Index(log.CaseId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

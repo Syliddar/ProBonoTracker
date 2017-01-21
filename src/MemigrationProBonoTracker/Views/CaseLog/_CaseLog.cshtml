@@ -1,0 +1,72 @@
+﻿@model CaseLogEntry
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @if (Model.Id == 0)
+            {
+                <h4 class="modal-title">Add Case Log Entry</h4>
+            }
+            else
+            {
+                <h4 class="modal-title">Edit Log Entry</h4>
+            }
+        </div>
+        <div class="modal-body">
+            <form id="CaseLogPartialForm">
+                @Html.AntiForgeryToken()
+                <input hidden="" asp-for="CaseId"/>
+                <input hidden="" asp-for="Id"/>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="EntryDate" class="control-label"></label>
+                            <input asp-for="EntryDate" class="form-control datepicker"/>
+                            <span asp-validation-for="EntryDate" class="text-danger" />
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label asp-for="EntryNotes" class="control-label"></label>
+                        <textarea style="max-width: 1080px" cols="2" rows="4" asp-for="EntryNotes" class="form-control"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary pull-right" id="CaseLogSave">Save</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+        initDatePickers();
+        $(':checkbox').bootstrapToggle({
+            on: 'Yes',
+            off: 'No'
+        });
+        $('#modalWrapper').modal('show');
+        $("#CaseLogSave").click(function () {
+            var formdata = $("#CaseLogPartialForm").serialize();
+            $('#modalWrapper').modal('hide');
+            $.ajax({
+                url: '/CaseLog/Save/',
+                type: "POST",
+                data: formdata,
+                success: function() {
+                    location.reload();
+                }
+                
+            });
+        });
+    });
+</script>

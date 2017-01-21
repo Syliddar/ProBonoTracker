@@ -23,6 +23,6 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public double AttorneyWorkedHours { get; set; }
         [Display(Name = "Case Notes")]
         public string CaseNotes { get; set; }
-        public List<ContactLogEntry> ContactLogEntries { get; set; }
+        public List<CaseLogEntry> CaseLogEntries { get; set; }
     }
 }

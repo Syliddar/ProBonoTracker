@@ -171,7 +171,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var logEntry in Model.ContactLogEntries.OrderBy(l => l.EntryDate))
+                        @foreach (var logEntry in Model.CaseLogEntries.OrderBy(l => l.EntryDate))
                         {
                             <tr>
                                 <td>@Html.DisplayFor(x => logEntry.EntryDate)</td>
@@ -193,6 +193,7 @@
 
 <div id="modalWrapper" class="modal fade" tabindex="-1" role="dialog"></div>
 <div>
+    <a asp-action="Index" asp-controller="CaseLog" asp-route-caseId="@Model.Id">Contact Log</a>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -19,7 +19,7 @@ namespace MemigrationProBonoTracker.Data
         public DbSet<Attorney> Attorneys { get; set; }
         public DbSet<Case> Cases { get; set; }
         public DbSet<CaseEvent> CaseEvents { get; set; }
-        public DbSet<ContactLogEntry> LogEntries { get; set; }
+        public DbSet<CaseLogEntry> LogEntries { get; set; }
         public DbSet<Person> People { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -46,7 +46,7 @@ namespace MemigrationProBonoTracker.Data
             builder.Entity<Person>().HasMany(p => p.AddressList);
             builder.Entity<Person>().HasMany(p=> p.PhoneList);
 
-            builder.Entity<ContactLogEntry>().HasOne(l => l.Case);
+            builder.Entity<CaseLogEntry>().HasOne(l => l.Case);
 
         }
     }

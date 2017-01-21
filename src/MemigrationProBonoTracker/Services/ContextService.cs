@@ -89,7 +89,7 @@ namespace MemigrationProBonoTracker.Services
                     AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
                     CaseEvents = dbResult.CaseEvents,
                     CaseNotes = dbResult.CaseNotes,
-                    ContactLogEntries = _db.LogEntries.Where(l => l.Case == dbResult).ToList(),
+                    CaseLogEntries = _db.LogEntries.Where(l => l.Case == dbResult).ToList(),
                 };
             return new CaseDetailsViewModel();
         }
@@ -261,25 +261,30 @@ namespace MemigrationProBonoTracker.Services
 
         #endregion
 
-        #region ContactLogMethods
+        #region CaseLogMethods
 
-        public List<ContactLogEntry> GetCaseContactLogEntries(int caseId)
+        public CaseLogListViewModel GetCaseLogEntries(int caseId)
         {
-            return _db.LogEntries.Where(x => x.CaseId == caseId).OrderBy(x => x.EntryDate).ToList();
+            var result = new CaseLogListViewModel
+            {
+                CaseId = caseId,
+                LogList = _db.LogEntries.Where(x => x.CaseId == caseId).OrderBy(x => x.EntryDate).ToList()
+            };
+            return result;
         }
 
-        public ContactLogEntry GetLogEntry(int logId)
+        public CaseLogEntry GetLogEntry(int logId)
         {
             return _db.LogEntries.FirstOrDefault(x => x.Id == logId);
         }
 
-        public int AddLogEntry(ContactLogEntry log)
+        public int AddLogEntry(CaseLogEntry log)
         {
             _db.LogEntries.Add(log);
             return _db.SaveChanges();
         }
 
-        public int UpdateLogEntry(ContactLogEntry log)
+        public int UpdateLogEntry(CaseLogEntry log)
         {
             _db.LogEntries.Update(log);
             return _db.SaveChanges();

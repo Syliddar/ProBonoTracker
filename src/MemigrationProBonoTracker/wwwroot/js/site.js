@@ -9,18 +9,6 @@ $().ready(function () {
         $("#ajaxLoader").hide();
     });
 });
-
-function CaseEventCreatLaunch(id) {
-    $.ajax({
-        url: '/Case/CreateCaseEventPartial/',
-        type: 'POST',
-        data: { parentId: id },
-        success: function (data) {
-            $('#modalWrapper').html(data);
-        }
-    });
-}
-
 function bindRemoveEventRow() {
     $(".caseEventEdit").click(function () {
         var id = this.id;
@@ -52,10 +40,8 @@ function bindRemoveEventRow() {
             }
         });
 }
-
-
 function initDatePickers() {
-    $(".datepicker.future").datepicker({
+    $(".datepickerfuture").datepicker({
         format: "mm/dd/yyyy",
         startDate: "-1d",
         todayBtn: "linked",
@@ -63,10 +49,18 @@ function initDatePickers() {
         autoclose: true,
         todayHighlight: true
     });
-    $(".datepicker.past").datepicker({
+    $(".datepickerpast").datepicker({
         format: "mm/dd/yyyy",
         startDate: "1/1/1900",
         endDate: "0d",
+        todayBtn: "linked",
+        keyboardNavigation: "true",
+        autoclose: true,
+        todayHighlight: true
+    });
+    $(".datepicker").datepicker({
+        format: "mm/dd/yyyy",
+        startDate: "1/1/1900",
         todayBtn: "linked",
         keyboardNavigation: "true",
         autoclose: true,
