@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
+using MemigrationProBonoTracker.Models.PersonViewModel;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Razor.Tools.Internal;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -43,33 +40,13 @@ namespace MemigrationProBonoTracker.Controllers
             return View(person);
         }
 
-        // GET: People/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: People/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Person person)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.AddPerson(person);
-                return RedirectToAction("Index");
-            }
-            return View(person);
-        }
-
         // GET: People/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> CreateEdit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                var model = new PersonEditViewModel();
+                return View("CreateEdit", model);
             }
 
             var person = _context.GetPerson(id.Value);
@@ -95,30 +72,21 @@ namespace MemigrationProBonoTracker.Controllers
             return View(person);
         }
 
-        // GET: People/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var person = _context.GetPerson(id.Value);
-            if (person == null)
-            {
-                return NotFound();
-            }
-
-            return View(person);
-        }
 
         // POST: People/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public JsonResult Delete(int id)
         {
-            _context.DeletePerson(id);
-            return RedirectToAction("Index");
+            try
+            {
+                _context.DeletePerson(id);
+                return Json(new { success = true, responseText = "Your message successfuly sent!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = ex.Message });
+            }
         }
 
         public PartialViewResult PersonContactPartial(int id)

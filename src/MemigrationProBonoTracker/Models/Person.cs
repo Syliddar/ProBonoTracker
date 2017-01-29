@@ -18,12 +18,18 @@ namespace MemigrationProBonoTracker.Models
         public string FullName { get { return FirstName + " " + LastName; } }
         public List<PersonAddress> AddressList { get; set; }
         public List<PersonPhoneNumber> PhoneList { get; set; }
+
+        [Display(Name = "Notes")]
         public string Notes { get; set; }
 
         [Display(Name = "Date of Birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { get; set; }
+
+        [Display(Name = "Nationality")]
         public NationalOrigin Nationality { get; set; }
+
+        [Display(Name = "Gender")]
         public Gender Gender { get; set; }
     }
 }

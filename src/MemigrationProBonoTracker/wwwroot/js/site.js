@@ -67,6 +67,7 @@ function initDatePickers() {
         todayHighlight: true
     });
 }
+
 function PersonContactInfoModal(personId) {
     $.ajax({
         url: '/People/PersonContactPartial/?id=' + personId,
@@ -75,7 +76,6 @@ function PersonContactInfoModal(personId) {
         }
     });
 }
-
 function AttorneyContactInfoModal(attorneyId) {
     $.ajax({
         url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + attorneyId,

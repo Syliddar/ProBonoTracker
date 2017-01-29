@@ -36,7 +36,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+                           role="button" aria-haspopup="true" aria-expanded="false">
                             Cases<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -48,7 +49,8 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+                           role="button" aria-haspopup="true" aria-expanded="false">
                             Attorneys<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -58,15 +60,24 @@
                             <li><a asp-controller="Attorney" asp-action="Index">Search Attorneys</a></li>
                         </ul>
                     </li>
-
                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            People<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="People" asp-action="CreateEdit">Add Person</a></li>
+                            <li><a asp-controller="People" asp-action="Index">Search People</a></li>
+                        </ul>
+                    </li>
+                    @*<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Reports<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
                         </ul>
-                    </li>
+                    </li>*@
 
 
                 </ul>

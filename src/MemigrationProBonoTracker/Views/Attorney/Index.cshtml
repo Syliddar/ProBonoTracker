@@ -54,7 +54,7 @@
                 <td>
                     <a asp-action="CreateEdit" asp-route-id="@item.Id">Edit</a><br />
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

@@ -1,25 +1,26 @@
-@model IEnumerable<MemigrationProBonoTracker.Models.Person>
+@model IEnumerable<Person>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateEdit" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+@Html.AntiForgeryToken()
+<table class="table" id="PeopleTable">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Nationality)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
@@ -32,29 +33,62 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Nationality)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @*<a class="delete" id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    $()
+        .ready(function () {
+            $("#PeopleTable").dataTable();
+            $(".delete").click(function () {
+                var id = this.id;
+                console.log(id);
+                if (confirm('Are you sure?')) {
+                    $.ajax({
+                        url: '/People/Delete/',
+                        type: 'POST',
+                        data: {
+                            "__RequestVerificationToken": $("input[name=__RequestVerificationToken]").val(),
+                            id: id
+                        },
+                        success: function (data) {
+                            if (data != null && data.success) {
+                                var tr = $("." + id).closest('tr');
+                                tr.css("background-color", "#FF3700");
+                                tr.fadeOut(400, function() { tr.remove(); });
+                            } else {
+                                console.log(data);
+                            }
+                        },
+                        failure: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        });
+</script>
