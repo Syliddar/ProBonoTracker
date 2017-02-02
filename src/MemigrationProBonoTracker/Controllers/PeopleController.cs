@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
@@ -41,14 +43,17 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         // GET: People/Edit/5
-        public async Task<IActionResult> CreateEdit(int? id)
+        public IActionResult CreateEdit(int? id)
         {
             if (id == null)
             {
-                var model = new PersonEditViewModel();
+                var model = new Person
+                {
+                    AddressList = new List<PersonAddress>(),
+                    PhoneList = new List<PersonPhoneNumber>()
+                };
                 return View("CreateEdit", model);
             }
-
             var person = _context.GetPerson(id.Value);
             if (person == null)
             {
@@ -66,7 +71,7 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.UpdatePerson(person);
+               _context.UpdatePerson(person);
                 return RedirectToAction("Index");
             }
             return View(person);

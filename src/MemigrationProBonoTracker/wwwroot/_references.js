@@ -3,6 +3,7 @@
 /// <reference path="js/bootstrap-toggle.min.js" />
 /// <reference path="js/datetime-moment.js" />
 /// <reference path="js/jquery.datatables.min.js" />
+/// <reference path="js/jquery.maskedinput.min.js" />
 /// <reference path="js/moment.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />

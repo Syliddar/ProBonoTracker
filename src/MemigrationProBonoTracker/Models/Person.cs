@@ -27,7 +27,7 @@ namespace MemigrationProBonoTracker.Models
         public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Nationality")]
-        public NationalOrigin Nationality { get; set; }
+        public Country Nationality { get; set; }
 
         [Display(Name = "Gender")]
         public Gender Gender { get; set; }

@@ -54,8 +54,9 @@ namespace MemigrationProBonoTracker.Models
             Other
         }
 
-        public enum NationalOrigin
+        public enum Country
         {
+            [Display(Name = "United States")]
             UnitedStates,
             Brazil,
             Mexico,
@@ -70,13 +71,17 @@ namespace MemigrationProBonoTracker.Models
             Cuba,
             Haiti,
             Bolivia,
+            [Display(Name = "Dominican Republic")]
             DominicanRepublic,
             Honduras,
             Paraguay,
             Nicaragua,
+            [Display(Name = "El Salvador")]
             ElSalvador,
+            [Display(Name = "Costa Rica")]
             CostaRica,
             Panama,
+            [Display(Name = "Puerto Rico")]
             PuertoRico,
             Uruguay,
             Jamaica,
@@ -89,27 +94,39 @@ namespace MemigrationProBonoTracker.Models
             Bahamas,
             Belize,
             Barbados,
+            [Display(Name = "French Guiana")]
             FrenchGuiana,
             SaintLucia,
             Curaçao,
             Aruba,
+            [Display(Name = "Saint Vincent and the Grenadines")]
             SaintVincentandtheGrenadines,
+            [Display(Name = "United States Virgin Islands")]
             UnitedStatesVirginIslands,
             Grenada,
+            [Display(Name = "Antigua and Barbuda")]
             AntiguanadBarbuda,
             Dominica,
             Bermuda,
+            [Display(Name = "Cayman Islands")]
             CaymanIslands,
+            [Display(Name = "Saint Kitts and Nevis")]
             SaintKittsandNevis,
+            [Display(Name = "Saint Maarten")]
             SaintMaarten,
+            [Display(Name = "Turks and Caicos Islands")]
             TurksandCaicosIslands,
-            SaintMartin,
+            [Display(Name = "British Virgin Islands")]
             BritishVirginIslands,
+            [Display(Name = "Caribbean Netherlands")]
             CaribbeanNetherlands,
             Anguilla,
+            [Display(Name = "Saint Barthélemy")]
             SaintBarthélemy,
+            [Display(Name = "Saint Pierre and Miquelon")]
             SaintPierreandMiquelon,
             Montserrat,
+            [Display(Name = "Falkland Islands")]
             FalklandIslands,
             Other
         }

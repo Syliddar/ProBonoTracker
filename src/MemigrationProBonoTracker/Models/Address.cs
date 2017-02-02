@@ -11,6 +11,7 @@ namespace MemigrationProBonoTracker.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public bool PrimaryAddress { get; set; }
+        public Country Country { get; set; }
     }
 
 
@@ -22,5 +23,6 @@ namespace MemigrationProBonoTracker.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public bool PrimaryAddress { get; set; }
+        public Country Country { get; set; }
     }
 }

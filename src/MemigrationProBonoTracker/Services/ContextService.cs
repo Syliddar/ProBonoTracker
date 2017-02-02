@@ -225,7 +225,23 @@ namespace MemigrationProBonoTracker.Services
         }
         public Person GetPerson(int id)
         {
-            return _db.People.Find(id);
+            var result = _db.People
+                .Include(p => p.AddressList)
+                .Include(p => p.PhoneList)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (result != null)
+            {
+                if (result.AddressList == null)
+                {
+                    result.AddressList = new List<PersonAddress>();
+                }
+                if (result.PhoneList == null)
+                {
+                    result.PhoneList = new List<PersonPhoneNumber>();
+                }
+            }
+            return result;
         }
         public int AddPerson(Person person)
         {
@@ -249,13 +265,21 @@ namespace MemigrationProBonoTracker.Services
                 .Include(p => p.AddressList)
                 .Include(p => p.PhoneList)
                 .FirstOrDefault(p => p.Id == id);
-            var result = new PersonContactInfoViewModel
+            if (person != null)
             {
-                PersonAddresses = person.AddressList,
-                PersonName = person.FullName,
-                PhoneNumbers = person.PhoneList
+                var result = new PersonContactInfoViewModel
+                {
+                    PersonAddresses = person.AddressList,
+                    PersonName = person.FullName,
+                    PhoneNumbers = person.PhoneList
+                };
+                return result;
+            }
+            return new PersonContactInfoViewModel
+            {
+                PhoneNumbers = new List<PersonPhoneNumber>(),
+                PersonAddresses = new List<PersonAddress>()
             };
-            return result;
         }
 
 
@@ -307,6 +331,7 @@ namespace MemigrationProBonoTracker.Services
             if (assigningAttorney.HasValue)
             {
                 model.Title = assigningAttorney.Value ? "Assigning Attorneys" : "Volunteer Attorney";
+                //TODO: Extract this to Service
                 var attorneys = _db.Attorneys.Where(c => c.IsAssigningAttorney == assigningAttorney.Value);
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
@@ -327,10 +352,12 @@ namespace MemigrationProBonoTracker.Services
             else
             {
                 model.Title = "All Attorneys";
+
+                //TODO: Extract this to Service
                 model.AttorneyList = _db.Attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
+                    //AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
