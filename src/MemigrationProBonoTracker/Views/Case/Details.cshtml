@@ -15,7 +15,7 @@
                         @Html.LabelFor(x => x.LeadClient.DateOfBirth)<br />
                         @Html.DisplayFor(x => x.LeadClient.DateOfBirth)
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         @Html.LabelFor(x => x.LeadClient.Gender)<br />
                         @Html.DisplayFor(x => x.LeadClient.Gender)
                     </div>
@@ -24,8 +24,18 @@
                         @Html.LabelFor(x => x.LeadClient.Nationality)<br />
                         @Html.DisplayFor(x => x.LeadClient.Nationality)
                     </div>
-                    <div class="col-lg-1">
-                        <button type="button" onclick="PersonContactInfoModal(@Model.LeadClient.Id)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-certificate"></span></button>
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <button type="button" onclick="PersonContactInfoModal(@Model.LeadClient.Id)" class="pull-left btn btn-primary">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </button>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <a asp-action="Details" asp-controller="People" asp-route-id="@Model.LeadClient.Id" class="pull-left btn pull-right btn-primary">
+                                <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-lg-3">
                         @Html.LabelFor(x => x.Type)<br />
@@ -65,7 +75,7 @@
                             @Html.DisplayFor(x => x.VolunteerAttorneyOrganizationName)
                         </div>
                         <div class="col-lg-3">
-                            <button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-certificate"></span></button>
+                            <button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button>
                         </div>
                     </div>
                 </div>
@@ -104,7 +114,7 @@
                                 <td>@Html.DisplayFor(x => person.Relationship)</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" onclick="PersonContactInfoModal(@person.Person.Id)">
-                                        <span class="glyphicon glyphicon-certificate"></span>
+                                        <span class="glyphicon glyphicon-info-sign"></span>
                                     </button>
                                 </td>
                             </tr>

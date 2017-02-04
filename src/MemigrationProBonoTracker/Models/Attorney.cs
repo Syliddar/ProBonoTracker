@@ -78,6 +78,7 @@ namespace MemigrationProBonoTracker.Models
         public bool HasJuvenileExperience { get; set; }
 
         [Display(Name = "Assigned Cases")]
-        public int AssignedCases { get { return 666; } }
+        [NotMapped]
+        public int AssignedCases { get; set; }
     }
 }

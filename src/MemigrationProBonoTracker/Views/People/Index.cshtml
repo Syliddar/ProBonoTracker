@@ -53,7 +53,6 @@
                 <td>
                     <a asp-action="CreateEdit" asp-route-id="@item.Id">Edit</a>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    @*<a class="delete" id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }
@@ -64,31 +63,5 @@
     $()
         .ready(function () {
             $("#PeopleTable").dataTable();
-            $(".delete").click(function () {
-                var id = this.id;
-                console.log(id);
-                if (confirm('Are you sure?')) {
-                    $.ajax({
-                        url: '/People/Delete/',
-                        type: 'POST',
-                        data: {
-                            "__RequestVerificationToken": $("input[name=__RequestVerificationToken]").val(),
-                            id: id
-                        },
-                        success: function (data) {
-                            if (data != null && data.success) {
-                                var tr = $("." + id).closest('tr');
-                                tr.css("background-color", "#FF3700");
-                                tr.fadeOut(400, function() { tr.remove(); });
-                            } else {
-                                console.log(data);
-                            }
-                        },
-                        failure: function(data) {
-                            console.log(data);
-                        }
-                    });
-                }
-            });
         });
 </script>

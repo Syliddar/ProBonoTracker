@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MemigrationProBonoTracker.Models
 {
@@ -7,20 +9,36 @@ namespace MemigrationProBonoTracker.Models
     {
         public int Id { get; set; }
         public bool Active { get; set; }
-        [Display(Name = "Lead Client")]
-        public Person LeadClient { get; set; }
-        public List<AssociatedPerson> AssociatedPeopleList { get; set; }
-        [Display(Name = "Assigning Attorney")]
-        public Attorney AssigningAttorney { get; set; }
-        [Display(Name = "Volunteer Attorney")]
-        public Attorney VolunteerAttorney { get; set; }
+        
+        [ForeignKey("LeadClient")]
+        public int LeadClientId { get; set; }
+
+        [ForeignKey("AssigningAttorney")]
+        public int AssigningAttorneyId { get; set; }
+
+        [ForeignKey("VolunteerAttorney")]
+        public int? VolunteerAttorneyId { get; set; }
+
+        
         [Display(Name = "Volunteer Hours Worked")]
         public double AttorneyWorkedHours { get; set; }
+
         [Display(Name = "Case Type")]
         public Enums.CaseType Type { get; set; }
-        [Display(Name = "Case Events")]
-        public List<CaseEvent> CaseEvents { get; set; }
+        
         [Display(Name = "Case Notes")]
         public string CaseNotes { get; set; }
+        [Display(Name = "Date Created")]
+        public DateTime DateCreated { get; set; }
+
+
+        [Display(Name = "Lead Client")]
+        public virtual Person LeadClient { get; set; }
+        public virtual List<AssociatedPerson> AssociatedPeopleList { get; set; }
+        [Display(Name = "Case Events")]
+        public virtual List<CaseEvent> CaseEvents { get; set; }
+        public virtual Attorney AssigningAttorney { get; set; }
+        [Display(Name = "Volunteer Attorney")]
+        public virtual Attorney VolunteerAttorney { get; set; }
     }
 }

@@ -3062,8 +3062,8 @@ fieldset[disabled] a.btn {
 }
 .btn-default {
   color: #ffffff;
-  background-color: #95a5a6;
-  border-color: #95a5a6;
+  background-color: #798d8f;
+  border-color: #798d8f;
 }
 .btn-default:focus,
 .btn-default.focus {
@@ -3073,8 +3073,8 @@ fieldset[disabled] a.btn {
 }
 .btn-default:hover {
   color: #ffffff;
-  background-color: #798d8f;
-  border-color: #74898a;
+  background-color: #18bc9c;
+  border-color: #18bc9c;
 }
 .btn-default:active,
 .btn-default.active,

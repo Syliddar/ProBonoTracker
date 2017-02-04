@@ -1,4 +1,23 @@
 ﻿@model HomeViewModel
+@if (Model.OldOpenCases.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h2> The following cases are over 60 days old and do not have a Volunteer Attorney</h2>
+            @foreach (var oldOpenCase in Model.OldOpenCases)
+            {
+                <div class="col-md-3">
+                    <div class="alert alert-danger">
+                        <a asp-action="Details" asp-controller="Case" asp-route-id="@oldOpenCase.CaseId"><strong>@oldOpenCase.ClientName</strong></a><br />
+                        @oldOpenCase.CaseType <br />
+                        @oldOpenCase.CaseCreatedDate.ToShortDateString()
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+}
 <div class="row">
     <div class="col-md-6">
         <h2>Active Cases without Volunteers</h2>
@@ -50,7 +69,7 @@
                         <td>
                             @if (eventItem.AssignedAttorneyId != 0)
                             {
-                                <a id="@eventItem.AssignedAttorneyId" href="#" class="AttorneyContactInfo">Attorney Contact</a><br/>
+                                <a id="@eventItem.AssignedAttorneyId" href="#" class="AttorneyContactInfo">Attorney Contact</a><br />
                             }
                             else
                             {

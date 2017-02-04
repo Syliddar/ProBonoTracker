@@ -2,7 +2,7 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="Id" />
         <div class="row panel panel-primary">
             <div class="panel-heading">
@@ -116,6 +116,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <a asp-action="Index">Back to List</a>
+                <a class="delete" id="@Model.Id">Delete</a>
                 <input type="submit" value="Save" class="btn btn-primary pull-right" />
             </div>
         </div>
@@ -123,7 +124,33 @@
 </form>
 
 <script>
-    $().ready(function() {
-            $(".phonemask").mask("(999) 999-9999");
+    $().ready(function () {
+        $(".phonemask").mask("(999) 999-9999");
+        $(".delete").click(function () {
+            var id = this.id;
+            console.log(id);
+            if (confirm('Are you sure you want to DELETE this person?')) {
+                $.ajax({
+                    url: '/People/Delete/',
+                    type: 'POST',
+                    data: {
+                        "__RequestVerificationToken": $("input[name=__RequestVerificationToken]").val(),
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data != null && data.success) {
+                            var tr = $("." + id).closest('tr');
+                            tr.css("background-color", "#FF3700");
+                            tr.fadeOut(400, function () { tr.remove(); });
+                        } else {
+                            console.log(data);
+                        }
+                    },
+                    failure: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
         });
+    });
 </script>

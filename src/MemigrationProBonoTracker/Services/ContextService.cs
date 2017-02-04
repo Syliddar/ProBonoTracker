@@ -64,6 +64,26 @@ namespace MemigrationProBonoTracker.Services
             }
             return model;
         }
+        public CaseListViewModel GetCaseListViewModelForPerson(int personId)
+        {
+            var model = new CaseListViewModel();
+            var today = DateTime.Today;
+            var modelCases = _db.Cases.Where(c => c.LeadClientId == personId)
+                .Include(c => c.VolunteerAttorney)
+                .Include(c => c.AssigningAttorney)
+                .Include(c => c.CaseEvents);
+            model.Cases = modelCases.Select(c => new CaseListItem
+            {
+                CaseId = c.Id,
+                ClientName = "",
+                CaseType = c.Type,
+                AssigningAttorneyName = c.AssigningAttorney.FullName,
+                VolunteerAttorneyName = c.VolunteerAttorney == null ? "Not yet assigned." : c.VolunteerAttorney.FullName,
+                NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
+            }).ToList();
+
+            return model;
+        }
         public CaseDetailsViewModel GetCaseDetails(int id)
         {
             var dbResult = _db.Cases
@@ -114,7 +134,8 @@ namespace MemigrationProBonoTracker.Services
                 AssigningAttorney = assigningAttorney,
                 CaseNotes = @case.CaseNotes,
                 LeadClient = leadClient,
-                Type = @case.Type
+                Type = @case.Type,
+                DateCreated = DateTime.Now
             };
             _db.Cases.Add(newCase);
             return _db.SaveChanges();
@@ -180,6 +201,7 @@ namespace MemigrationProBonoTracker.Services
                 CaseId = c.Id,
                 ClientName = c.LeadClient.FullName,
                 CaseType = c.Type,
+                CaseCreatedDate = c.DateCreated,
                 AssigningAttorneyName = c.AssigningAttorney.FullName,
                 VolunteerAttorneyName = "Not yet assigned.",
                 NextCaseEvent = c.CaseEvents.OrderBy(e => Math.Abs((today - e.EventDate).Days)).FirstOrDefault()
@@ -255,7 +277,7 @@ namespace MemigrationProBonoTracker.Services
         }
         public int DeletePerson(int id)
         {
-            var @person = _db.People.First(p => p.Id == id);
+            var @person = GetPerson(id);
             _db.People.Remove(@person);
             return _db.SaveChanges();
         }
@@ -336,7 +358,7 @@ namespace MemigrationProBonoTracker.Services
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    //AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.CaseId),
+                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -357,7 +379,7 @@ namespace MemigrationProBonoTracker.Services
                 model.AttorneyList = _db.Attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    //AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
+                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -374,7 +396,12 @@ namespace MemigrationProBonoTracker.Services
         }
         public Attorney GetAttorneyDetails(int id)
         {
-            return _db.Attorneys.Find(id);
+            var result = _db.Attorneys.Include(x => x.PhoneList).Include(x => x.AddressList).FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                result.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == result.Id);
+            }
+            return result;
         }
         public int AddAttorney(Attorney attorney)
         {

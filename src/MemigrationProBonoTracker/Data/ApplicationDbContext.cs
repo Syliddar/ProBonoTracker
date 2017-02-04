@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MemigrationProBonoTracker.Models;
-using Microsoft.AspNetCore.Builder;
 
 namespace MemigrationProBonoTracker.Data
 {
@@ -44,7 +39,7 @@ namespace MemigrationProBonoTracker.Data
             builder.Entity<Attorney>().HasMany(a => a.EmailList);
 
             builder.Entity<Person>().HasMany(p => p.AddressList);
-            builder.Entity<Person>().HasMany(p=> p.PhoneList);
+            builder.Entity<Person>().HasMany(p => p.PhoneList);
 
             builder.Entity<CaseLogEntry>().HasOne(l => l.Case);
 

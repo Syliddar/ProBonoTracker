@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public Enums.CaseType CaseType { get; set; }
         public string AssigningAttorneyName { get; set; }
         public string VolunteerAttorneyName { get; set; }
+        public DateTime CaseCreatedDate { get; set; }
 
         public string NextCaseEventString => NextCaseEvent == null ? "" : NextCaseEvent.Event;
 

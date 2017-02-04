@@ -13,6 +13,7 @@ namespace MemigrationProBonoTracker.Services
     public interface IContextService
     {
         CaseListViewModel GetCaseListViewModel(bool? openCases);
+        CaseListViewModel GetCaseListViewModelForPerson(int personId);
         CaseDetailsViewModel GetCaseDetails(int id);
         int AddCase(CreateCaseViewModel @case);
         int UpdateCase(CaseDetailsViewModel @case);
@@ -23,6 +24,7 @@ namespace MemigrationProBonoTracker.Services
         int DeleteCaseEvent(int eventId);
         CaseEvent GetCaseEvent(int eventId);
         List<CaseEvent> GetCaseEventList(int caseId);
+
 
         List<Person> GetPeopleList();
         Person GetPerson(int id);

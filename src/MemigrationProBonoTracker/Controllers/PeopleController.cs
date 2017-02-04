@@ -32,14 +32,17 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 return NotFound();
             }
-
-            var person = _context.GetPerson(id.Value);
-            if (person == null)
+            var model = new PersonDetailsViewModel
+            {
+                Person = _context.GetPerson(id.Value),
+                Cases = _context.GetCaseListViewModelForPerson(id.Value)
+            };
+            if (model.Person == null)
             {
                 return NotFound();
             }
 
-            return View(person);
+            return View(model);
         }
 
         // GET: People/Edit/5
