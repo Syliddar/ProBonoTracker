@@ -26,7 +26,6 @@
                 <tr>
                     <th>Client Name</th>
                     <th>Case Type</th>
-                    <th>Assigning Attorney</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +34,6 @@
                     <tr>
                         <td>@Html.DisplayFor(m => modelOpenCase.ClientName)</td>
                         <td>@Html.DisplayFor(m => modelOpenCase.CaseType)</td>
-                        <td>@Html.DisplayFor(m => modelOpenCase.AssigningAttorneyName)</td>
                         <td><a class="btn btn-primary" asp-action="Details" asp-controller="Case" asp-route-id="@modelOpenCase.CaseId">Go To Case</a><br /></td>
                     </tr>
                 }
@@ -67,9 +65,9 @@
                             @Html.DisplayFor(e => eventItem.EventDate)
                         </td>
                         <td>
-                            @if (eventItem.AssignedAttorneyId != 0)
+                            @if (eventItem.VolunteerAttorneyId.HasValue)
                             {
-                                <a id="@eventItem.AssignedAttorneyId" href="#" class="AttorneyContactInfo">Attorney Contact</a><br />
+                                <a id="@eventItem.VolunteerAttorneyId" href="#" class="AttorneyContactInfo">Attorney Contact</a><br />
                             }
                             else
                             {

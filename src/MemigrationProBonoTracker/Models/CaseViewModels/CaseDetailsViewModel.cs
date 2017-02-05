@@ -13,7 +13,9 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public Attorney AssigningAttorney { get; set; }
         public int AssigningAttorneyId { get; set; }
         public int VolunteerAttorneyId { get; set; }
+        [Display(Name = "Volunteer Attorney Name")]
         public string VolunteerAttorneyFullName { get; set; }
+        [Display(Name = "Volunteer Attorney Organization")]
         public string VolunteerAttorneyOrganizationName { get; set; }
         [Display(Name = "Case Type")]
         public Enums.CaseType Type { get; set; }

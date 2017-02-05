@@ -107,6 +107,7 @@ namespace MemigrationProBonoTracker.Services
                     VolunteerAttorneyId = dbResult.VolunteerAttorney?.Id ?? 0,
                     AssigningAttorneyId = dbResult.AssigningAttorney.Id,
                     AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
+                    Type = dbResult.Type,
                     CaseEvents = dbResult.CaseEvents,
                     CaseNotes = dbResult.CaseNotes,
                     CaseLogEntries = _db.LogEntries.Where(l => l.Case == dbResult).ToList(),
@@ -175,18 +176,20 @@ namespace MemigrationProBonoTracker.Services
         }
         public List<CaseEventViewModel> GetUpcomingCaseEvents()
         {
-            var result = new List<CaseEventViewModel>();
-            //var now = DateTime.Today;
-            //var dbResult = _db.CaseEvents.Include(e => e.ParentCase).ThenInclude(c => c.VolunteerAttorney).Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
-            ////var result = dbResult.Select(e => new CaseEventViewModel
-            //{
-            //    CaseId = e.CaseId,
-            //    ClientName = e.ParentCase.LeadClient.FullName,
-            //    AssignedAttorneyId = e.ParentCase.VolunteerAttorney == null ? 0 : e.ParentCase.VolunteerAttorney.Id,
-            //    EventDate = e.EventDate,
-            //    Event = e.Event
+            var now = DateTime.Today;
+            var dbResult = _db.CaseEvents
+                .Include(ce => ce.ParentCase)
+                .Include(ce => ce.ParentCase.LeadClient)
+                .Where(e => e.EventDate >= now && e.EventDate <= now.AddDays(14)).OrderBy(e => e.EventDate);
+            var result = dbResult.Select(e => new CaseEventViewModel
+            {
+                CaseId = e.CaseId,
+                ClientName = e.ParentCase.LeadClient.FullName,
+                VolunteerAttorneyId= e.ParentCase.VolunteerAttorneyId,
+                EventDate = e.EventDate,
+                Event = e.Event
 
-            //}).ToList();
+            }).ToList();
             return result;
         }
         public List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys()
