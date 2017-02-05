@@ -425,7 +425,7 @@ namespace MemigrationProBonoTracker.Services
             var result = _db.Attorneys.Include(x => x.PhoneList).Include(x => x.AddressList).FirstOrDefault(x => x.Id == id);
             if (result != null)
             {
-                result.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == result.Id);
+                result.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == result.Id && y.Active);
             }
             return result;
         }

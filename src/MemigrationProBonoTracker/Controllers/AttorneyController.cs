@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,14 @@ namespace MemigrationProBonoTracker.Controllers
             if (id != 0)
             {
                 model = _context.GetAttorneyDetails(id);
+                if (model.AddressList == null)
+                {
+                    model.AddressList = new List<AttorneyAddress>();
+                }
+                if (model.PhoneList== null)
+                {
+                    model.PhoneList = new List<AttorneyPhoneNumber>();
+                }
             }
             return View("CreateEdit", model);
         }
@@ -66,12 +75,8 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = attorney.Id == 0 ? _context.AddAttorney(attorney) : _context.UpdateAttorney(attorney);
-                if (success == 1)
-                {
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "An internal error occurred. Please try again later.");
+                var i = attorney.Id == 0 ? _context.AddAttorney(attorney) : _context.UpdateAttorney(attorney);
+                return Details(attorney.Id);
             }
             return View(attorney);
         }

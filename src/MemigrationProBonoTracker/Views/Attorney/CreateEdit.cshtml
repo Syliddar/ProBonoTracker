@@ -1,129 +1,190 @@
 @model Attorney
-<form asp-action="Save" asp-controller="Attorney">
-    <div class="form">
-        @if (Model.Id == 0)
-        {
-            <h4>Create Attorney</h4>
-        }
-        else
-        {
-            <h4>Edit Attorney</h4>
-        }
-        <hr />
-        <input asp-for="Id" hidden="" />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="BarNumber" class="control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="BarNumber" class="form-control" />
-                        <span asp-validation-for="BarNumber" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="OrganizationName" class="control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="OrganizationName" class="form-control" />
-                        <span asp-validation-for="OrganizationName" class="text-danger" />
-                    </div>
-                </div>
-            </div>
+<form asp-action="Save">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <h1>@Html.DisplayFor(x => x.FullName)</h1>
+            <hr />
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="FirstName" class="control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-
-                <div class="form-group">
-                    <label asp-for="Gender" class="control-label"></label>
-                    <div class="col-md-10">
-                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
-                        <span asp-validation-for="Gender" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-
-            </div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="RecruitmentDate" class="control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="RecruitmentDate" class="form-control datepickerpast" />
-                        <span asp-validation-for="RecruitmentDate" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="RecruitmentMethod" class="control-label"></label>
-                    <div class="col-md-10">
-                        <select asp-for="RecruitmentMethod" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
-                        <span asp-validation-for="RecruitmentMethod" class="text-danger" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="row">
+        @Html.HiddenFor(x=>x.Id)
+        <div class="col-md-6">
+            <div class="col-md-6"><strong>First Name:</strong><input asp-for="FirstName" class="form-control" /></div>
+            <div class="col-md-6"><strong>LastName:</strong><input asp-for="LastName" class="form-control" /></div>
             <div class="col-md-6">
-                <label asp-for="HasImmigrationExperience"></label>
-                <div class="col-md-10">
-                    <input asp-for="HasImmigrationExperience" type="checkbox" data-toggle="toggle" />
-                </div>
-
-                <label asp-for="HasJuvenileExperience"></label>
-                <div class="col-md-10">
-                    <input asp-for="HasJuvenileExperience" type="checkbox" data-toggle="toggle" />
-                </div>
+                <strong>Bar Number:</strong>
+                <input asp-for="BarNumber" class="form-control" />
             </div>
             <div class="col-md-6">
-                <label asp-for="HasProbateExperience"></label>
-                <div class="col-md-10">
-                    <input asp-for="HasProbateExperience" type="checkbox" data-toggle="toggle" />
-                </div>
-                <label asp-for="SpeaksSpanish"></label>
-                <div class="col-md-10">
-                    <input asp-for="SpeaksSpanish" type="checkbox" data-toggle="toggle" />
-                </div>
+                <strong>Gender: </strong>
+                <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
             </div>
         </div>
-        <div class="row">
-            <label asp-for="Notes" class="control-label"></label>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <strong>Organization Name</strong>
+                <input asp-for="OrganizationName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <strong>Recruited: </strong>
+                <input asp-for="RecruitmentDate" class="form-control datepicker" />
+            </div>
+            <div class="col-md-6">
 
-            <textarea style="max-width: 1080px" cols="2" rows="4" asp-for="Notes" class="form-control"></textarea>
+                <strong>Via</strong>
+                <select asp-for="@Model.RecruitmentDate" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
+            </div>
         </div>
     </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Phone Number</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-8">
+                        <input asp-for="@Model.PhoneList[0].Number" class="form-control" placeholder="Phone Number" />
+                    </div>
+                    <div class="col-md-4">
+                        <select asp-for="@Model.PhoneList[0].Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Address</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.AddressList[0].StreetAddress" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6"><input asp-for="@Model.AddressList[0].City" class="form-control" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.AddressList[0].State" class="form-control" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.AddressList[0].ZipCode" class="form-control" /></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Email</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <input asp-for="@Model.EmailList[0].Address" class="form-control" placeholder="EmailAddress" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Experience/Qualifications</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input asp-for="HasImmigrationExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Immigration<br />Experience"
+                                   data-off="No<br />Immigration<br />Experience"
+                                   data-width="120" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="HasJuvenileExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Juvenile<br />Experience"
+                                   data-off="No<br />Juvenile<br />Experience"
+                                   data-width="120" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="HasProbateExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Probate<br />Experience"
+                                   data-off="No<br />Probate<br />Experience"
+                                   data-width="120" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="SpeaksSpanish" type="checkbox" data-toggle="toggle"
+                                   data-on="Can<br />Speak<br />Spanish"
+                                   data-off="Cannot<br />Speak<br />Spanish"
+                                   data-width="120" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="InterestedVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-on="Is<br />Interested<br />Volunteer"
+                                   data-off="Is<br />Not<br />Interested<br />"
+                                   data-width="120" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-on="Is<br />Desired<br />Volunteer"
+                                   data-off="Is<br />Not<br />Desired<br />"
+                                   data-width="120" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Contributions</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.LatinoMemContribution)</strong><br />
+                            <input asp-for="@Model.LatinoMemContribution" class="form-control" />
+                        </div>
+                        <div class=" col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.MiaContribution)</strong><br />
+                            <input asp-for="@Model.MiaContribution" class="form-control" />
+                        </div>
+                        <div class="col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.ClcContribution)</strong><br />
+                            <input asp-for="@Model.ClcContribution" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Notes</h2>
+                </div>
+                <div class="panel-body">
+                    <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="Notes" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-primary pull-right">Save</button>
+    </div>
 </form>
+<script>
+    $.ready(function () {
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    });
+</script>
 @section scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
