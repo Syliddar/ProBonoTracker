@@ -10,6 +10,6 @@ namespace MemigrationProBonoTracker.Models.PersonViewModel
     {
         public Person Person { get; set; }
         public CaseListViewModel Cases { get; set; }
-
+        public List<AssociatedPersonViewModel> AssociatedPeople { get; set; }
     }
 }

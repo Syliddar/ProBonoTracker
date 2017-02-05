@@ -87,10 +87,8 @@ function AttorneyContactInfoModal(attorneyId) {
 
 
 /*
-Rest of file copy-pasted directly from the internet, don't even ask me. 
+Rest of file copy-pasted directly from the internet, don't ask me. 
 */
-
-
 
 //In accordance with prophecy, this allows the datatables to put empty values at the bottom when sorting columns 
 (function (factory) {

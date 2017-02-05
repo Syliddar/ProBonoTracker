@@ -1,70 +1,95 @@
 @model MemigrationProBonoTracker.Models.AttorneyViewModels.AttorneyListingViewModel
 
-<h1>@Model.Title</h1>
-<table class="table" id="AttorneyTable">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Organization Name</th>
-            <th>Assigned Cases</th>
-            <th>Immigration Experience</th>
-            <th>Juvenile Experience</th>
-            <th>Probate Experience</th>
-            <th>Interested Volunteer</th>
-            <th>Desired Volunteer</th>
-            <th>Speaks Spanish</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.AttorneyList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrganizationName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AssignedCases)
-                </td>
-                <td>
-                    @(item.HasImmigrationExperience ? "Yes" : "No")
-                </td>
-                <td>
-                    @(item.HasJuvenileExperience ? "Yes" : "No")
-                </td>
-                <td>
-                    @(item.HasProbateExperience ? "Yes" : "No")
-                </td>
-                <td>
-                    @(item.InterestedVolunteer ? "Yes" : "No")
-                </td>
-                <td>
-                    @(item.DesiredVolunteer ? "Yes" : "No")
-                </td>
-                <td>
-                    @(item.SpeaksSpanish ? "Yes" : "No")
-                </td>
-                <td>
-                    <a asp-action="CreateEdit" asp-route-id="@item.Id">Edit</a><br />
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    <a id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<p>
-    <a asp-action="CreateEdit">Create New</a>
-</p>
+<div class="row">
+    <div class="col-md-12">
+        <h1>
+            @Model.Title
+            <a class="btn btn-primary pull-right" asp-action="CreateEdit">Create New</a>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table" id="AttorneyTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Organization Name</th>
+                    <th>Assigned Cases</th>
+                    <th>Immigration Experience        </th>
+                    <th>Juvenile Experience</th>
+                    <th>Probate Experience</th>
+                    <th>Interested Volunteer</th>
+                    <th>Desired Volunteer</th>
+                    <th>Speaks Spanish</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @*<tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Organization Name</th>
+                    <th>Assigned Cases</th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th><input type="checkbox" data-toggle="toggle" /></th>
+                    <th></th>
+                </tr>
+            </tfoot>*@
+            <tbody>
+                @foreach (var item in Model.AttorneyList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrganizationName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AssignedCases)
+                        </td>
+                        <td>
+                            @(item.HasImmigrationExperience ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(item.HasJuvenileExperience ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(item.HasProbateExperience ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(item.InterestedVolunteer ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(item.DesiredVolunteer ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(item.SpeaksSpanish ? "Yes" : "No")
+                        </td>
+                        <td>
+                            <a asp-action="CreateEdit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <script>
     $().ready(function () {
-        $('#AttorneyTable').DataTable();
+        $('#AttorneyTable').DataTable({
+            "lengthChange": false
+        });;
     });
 </script>

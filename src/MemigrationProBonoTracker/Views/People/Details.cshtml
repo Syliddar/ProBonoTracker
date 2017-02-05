@@ -12,10 +12,28 @@
                     <dt></dt>
                     <dd>
                         @Html.DisplayFor(x => x.Person.DateOfBirth)<br />
-                        @Html.DisplayFor(x => x.Person.Gender) <br/>
+                        @Html.DisplayFor(x => x.Person.Gender) <br />
                         @Html.DisplayFor(x => x.Person.Nationality)
                     </dd>
                 </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Associated People</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    @foreach (var assPerson in Model.AssociatedPeople)
+                {
+                    <div class="col-md-2">
+                        <a asp-controller="People" asp-action="Details" asp-route-id="@assPerson.AssociatedPersonId"><strong>@assPerson.FullName</strong></a><br/>
+                        @assPerson.Relation
+                    </div>
+                }
+            </div>
             </div>
         </div>
     </div>

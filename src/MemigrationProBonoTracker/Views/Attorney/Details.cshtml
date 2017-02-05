@@ -1,124 +1,151 @@
-@model MemigrationProBonoTracker.Models.Attorney
+@model Attorney
 
-<div>
-    <h4>Attorney</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AssignedCases)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AssignedCases)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BarNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BarNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ClcContribution)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ClcContribution)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DesiredVolunteer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DesiredVolunteer)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HasImmigrationExperience)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HasImmigrationExperience)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HasJuvenileExperience)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HasJuvenileExperience)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HasProbateExperience)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HasProbateExperience)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.InterestedVolunteer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.InterestedVolunteer)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAssigningAttorney)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsAssigningAttorney)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LatinoMemContribution)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LatinoMemContribution)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MiaContribution)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MiaContribution)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OrganizationName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OrganizationName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RecruitmentDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RecruitmentDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RecruitmentMethod)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RecruitmentMethod)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SpeaksSpanish)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SpeaksSpanish)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="col-md-12"><h1>@Html.DisplayFor(x => x.FullName), @Html.DisplayFor(model => model.OrganizationName)</h1></div>
+
+    <div class="col-md-3"><strong>Assigned Cases:</strong> @Html.DisplayFor(model => model.AssignedCases)</div>
+    <div class="col-md-3"><strong>Bar Number:</strong> @Html.DisplayFor(model => model.BarNumber)</div>
+    <div class="col-md-3"><strong>Gender: </strong>@Html.DisplayFor(model => model.Gender)</div>
+    <div class="col-md-3"><strong>Recruited: </strong>@Html.DisplayFor(model => model.RecruitmentDate), <strong>Via</strong> @Html.DisplayFor(model => model.RecruitmentMethod)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Phone Numbers</h2>
+            </div>
+            <div class="panel-body">
+                @foreach (var phone in Model.PhoneList)
+                {
+                    <address class="col-md-4">
+                        <strong>@phone.Type</strong><br />
+                        @phone.Number
+                    </address>
+
+
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Address</h2>
+            </div>
+            <div class="panel-body">
+                @foreach (var address in Model.AddressList)
+                {
+                    <address class="col-md-6">
+                        <strong>@Html.DisplayFor(a => address.StreetAddress)</strong><br />
+                        @Html.DisplayFor(a => address.City) @Html.DisplayFor(a => address.State) @Html.DisplayFor(a => address.ZipCode)<br />
+                    </address>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Experience/Qualifications</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input asp-for="HasImmigrationExperience" type="checkbox" data-toggle="toggle"
+                               data-on="Has<br />Immigration<br />Experience"
+                               data-off="No<br />Immigration<br />Experience"
+                               data-width="120"
+                               data-offstyle="info"
+                               disabled="" />
+                    </div>
+                    <div class="col-md-2">
+                        <input asp-for="HasJuvenileExperience" type="checkbox" data-toggle="toggle"
+                               data-on="Has<br />Juvenile<br />Experience"
+                               data-off="No<br />Juvenile<br />Experience"
+                               data-width="120"
+                               data-offstyle="info"
+                               disabled="" />
+                    </div>
+                    <div class="col-md-2">
+                        <input asp-for="HasProbateExperience" type="checkbox" data-toggle="toggle"
+                               data-on="Has<br />Probate<br />Experience"
+                               data-off="No<br />Probate<br />Experience"
+                               data-width="120"
+                               data-offstyle="info"
+                               disabled="" />
+                    </div>
+                    <div class="col-md-2">
+                        <input asp-for="SpeaksSpanish" type="checkbox" data-toggle="toggle"
+                               data-on="Can<br />Speak<br />Spanish"
+                               data-off="Cannot<br />Speak<br />Spanish"
+                               data-width="120"
+                               data-offstyle="info"
+                               disabled="" />
+                    </div>
+                    <div class="col-md-2">
+                        <input asp-for="InterestedVolunteer" type="checkbox" data-toggle="toggle"
+                               data-on="Is<br />Interested<br />Volunteer"
+                               data-off="Is<br />Not<br />Interested<br />"
+                               data-width="120"
+                               data-offstyle="info"
+                               disabled="" />
+                    </div>
+                    <div class="col-md-2">
+                        <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                               data-on="Is<br />Desired<br />Volunteer"
+                               data-off="Is<br />Not<br />Desired<br />"
+                               data-offstyle="info"
+                               data-width="120"
+                               disabled="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Contributions</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>@Html.DisplayNameFor(model => model.LatinoMemContribution)</strong><br />
+                        $@Html.DisplayFor(model => model.LatinoMemContribution)
+                    </div>
+                    <div class="col-md-4">
+                        <strong>@Html.DisplayNameFor(model => model.MiaContribution)</strong><br />
+                        $@Html.DisplayFor(model => model.MiaContribution)
+                    </div>
+                    <div class="col-md-4">
+                        <strong>@Html.DisplayNameFor(model => model.ClcContribution)</strong><br />
+                        $@Html.DisplayFor(model => model.ClcContribution)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Notes</h2>
+            </div>
+            <div class="panel-body">
+                <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="Notes" class="form-control" readonly=""></textarea>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
     <a asp-action="CreateEdit" asp-route-id="@Model.Id">Edit</a> |

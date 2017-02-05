@@ -35,7 +35,9 @@ namespace MemigrationProBonoTracker.Controllers
             var model = new PersonDetailsViewModel
             {
                 Person = _context.GetPerson(id.Value),
-                Cases = _context.GetCaseListViewModelForPerson(id.Value)
+                Cases = _context.GetCaseListViewModelForPerson(id.Value),
+                AssociatedPeople = _context.GetAssociatedPeopleViewModelForPerson(id.Value)
+
             };
             if (model.Person == null)
             {

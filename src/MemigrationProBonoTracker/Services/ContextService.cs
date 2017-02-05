@@ -185,7 +185,7 @@ namespace MemigrationProBonoTracker.Services
             {
                 CaseId = e.CaseId,
                 ClientName = e.ParentCase.LeadClient.FullName,
-                VolunteerAttorneyId= e.ParentCase.VolunteerAttorneyId,
+                VolunteerAttorneyId = e.ParentCase.VolunteerAttorneyId,
                 EventDate = e.EventDate,
                 Event = e.Event
 
@@ -307,6 +307,29 @@ namespace MemigrationProBonoTracker.Services
             };
         }
 
+        public List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int id)
+        {
+            var result = new List<AssociatedPersonViewModel>();
+            var dbResult = _db.Cases.Where(ca => ca.LeadClientId == id).Include(ca => ca.AssociatedPeopleList).ThenInclude(ap => ap.Person);
+            foreach (var @case in dbResult)
+            {
+                foreach (var associatedPerson in @case.AssociatedPeopleList)
+                {
+                    if (result.Any(r => r.AssociatedPersonId == associatedPerson.Id) == false)
+                    {
+                        result.Add(new AssociatedPersonViewModel
+                        {
+                            AssociatedPersonId = associatedPerson.Person.Id,
+                            FullName = associatedPerson.Person.FullName,
+                            Relation = associatedPerson.Relationship
+                        });
+                    }
+                }
+            }
+
+
+            return result;
+        }
 
         #endregion
 
@@ -361,7 +384,7 @@ namespace MemigrationProBonoTracker.Services
                 List<AttorneyListItem> attorneyListItems = attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
+                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorneyId == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
@@ -382,7 +405,7 @@ namespace MemigrationProBonoTracker.Services
                 model.AttorneyList = _db.Attorneys.Select(x => new AttorneyListItem
                 {
                     Id = x.Id,
-                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == x.Id),
+                    AssignedCases = _db.Cases.Count(y => y.VolunteerAttorneyId == x.Id),
                     FullName = x.FullName,
                     Gender = x.Gender,
                     OrganizationName = x.OrganizationName,
