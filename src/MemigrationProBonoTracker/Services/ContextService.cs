@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 using System.Linq;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Models.PersonViewModel;
+using Microsoft.DotNet.Cli.Utils;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Versioning;
 
 namespace MemigrationProBonoTracker.Services
 {
@@ -116,19 +115,26 @@ namespace MemigrationProBonoTracker.Services
         }
         public int AddCase(CreateCaseViewModel @case)
         {
-            var leadClient = @case.LeadClient.Id == 0 ? new Person
+            Person leadClient;
+            if (@case.LeadClient.Id == 0)
             {
-                FirstName = @case.LeadClient.FirstName,
-                LastName = @case.LeadClient.LastName,
-                DateOfBirth = @case.LeadClient.DateOfBirth,
-                Gender = @case.LeadClient.Gender,
-                Nationality = @case.LeadClient.Nationality,
-                Notes = @case.LeadClient.Notes
+                leadClient = new Person
+                {
+                    FirstName = @case.LeadClient.FirstName,
+                    LastName = @case.LeadClient.LastName,
+                    DateOfBirth = @case.LeadClient.DateOfBirth,
+                    Gender = @case.LeadClient.Gender,
+                    Nationality = @case.LeadClient.Nationality,
+                    Notes = @case.LeadClient.Notes
+                };
+                _db.People.Add(leadClient);
+                _db.SaveChanges();
             }
-                : GetPerson(@case.LeadClient.Id);
-            _db.People.Add(leadClient);
-            _db.SaveChanges();
-            var assigningAttorney = GetAttorneyDetails(@case.AssigningAttorneyId);
+            else
+            {
+                leadClient = GetPerson(@case.LeadClient.Id);
+            }
+            var assigningAttorney = _db.Attorneys.Find(@case.AssigningAttorneyId);
             var newCase = new Case
             {
                 Active = true,
@@ -139,26 +145,29 @@ namespace MemigrationProBonoTracker.Services
                 DateCreated = DateTime.Now
             };
             _db.Cases.Add(newCase);
-            return _db.SaveChanges();
+            _db.SaveChanges();
+            return newCase.Id;
         }
         public int UpdateCase(CaseDetailsViewModel viewModel)
         {
             var @case = _db.Cases.Find(viewModel.Id);
-            foreach (var caseEvent in viewModel.CaseEvents)
+            if (viewModel.CaseEvents != null && viewModel.CaseEvents.Any())
             {
-                if (caseEvent.Id == 0)
+                foreach (var caseEvent in viewModel.CaseEvents)
                 {
-                    caseEvent.ParentCase = @case;
-                    _db.CaseEvents.Add(caseEvent);
+                    if (caseEvent.Id == 0)
+                    {
+                        caseEvent.ParentCase = @case;
+                        _db.CaseEvents.Add(caseEvent);
+                    }
+                    else
+                    {
+                        var @event = _db.CaseEvents.Find(caseEvent.Id);
+                        @event.EventDate = caseEvent.EventDate;
+                        @event.Event = caseEvent.Event;
+                    }
+                    _db.SaveChanges();
                 }
-                else
-                {
-                    var @event = _db.CaseEvents.Find(caseEvent.Id);
-                    @event.EventDate = caseEvent.EventDate;
-                    @event.Event = caseEvent.Event;
-                }
-
-                _db.SaveChanges();
             }
             @case.Active = viewModel.Active;
             @case.AssociatedPeopleList = viewModel.AssociatedPeopleList;
@@ -251,21 +260,9 @@ namespace MemigrationProBonoTracker.Services
         public Person GetPerson(int id)
         {
             var result = _db.People
-                .Include(p => p.AddressList)
-                .Include(p => p.PhoneList)
+                .Include(p => p.Address)
+                .Include(p => p.Phone)
                 .FirstOrDefault(p => p.Id == id);
-
-            if (result != null)
-            {
-                if (result.AddressList == null)
-                {
-                    result.AddressList = new List<PersonAddress>();
-                }
-                if (result.PhoneList == null)
-                {
-                    result.PhoneList = new List<PersonPhoneNumber>();
-                }
-            }
             return result;
         }
         public int AddPerson(Person person)
@@ -287,23 +284,23 @@ namespace MemigrationProBonoTracker.Services
         public PersonContactInfoViewModel GetPersonContactInfo(int id)
         {
             var person = _db.People
-                .Include(p => p.AddressList)
-                .Include(p => p.PhoneList)
+                .Include(p => p.Address)
+                .Include(p => p.Phone)
                 .FirstOrDefault(p => p.Id == id);
             if (person != null)
             {
                 var result = new PersonContactInfoViewModel
                 {
-                    PersonAddresses = person.AddressList,
+                    PersonAddresses = person.Address,
                     PersonName = person.FullName,
-                    PhoneNumbers = person.PhoneList
+                    PhoneNumbers = person.Phone
                 };
                 return result;
             }
             return new PersonContactInfoViewModel
             {
-                PhoneNumbers = new List<PersonPhoneNumber>(),
-                PersonAddresses = new List<PersonAddress>()
+                PhoneNumbers = new PersonPhoneNumber(),
+                PersonAddresses = new PersonAddress()
             };
         }
 
@@ -420,14 +417,25 @@ namespace MemigrationProBonoTracker.Services
 
             return model;
         }
-        public Attorney GetAttorneyDetails(int id)
+        public AttorneyDetailsViewModel GetAttorneyDetails(int id)
         {
-            var result = _db.Attorneys.Include(x => x.PhoneList).Include(x => x.AddressList).FirstOrDefault(x => x.Id == id);
-            if (result != null)
+            var viewModel = new AttorneyDetailsViewModel();
+            var dbResult = _db.Attorneys.Include(x => x.Phone).Include(x => x.Address).FirstOrDefault(x => x.Id == id);
+            if (dbResult != null)
             {
-                result.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == result.Id && y.Active);
+                dbResult.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == dbResult.Id && y.Active);
+                viewModel.Attorney = dbResult;
+                viewModel.CaseList = _db.Cases
+                    .Include(x => x.LeadClient)
+                    .Where(x => x.VolunteerAttorneyId == id).Select(x => new AttorneyCasesViewModel
+                        {
+                            Active = x.Active,
+                            CaseId = x.Id,
+                            LeadClientName = x.LeadClient.FullName,
+                            Type = x.Type
+                        }).ToList();
             }
-            return result;
+            return viewModel;
         }
         public int AddAttorney(Attorney attorney)
         {
@@ -449,14 +457,14 @@ namespace MemigrationProBonoTracker.Services
 
         public AttorneyContactInfoViewModel GetAttorneyContactInfo(int id)
         {
-            var attorney = _db.Attorneys.Include(a => a.AddressList).Include(a => a.PhoneList).Include(a => a.EmailList).First(a => a.Id == id);
+            var attorney = _db.Attorneys.Include(a => a.Address).Include(a => a.Phone).Include(a => a.Email).First(a => a.Id == id);
             var result = new AttorneyContactInfoViewModel
             {
                 AttorneyName = attorney.FullName,
-                AttorneyAddresses = attorney.AddressList,
+                AttorneyAddresses = attorney.Address,
                 Notes = attorney.Notes,
-                EmailList = attorney.EmailList,
-                PhoneNumbers = attorney.PhoneList
+                EmailList = attorney.Email,
+                PhoneNumbers = attorney.Phone
             };
             return result;
         }

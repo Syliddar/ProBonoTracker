@@ -1,47 +1,63 @@
-@model Attorney
+@model MemigrationProBonoTracker.Models.AttorneyViewModels.AttorneyDetailsViewModel
 
 <div class="row">
-    <div class="col-md-12"><h1>@Html.DisplayFor(x => x.FullName), @Html.DisplayFor(model => model.OrganizationName)</h1></div>
+    <div class="col-md-12"><h1>@Html.DisplayFor(model => model.Attorney.FullName), @Html.DisplayFor(model => model.Attorney.OrganizationName)</h1></div>
 
-    <div class="col-md-3"><strong>Assigned Cases:</strong> @Html.DisplayFor(model => model.AssignedCases)</div>
-    <div class="col-md-3"><strong>Bar Number:</strong> @Html.DisplayFor(model => model.BarNumber)</div>
-    <div class="col-md-3"><strong>Gender: </strong>@Html.DisplayFor(model => model.Gender)</div>
-    <div class="col-md-3"><strong>Recruited: </strong>@Html.DisplayFor(model => model.RecruitmentDate), <strong>Via</strong> @Html.DisplayFor(model => model.RecruitmentMethod)
+    @if (Model.Attorney.IsAssigningAttorney == false)
+    { <div class="col-md-3"><strong>Assigned Cases:</strong> @Html.DisplayFor(model => model.Attorney.AssignedCases)</div>}
+    <div class="col-md-3"><strong>Bar Number:</strong> @Html.DisplayFor(model => model.Attorney.BarNumber)</div>
+    <div class="col-md-3"><strong>Gender: </strong>@Html.DisplayFor(model => model.Attorney.Gender)</div>
+    <div class="col-md-3">
+        @if (Model.Attorney.IsAssigningAttorney)
+        {
+            <strong>Assigning Attorney</strong>
+        }
+        else
+        {
+            <strong>Recruited: </strong>@Html.DisplayFor(model => model.Attorney.RecruitmentDate)<text>,</text>
+            <strong>Via</strong> @Html.DisplayFor(model => model.Attorney.RecruitmentMethod)
+        }
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Phone Numbers</h2>
             </div>
             <div class="panel-body">
-                @foreach (var phone in Model.PhoneList)
-                {
-                    <address class="col-md-4">
-                        <strong>@phone.Type</strong><br />
-                        @phone.Number
-                    </address>
-
-
-                }
+                <address class="col-md-4">
+                    <strong>@Html.DisplayFor(x=>x.Attorney.Phone.Type)</strong><br />
+                    @Html.DisplayFor(x => x.Attorney.Phone.Number)
+                </address>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Address</h2>
             </div>
             <div class="panel-body">
-                @foreach (var address in Model.AddressList)
-                {
-                    <address class="col-md-6">
-                        <strong>@Html.DisplayFor(a => address.StreetAddress)</strong><br />
-                        @Html.DisplayFor(a => address.City) @Html.DisplayFor(a => address.State) @Html.DisplayFor(a => address.ZipCode)<br />
-                    </address>
-                }
+
+                <address class="col-md-6">
+                    <strong>@Html.DisplayFor(model => model.Attorney.Address.StreetAddress)</strong><br />
+                    @Html.DisplayFor(model => model.Attorney.Address.City) @Html.DisplayFor(model => model.Attorney.Address.State) @Html.DisplayFor(model => model.Attorney.Address.ZipCode)<br />
+                </address>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Email Address</h2>
+            </div>
+            <div class="panel-body">
+                <address class="col-md-4">
+                    <strong>@Html.DisplayFor(x => x.Attorney.Email.Address)</strong><br />
+                </address>
             </div>
         </div>
     </div>
@@ -55,7 +71,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <input asp-for="HasImmigrationExperience" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.HasImmigrationExperience" type="checkbox" data-toggle="toggle"
                                data-on="Has<br />Immigration<br />Experience"
                                data-off="No<br />Immigration<br />Experience"
                                data-width="120"
@@ -63,7 +79,7 @@
                                disabled="" />
                     </div>
                     <div class="col-md-2">
-                        <input asp-for="HasJuvenileExperience" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.HasJuvenileExperience" type="checkbox" data-toggle="toggle"
                                data-on="Has<br />Juvenile<br />Experience"
                                data-off="No<br />Juvenile<br />Experience"
                                data-width="120"
@@ -71,7 +87,7 @@
                                disabled="" />
                     </div>
                     <div class="col-md-2">
-                        <input asp-for="HasProbateExperience" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.HasProbateExperience" type="checkbox" data-toggle="toggle"
                                data-on="Has<br />Probate<br />Experience"
                                data-off="No<br />Probate<br />Experience"
                                data-width="120"
@@ -79,7 +95,7 @@
                                disabled="" />
                     </div>
                     <div class="col-md-2">
-                        <input asp-for="SpeaksSpanish" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.SpeaksSpanish" type="checkbox" data-toggle="toggle"
                                data-on="Can<br />Speak<br />Spanish"
                                data-off="Cannot<br />Speak<br />Spanish"
                                data-width="120"
@@ -87,7 +103,7 @@
                                disabled="" />
                     </div>
                     <div class="col-md-2">
-                        <input asp-for="InterestedVolunteer" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.InterestedVolunteer" type="checkbox" data-toggle="toggle"
                                data-on="Is<br />Interested<br />Volunteer"
                                data-off="Is<br />Not<br />Interested<br />"
                                data-width="120"
@@ -95,7 +111,7 @@
                                disabled="" />
                     </div>
                     <div class="col-md-2">
-                        <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                        <input asp-for="@Model.Attorney.DesiredVolunteer" type="checkbox" data-toggle="toggle"
                                data-on="Is<br />Desired<br />Volunteer"
                                data-off="Is<br />Not<br />Desired<br />"
                                data-offstyle="info"
@@ -107,34 +123,34 @@
         </div>
     </div>
 </div>
-
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title">Contributions</h2>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <strong>@Html.DisplayNameFor(model => model.LatinoMemContribution)</strong><br />
-                        $@Html.DisplayFor(model => model.LatinoMemContribution)
-                    </div>
-                    <div class="col-md-4">
-                        <strong>@Html.DisplayNameFor(model => model.MiaContribution)</strong><br />
-                        $@Html.DisplayFor(model => model.MiaContribution)
-                    </div>
-                    <div class="col-md-4">
-                        <strong>@Html.DisplayNameFor(model => model.ClcContribution)</strong><br />
-                        $@Html.DisplayFor(model => model.ClcContribution)
+@if (Model.Attorney.IsAssigningAttorney == false)
+{
+   <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Contributions</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.Attorney.LatinoMemContribution)</strong><br />
+                            $@Html.DisplayFor(model => model.Attorney.LatinoMemContribution)
+                        </div>
+                        <div class="col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.Attorney.MiaContribution)</strong><br />
+                            $@Html.DisplayFor(model => model.Attorney.MiaContribution)
+                        </div>
+                        <div class="col-md-4">
+                            <strong>@Html.DisplayNameFor(model => model.Attorney.ClcContribution)</strong><br />
+                            $@Html.DisplayFor(model => model.Attorney.ClcContribution)
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
@@ -142,12 +158,50 @@
                 <h2 class="panel-title">Notes</h2>
             </div>
             <div class="panel-body">
-                <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="Notes" class="form-control" readonly=""></textarea>
+                <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="@Model.Attorney.Notes" class="form-control" readonly=""></textarea>
             </div>
         </div>
     </div>
 </div>
+@if (Model.Attorney.IsAssigningAttorney == false) { 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Cases</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Case Type</th>
+                            <th>Lead Client</th>
+                            <th>Active/Closed</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var caseItem in Model.CaseList)
+                        {
+                            <tr>
+                                <td>@caseItem.Type</td>
+                                <td>@caseItem.LeadClientName</td>
+                                <td>@(caseItem.Active ? "Active" : "Closed")</td>
+                                <td>
+                                    <a class="btn btn-primary"  type="button" asp-controller="Case" asp-action="Details" asp-route-id="@caseItem.CaseId">
+                                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <div>
-    <a asp-action="CreateEdit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="CreateEdit" asp-route-id="@Model.Attorney.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

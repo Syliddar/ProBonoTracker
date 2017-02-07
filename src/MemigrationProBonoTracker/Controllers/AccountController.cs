@@ -1,13 +1,9 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.AccountViewModels;
-using MemigrationProBonoTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace MemigrationProBonoTracker.Controllers

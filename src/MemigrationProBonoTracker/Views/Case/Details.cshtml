@@ -1,8 +1,9 @@
 @model MemigrationProBonoTracker.Models.CaseViewModels.CaseDetailsViewModel
 <div class="row ">
-    <div class="col-lg-8">
-        <h2>@Html.DisplayFor(x => x.LeadClient.FullName) - @Html.DisplayFor(x => x.Type)</h2>
+    <div class="col-lg-12">
+        <h2>@Html.DisplayFor(x => x.LeadClient.FullName) - @Html.DisplayFor(x => x.Type) <a class="pull-right btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a></h2>
     </div>
+
     <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -11,7 +12,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-3">
-                        @Html.LabelFor(x => x.LeadClient.FullName) <br />6
+                        @Html.LabelFor(x => x.LeadClient.FullName) <br />
                         @Html.DisplayFor(x => x.LeadClient.FullName)
                     </div>
                     <div class="col-lg-2">
@@ -78,7 +79,17 @@
                             @Html.DisplayFor(x => x.VolunteerAttorneyOrganizationName)
                         </div>
                         <div class="col-lg-3">
-                            <button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button>
+                            <div class="row">
+                                <div class="col-lg-12"><button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a asp-action="Details" asp-controller="Attorney" asp-route-id="@Model.VolunteerAttorneyId" class="pull-right btn btn-primary">
+                                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

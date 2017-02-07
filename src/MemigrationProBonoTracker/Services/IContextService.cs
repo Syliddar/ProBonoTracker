@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Models.CaseViewModels;
@@ -35,7 +31,7 @@ namespace MemigrationProBonoTracker.Services
         List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int idValue);
 
         AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney);
-        Attorney GetAttorneyDetails(int id);
+        AttorneyDetailsViewModel GetAttorneyDetails(int id);
         int AddAttorney(Attorney @attorney);
         int UpdateAttorney(Attorney @attorney);
         int DeleteAttorney(int id);

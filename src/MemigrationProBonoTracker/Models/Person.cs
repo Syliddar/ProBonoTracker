@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using static MemigrationProBonoTracker.Models.Enums;
 
 namespace MemigrationProBonoTracker.Models
@@ -16,8 +15,8 @@ namespace MemigrationProBonoTracker.Models
         public string LastName { get; set; }
         [Display(Name = "Full Name")]
         public string FullName { get { return FirstName + " " + LastName; } }
-        public List<PersonAddress> AddressList { get; set; }
-        public List<PersonPhoneNumber> PhoneList { get; set; }
+        public PersonAddress Address { get; set; }
+        public PersonPhoneNumber Phone { get; set; }
 
         [Display(Name = "Notes")]
         public string Notes { get; set; }

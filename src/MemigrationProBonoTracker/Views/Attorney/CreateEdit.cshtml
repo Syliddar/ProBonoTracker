@@ -14,9 +14,15 @@
                 <strong>Bar Number:</strong>
                 <input asp-for="BarNumber" class="form-control" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <strong>Gender: </strong>
                 <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+            </div>
+            <div class="col-md-3"><br/>
+                <input asp-for="IsAssigningAttorney" type="checkbox" data-toggle="toggle"
+                       data-size="normal"
+                       data-on= "Assigning"
+                       data-off="Volunteer" />
             </div>
         </div>
         <div class="col-md-6">
@@ -44,10 +50,10 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-8">
-                        <input asp-for="@Model.PhoneList[0].Number" class="form-control" placeholder="Phone Number" />
+                        <input asp-for="@Model.Phone.Number" class="form-control" placeholder="Phone Number" />
                     </div>
                     <div class="col-md-4">
-                        <select asp-for="@Model.PhoneList[0].Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
+                        <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
                     </div>
                 </div>
             </div>
@@ -60,14 +66,14 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <input asp-for="@Model.AddressList[0].StreetAddress" class="form-control" />
+                            <input asp-for="@Model.Address.StreetAddress" class="form-control" />
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-6"><input asp-for="@Model.AddressList[0].City" class="form-control" /></div>
-                        <div class="col-md-3"><input asp-for="@Model.AddressList[0].State" class="form-control" /></div>
-                        <div class="col-md-3"><input asp-for="@Model.AddressList[0].ZipCode" class="form-control" /></div>
+                        <div class="col-md-6"><input asp-for="@Model.Address.City" class="form-control" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.Address.State" class="form-control" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.Address.ZipCode" class="form-control" /></div>
                     </div>
 
                 </div>
@@ -80,7 +86,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <input asp-for="@Model.EmailList[0].Address" class="form-control" placeholder="EmailAddress" />
+                        <input asp-for="@Model.Email.Address" class="form-control" placeholder="EmailAddress" />
                     </div>
                 </div>
             </div>
@@ -147,15 +153,15 @@
                     <div class="row">
                         <div class="col-md-4">
                             <strong>@Html.DisplayNameFor(model => model.LatinoMemContribution)</strong><br />
-                            <input asp-for="@Model.LatinoMemContribution" class="form-control" />
+                            <input asp-for="@Model.LatinoMemContribution" class="form-control" placeholder="0.00" />
                         </div>
                         <div class=" col-md-4">
                             <strong>@Html.DisplayNameFor(model => model.MiaContribution)</strong><br />
-                            <input asp-for="@Model.MiaContribution" class="form-control" />
+                            <input asp-for="@Model.MiaContribution" class="form-control"placeholder="0.00" />
                         </div>
                         <div class="col-md-4">
                             <strong>@Html.DisplayNameFor(model => model.ClcContribution)</strong><br />
-                            <input asp-for="@Model.ClcContribution" class="form-control" />
+                            <input asp-for="@Model.ClcContribution" class="form-control" placeholder="0.00"/>
                         </div>
                     </div>
                 </div>
@@ -180,11 +186,6 @@
         <button type="submit" class="btn btn-primary pull-right">Save</button>
     </div>
 </form>
-<script>
-    $.ready(function () {
-
-    });
-</script>
 @section scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

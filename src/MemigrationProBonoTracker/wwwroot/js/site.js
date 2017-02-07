@@ -77,9 +77,12 @@ function PersonContactInfoModal(personId) {
     });
 }
 function AttorneyContactInfoModal(attorneyId) {
+    
     $.ajax({
         url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + attorneyId,
         success: function (data) {
+            
+            console.log(data);
             $('#modalWrapper').html(data);
         }
     });

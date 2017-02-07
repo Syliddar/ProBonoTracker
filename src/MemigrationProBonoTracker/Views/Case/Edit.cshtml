@@ -5,10 +5,9 @@
             <h1>Edit Case</h1>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <select asp-for="@Model.Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
                     <span asp-validation-for="@Model.Type" class="text-danger"></span>
-                    <input hidden asp-for="Active" />
                     <input hidden asp-for="Id" />
                 </div>
             </div>
@@ -220,7 +219,6 @@
                 }
             });
         });
-        BindCaseEventRow();
     });
 
 

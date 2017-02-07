@@ -45,15 +45,12 @@
                 <h2 class="panel-title">Phone Numbers</h2>
             </div>
             <div class="panel-body">
-                @foreach (var phone in Model.Person.PhoneList)
-                {
+                
                     <address class="col-md-6">
-                        <strong>@phone.Type</strong><br />
-                        @phone.Number
+                        <strong>@Html.DisplayFor(x=>x.Person.Phone.Type)</strong><br />
+                        @Html.DisplayFor(x => x.Person.Phone.Number)
                     </address>
-
-
-                }
+                    
             </div>
         </div>
     </div>
@@ -63,14 +60,13 @@
                 <h2 class="panel-title">Address</h2>
             </div>
             <div class="panel-body">
-                @foreach (var address in Model.Person.AddressList)
-                {
+               
                     <address class="col-md-6">
-                        <strong>@Html.DisplayFor(a => address.StreetAddress)</strong><br />
-                        @Html.DisplayFor(a => address.City) @Html.DisplayFor(a => address.State) @Html.DisplayFor(a => address.ZipCode)<br />
-                        @Html.DisplayFor(a => address.Country)
+                        <strong>@Html.DisplayFor(a => a.Person.Address.StreetAddress)</strong><br />
+                        @Html.DisplayFor(a => a.Person.Address.City) @Html.DisplayFor(a => a.Person.Address.State) @Html.DisplayFor(a => a.Person.Address.ZipCode)<br />
+                        @Html.DisplayFor(a => a.Person.Address.Country)
                     </address>
-                }
+              
             </div>
         </div>
     </div>

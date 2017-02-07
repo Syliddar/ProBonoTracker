@@ -443,14 +443,14 @@ namespace MemigrationProBonoTracker.Migrations
             modelBuilder.Entity("MemigrationProBonoTracker.Models.AttorneyAddress", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Attorney")
-                        .WithMany("AddressList")
+                        .WithMany("Address")
                         .HasForeignKey("AttorneyId");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.AttorneyPhoneNumber", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Attorney")
-                        .WithMany("PhoneList")
+                        .WithMany("Phone")
                         .HasForeignKey("AttorneyId");
                 });
 
@@ -494,14 +494,14 @@ namespace MemigrationProBonoTracker.Migrations
             modelBuilder.Entity("MemigrationProBonoTracker.Models.PersonAddress", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Person")
-                        .WithMany("AddressList")
+                        .WithMany("Address")
                         .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.PersonPhoneNumber", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Person")
-                        .WithMany("PhoneList")
+                        .WithMany("Phone")
                         .HasForeignKey("PersonId");
                 });
 

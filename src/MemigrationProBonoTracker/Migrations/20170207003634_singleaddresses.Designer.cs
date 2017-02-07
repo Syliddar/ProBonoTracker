@@ -9,8 +9,8 @@ using MemigrationProBonoTracker.Models;
 namespace MemigrationProBonoTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170121213245_renamingContactLogToCaseLog")]
-    partial class renamingContactLogToCaseLog
+    [Migration("20170207003634_singleaddresses")]
+    partial class singleaddresses
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,11 +93,15 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AddressId");
+
                     b.Property<string>("BarNumber");
 
                     b.Property<double>("ClcContribution");
 
                     b.Property<bool>("DesiredVolunteer");
+
+                    b.Property<int?>("EmailId");
 
                     b.Property<string>("FirstName");
 
@@ -123,6 +127,8 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<string>("OrganizationName");
 
+                    b.Property<int?>("PhoneId");
+
                     b.Property<DateTime>("RecruitmentDate");
 
                     b.Property<int>("RecruitmentMethod");
@@ -130,6 +136,12 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<bool>("SpeaksSpanish");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("EmailId");
+
+                    b.HasIndex("PhoneId");
 
                     b.ToTable("Attorneys");
                 });
@@ -139,9 +151,9 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AttorneyId");
-
                     b.Property<string>("City");
+
+                    b.Property<int>("Country");
 
                     b.Property<bool>("PrimaryAddress");
 
@@ -153,8 +165,6 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttorneyId");
-
                     b.ToTable("AttorneyAddresses");
                 });
 
@@ -163,15 +173,11 @@ namespace MemigrationProBonoTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AttorneyId");
-
                     b.Property<string>("Number");
 
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AttorneyId");
 
                     b.ToTable("AttorneyPhoneNumbers");
                 });
@@ -183,13 +189,15 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("AssigningAttorneyId");
+                    b.Property<int>("AssigningAttorneyId");
 
                     b.Property<double>("AttorneyWorkedHours");
 
                     b.Property<string>("CaseNotes");
 
-                    b.Property<int?>("LeadClientId");
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<int>("LeadClientId");
 
                     b.Property<int>("Type");
 
@@ -249,11 +257,7 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int?>("AttorneyId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AttorneyId");
 
                     b.ToTable("EmailAddresses");
                 });
@@ -262,6 +266,8 @@ namespace MemigrationProBonoTracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AddressId");
 
                     b.Property<DateTime>("DateOfBirth");
 
@@ -275,7 +281,13 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<string>("Notes");
 
+                    b.Property<int?>("PhoneId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("PhoneId");
 
                     b.ToTable("People");
                 });
@@ -287,7 +299,7 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<int?>("PersonId");
+                    b.Property<int>("Country");
 
                     b.Property<bool>("PrimaryAddress");
 
@@ -299,8 +311,6 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
-
                     b.ToTable("PersonAddresses");
                 });
 
@@ -311,13 +321,9 @@ namespace MemigrationProBonoTracker.Migrations
 
                     b.Property<string>("Number");
 
-                    b.Property<int?>("PersonId");
-
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.ToTable("PersonPhoneNumbers");
                 });
@@ -440,29 +446,32 @@ namespace MemigrationProBonoTracker.Migrations
                         .HasForeignKey("PersonId");
                 });
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.AttorneyAddress", b =>
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.Attorney", b =>
                 {
-                    b.HasOne("MemigrationProBonoTracker.Models.Attorney")
-                        .WithMany("Address")
-                        .HasForeignKey("AttorneyId");
-                });
+                    b.HasOne("MemigrationProBonoTracker.Models.AttorneyAddress", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.AttorneyPhoneNumber", b =>
-                {
-                    b.HasOne("MemigrationProBonoTracker.Models.Attorney")
-                        .WithMany("Phone")
-                        .HasForeignKey("AttorneyId");
+                    b.HasOne("MemigrationProBonoTracker.Models.Email", "Email")
+                        .WithMany()
+                        .HasForeignKey("EmailId");
+
+                    b.HasOne("MemigrationProBonoTracker.Models.AttorneyPhoneNumber", "Phone")
+                        .WithMany()
+                        .HasForeignKey("PhoneId");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.Case", b =>
                 {
                     b.HasOne("MemigrationProBonoTracker.Models.Attorney", "AssigningAttorney")
                         .WithMany()
-                        .HasForeignKey("AssigningAttorneyId");
+                        .HasForeignKey("AssigningAttorneyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MemigrationProBonoTracker.Models.Person", "LeadClient")
                         .WithMany()
-                        .HasForeignKey("LeadClientId");
+                        .HasForeignKey("LeadClientId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MemigrationProBonoTracker.Models.Attorney", "VolunteerAttorney")
                         .WithMany()
@@ -485,25 +494,15 @@ namespace MemigrationProBonoTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.Email", b =>
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.Person", b =>
                 {
-                    b.HasOne("MemigrationProBonoTracker.Models.Attorney")
-                        .WithMany("EmailList")
-                        .HasForeignKey("AttorneyId");
-                });
+                    b.HasOne("MemigrationProBonoTracker.Models.PersonAddress", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.PersonAddress", b =>
-                {
-                    b.HasOne("MemigrationProBonoTracker.Models.Person")
-                        .WithMany("Address")
-                        .HasForeignKey("PersonId");
-                });
-
-            modelBuilder.Entity("MemigrationProBonoTracker.Models.PersonPhoneNumber", b =>
-                {
-                    b.HasOne("MemigrationProBonoTracker.Models.Person")
-                        .WithMany("Phone")
-                        .HasForeignKey("PersonId");
+                    b.HasOne("MemigrationProBonoTracker.Models.PersonPhoneNumber", "Phone")
+                        .WithMany()
+                        .HasForeignKey("PhoneId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

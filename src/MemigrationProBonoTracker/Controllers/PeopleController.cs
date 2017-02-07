@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.PersonViewModel;
 using MemigrationProBonoTracker.Services;
-using Microsoft.AspNetCore.Razor.Tools.Internal;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -52,11 +49,7 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (id == null)
             {
-                var model = new Person
-                {
-                    AddressList = new List<PersonAddress>(),
-                    PhoneList = new List<PersonPhoneNumber>()
-                };
+                var model = new Person();
                 return View("CreateEdit", model);
             }
             var person = _context.GetPerson(id.Value);

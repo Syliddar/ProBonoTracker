@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using MemigrationProBonoTracker.Services;
-using Newtonsoft.Json;
 using static MemigrationProBonoTracker.Models.Enums;
 
 namespace MemigrationProBonoTracker.Models
@@ -20,13 +17,13 @@ namespace MemigrationProBonoTracker.Models
         public string LastName { get; set; }
         public string FullName { get { return FirstName + " " + LastName; } }
 
-        [Display(Name = "AddressList")]
+        [Display(Name = "Address")]
         //TFW TPC Inheritance isn't supported yet
-        public List<AttorneyAddress> AddressList { get; set; }
+        public AttorneyAddress Address { get; set; }
 
         [Display(Name = "Phone Number")]
-        public List<AttorneyPhoneNumber> PhoneList { get; set; }
-        public List<Email> EmailList { get; set; }
+        public AttorneyPhoneNumber Phone { get; set; }
+        public Email Email { get; set; }
 
         [Display(Name = "Notes")]
         public string Notes { get; set; }

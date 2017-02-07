@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MemigrationProBonoTracker.Data;
 using MemigrationProBonoTracker.Models;
+using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Services;
 
 namespace MemigrationProBonoTracker.Controllers
@@ -37,20 +34,12 @@ namespace MemigrationProBonoTracker.Controllers
 
         public IActionResult CreateEdit(int id = 0)
         {
-            var model = new Attorney();
+            var model = new AttorneyDetailsViewModel();
             if (id != 0)
             {
                 model = _context.GetAttorneyDetails(id);
-                if (model.AddressList == null)
-                {
-                    model.AddressList = new List<AttorneyAddress>();
-                }
-                if (model.PhoneList== null)
-                {
-                    model.PhoneList = new List<AttorneyPhoneNumber>();
-                }
             }
-            return View("CreateEdit", model);
+            return View("CreateEdit", model.Attorney);
         }
 
         public PartialViewResult CreatePartial()
@@ -73,12 +62,8 @@ namespace MemigrationProBonoTracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Save(Attorney attorney)
         {
-            if (ModelState.IsValid)
-            {
-                var i = attorney.Id == 0 ? _context.AddAttorney(attorney) : _context.UpdateAttorney(attorney);
-                return Details(attorney.Id);
-            }
-            return View(attorney);
+            var i = attorney.Id == 0 ? _context.AddAttorney(attorney) : _context.UpdateAttorney(attorney);
+            return RedirectToAction("Details", new {id = attorney.Id});
         }
 
         [HttpPost]

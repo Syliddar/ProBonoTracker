@@ -11,29 +11,26 @@
             <div class="row">
                 <div class="col-md-6">
                     <ul>
-                        @foreach (var item in Model.PhoneNumbers)
-                        {
-                            <li>@Html.DisplayFor(i => item.Number) -  @Html.DisplayFor(i => item.Type)</li>
-                        }
+
+                        <li>@Html.DisplayFor(i => i.PhoneNumbers.Number) -  @Html.DisplayFor(i => i.PhoneNumbers.Type)</li>
+
                     </ul>
                     <ul>
-                        @foreach (var email in Model.EmailList)
-                        {
-                            <li><a href="mailto:@email.Address" target="_blank">@email.Address</a></li>
-                        }
+
+                        @*<li><a href="mailto:@Model.EmailList.Address" target="_blank">@Model.EmailList.Address</a></li>*@
+
                     </ul>
                 </div>
                 <div class="col-md-6">
                     <ul>
-                        @foreach (var item in Model.AttorneyAddresses)
-                        {
-                            <li>
-                                <address>
-                                    @Html.DisplayFor(i => item.StreetAddress)<br />
-                                    @Html.DisplayFor(i => item.City) @Html.DisplayFor(i => item.State), @Html.DisplayFor(i => item.ZipCode)<br />
-                                </address>
-                            </li>
-                        }
+
+                        <li>
+                            <address>
+                                @Html.DisplayFor(i => i.AttorneyAddresses.StreetAddress)<br />
+                                @Html.DisplayFor(i => i.AttorneyAddresses.City) @Html.DisplayFor(i => i.AttorneyAddresses.State), @Html.DisplayFor(i => i.AttorneyAddresses.ZipCode)<br />
+                            </address>
+                        </li>
+
                     </ul>
                 </div>
             </div>

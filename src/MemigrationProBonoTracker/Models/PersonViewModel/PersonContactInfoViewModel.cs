@@ -5,7 +5,7 @@ namespace MemigrationProBonoTracker.Models.PersonViewModel
     public class PersonContactInfoViewModel
     {
         public string PersonName { get; set; }
-        public List<PersonPhoneNumber> PhoneNumbers { get; set; }
-        public List<PersonAddress> PersonAddresses { get; set; }
+        public PersonPhoneNumber PhoneNumbers { get; set; }
+        public PersonAddress PersonAddresses { get; set; }
     }
 }

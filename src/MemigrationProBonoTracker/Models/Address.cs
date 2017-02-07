@@ -1,5 +1,4 @@
-﻿using System;
-using static MemigrationProBonoTracker.Models.Enums;
+﻿using static MemigrationProBonoTracker.Models.Enums;
 
 namespace MemigrationProBonoTracker.Models
 {

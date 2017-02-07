@@ -1,11 +1,8 @@
 using System;
-using System.IdentityModel.Tokens;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 using MemigrationProBonoTracker.Services;
-using Microsoft.AspNetCore.Http.Features;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -54,12 +51,8 @@ namespace MemigrationProBonoTracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateCaseViewModel @case)
         {
-            if (ModelState.IsValid)
-            {
-                _context.AddCase(@case);
-                return RedirectToAction("Index");
-            }
-            return View(@case);
+            var caseId = _context.AddCase(@case);
+            return RedirectToAction("Details", new {id = caseId });
         }
 
         // GET: Cases/Edit/5
@@ -86,7 +79,7 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 _context.UpdatePerson(@case.LeadClient);
                 _context.UpdateCase(@case);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {id = @case.Id});
             }
             return View(@case);
 
