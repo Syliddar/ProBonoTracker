@@ -1,6 +1,6 @@
 @model MemigrationProBonoTracker.Models.CaseViewModels.CaseListViewModel
 
-<h2>@Model.Title</h2>
+<h2>@Model.Title <a asp-action="Create" asp-controller="Case" class="btn btn-primary pull-right">Create New Case</a></h2>
 <table class="table table-striped table-hover" id="CaseTable">
     <thead>
         <tr>

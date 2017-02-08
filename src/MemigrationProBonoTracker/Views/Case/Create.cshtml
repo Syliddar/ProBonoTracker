@@ -51,7 +51,7 @@
                         <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-5">
                     <label asp-for="@Model.LeadClient.Nationality" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
                         <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>

@@ -41,6 +41,10 @@ namespace MemigrationProBonoTracker.Controllers
         // GET: Cases/Create
         public IActionResult Create()
         {
+            var newCase = new CreateCaseViewModel
+            {
+                Active = true
+            };
             return View();
         }
 

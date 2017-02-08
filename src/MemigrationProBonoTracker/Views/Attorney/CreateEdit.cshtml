@@ -21,6 +21,8 @@
             <div class="col-md-3"><br/>
                 <input asp-for="IsAssigningAttorney" type="checkbox" data-toggle="toggle"
                        data-size="normal"
+                       data-onstyle="primary"
+                       data-offstyle="primary"
                        data-on= "Assigning"
                        data-off="Volunteer" />
             </div>
@@ -66,14 +68,14 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <input asp-for="@Model.Address.StreetAddress" class="form-control" />
+                            <input asp-for="@Model.Address.StreetAddress" class="form-control" placeholder="Street Address" />
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-6"><input asp-for="@Model.Address.City" class="form-control" /></div>
-                        <div class="col-md-3"><input asp-for="@Model.Address.State" class="form-control" /></div>
-                        <div class="col-md-3"><input asp-for="@Model.Address.ZipCode" class="form-control" /></div>
+                        <div class="col-md-6"><input asp-for="@Model.Address.City" class="form-control"   placeholder="City" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.Address.State" class="form-control"  placeholder="State" /></div>
+                        <div class="col-md-3"><input asp-for="@Model.Address.ZipCode" class="form-control"placeholder="Zip/Postal Code" /></div>
                     </div>
 
                 </div>

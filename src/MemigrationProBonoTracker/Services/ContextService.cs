@@ -146,6 +146,14 @@ namespace MemigrationProBonoTracker.Services
             };
             _db.Cases.Add(newCase);
             _db.SaveChanges();
+            var createdLog = new CaseLogEntry
+            {
+                CaseId = newCase.Id,
+                EntryDate = DateTime.Today,
+                EntryNotes = "Case Created"
+            };
+            _db.LogEntries.Add(createdLog);
+            _db.SaveChanges();
             return newCase.Id;
         }
         public int UpdateCase(CaseDetailsViewModel viewModel)

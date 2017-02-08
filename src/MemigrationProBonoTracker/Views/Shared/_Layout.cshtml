@@ -44,6 +44,7 @@
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Case" asp-action="Index" asp-route-open="true">Active Cases</a></li>
                             <li><a asp-controller="Case" asp-action="Create">Add Case</a></li>
+                            <li role="separator" class="divider"></li>
                             <li><a asp-controller="Case" asp-action="Index" asp-route-open="false">Closed Cases</a></li>
                             <li><a asp-controller="Case" asp-action="Index">All Cases</a></li>
                         </ul>
@@ -55,9 +56,9 @@
                             Attorneys<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="true">Assigning Attorneys</a></li>
                             <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="false">Volunteer Attorneys</a></li>
                             <li><a asp-controller="Attorney" asp-action="CreateEdit">Add Attorney</a></li>
+                            <li><a asp-controller="Attorney" asp-action="Index" asp-route-assigning="true">Assigning Attorneys</a></li>
                             <li><a asp-controller="Attorney" asp-action="Index">Search Attorneys</a></li>
                         </ul>
                     </li>

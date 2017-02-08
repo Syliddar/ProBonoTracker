@@ -39,6 +39,17 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 model = _context.GetAttorneyDetails(id);
             }
+            else
+            {
+                model.Attorney = new Attorney
+                {
+                    ClcContribution = 0,
+                    MiaContribution = 0,
+                    LatinoMemContribution = 0,
+                    IsAssigningAttorney = false,
+                    RecruitmentDate = DateTime.Today
+                };
+            }
             return View("CreateEdit", model.Attorney);
         }
 
@@ -63,7 +74,7 @@ namespace MemigrationProBonoTracker.Controllers
         public IActionResult Save(Attorney attorney)
         {
             var i = attorney.Id == 0 ? _context.AddAttorney(attorney) : _context.UpdateAttorney(attorney);
-            return RedirectToAction("Details", new {id = attorney.Id});
+            return RedirectToAction("Details", new { id = attorney.Id });
         }
 
         [HttpPost]
