@@ -105,6 +105,18 @@ namespace MemigrationProBonoTracker.Controllers
             _context.DeleteCaseEvent(id);
         }
 
+        public IActionResult CloseCase(int caseId)
+        {
+            var model = _context.GetCaseDetails(caseId);
+            return View("CloseCase", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CloseCase(CaseDetailsViewModel caseDetails)
+        {
+            return RedirectToAction("Index", "Home");
+        }
         public PartialViewResult CreateCaseEventPartial(int parentId)
         {
             var model = new CaseEvent
@@ -121,7 +133,6 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public PartialViewResult ModalCaseEventCreateSave(CaseEvent @caseEvent)
         {
             _context.UpsertCaseEvent(@caseEvent);

@@ -1,0 +1,125 @@
+﻿@model MemigrationProBonoTracker.Models.CaseViewModels.CaseDetailsViewModel
+
+<h1>Close Case</h1>
+@Html.HiddenFor(x => x.Id)
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lead Client</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            @Html.LabelFor(x => x.LeadClient.FullName) <br />
+                            @Html.DisplayFor(x => x.LeadClient.FullName)
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.LabelFor(x => x.LeadClient.DateOfBirth)<br />
+                            @Html.DisplayFor(x => x.LeadClient.DateOfBirth)
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.LabelFor(x => x.LeadClient.Gender)<br />
+                            @Html.DisplayFor(x => x.LeadClient.Gender)
+                        </div>
+
+                        <div class="col-lg-4">
+                            @Html.LabelFor(x => x.LeadClient.Nationality)<br />
+                            @Html.DisplayFor(x => x.LeadClient.Nationality)
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.LabelFor(x => x.Type)<br />
+                            @Html.DisplayFor(x => x.Type)
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Assigning Attorney</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <h2>@Html.DisplayFor(x => x.AssigningAttorneyFullName) <br /> @Html.DisplayFor(x => x.AssigningAttorneyOrganizationName)</h2>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <div class="col-lg-12"><button type="button" onclick="AttorneyContactInfoModal(@Model.VolunteerAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button></div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a asp-action="Details" asp-controller="Attorney" asp-route-id="@Model.VolunteerAttorneyId" class="pull-right btn btn-primary">
+                                    <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Final Case Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label asp-for="AttorneyWorkedHours" class="col-md-12 control-label"></label>
+
+                        <div class="col-lg-10">
+                            <input asp-for="AttorneyWorkedHours" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="InterestedVolunteer" class="col-md-8 control-label"></label>
+                        <div class="col-lg-10">
+                            <input asp-for="InterestedVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-width="180"
+                                   data-on="Yes"
+                                   data-off="No" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label asp-for="FeesPaid" class="col-md-12 control-label"></label>
+
+                        <div class="col-lg-10">
+                            <input asp-for="FeesPaid" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DesiredVolunteer" class="col-md-8 control-label"></label>
+                        <div class="col-lg-10">
+                            <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-width="180"
+                                   data-on="Yes"
+                                   data-off="No" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.LabelFor(x => x.CaseNotes)
+                        <textarea style="max-width: 1080px" cols="2" rows="8" asp-for="@Model.CaseNotes" class="form-control"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @*<div class="col-lg-4">
+
+        </div>*@
+</div>

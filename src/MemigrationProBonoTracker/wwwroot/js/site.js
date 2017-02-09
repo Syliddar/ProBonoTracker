@@ -84,21 +84,14 @@ function AttorneyContactInfoModal(attorneyId) {
         }
     });
 }
-function LaunchPersonSearchModal() {
-    $.ajax({
-        url: '/People/PersonLookupPartial/',
-        success: function (data) {
-            $('#modalWrapper').html(data);
-        }
-    });
-}function LaunchAssPersonSearchModal() {
-    $.ajax({
-        url: '/People/AssociatedPersonLookupPartial/',
-        success: function (data) {
-            $('#modalWrapper').html(data);
-        }
-    });
-}
+//function LaunchAssPersonSearchModal() {
+//    $.ajax({
+//        url: '/People/AssociatedPersonLookupPartial/',
+//        success: function (data) {
+//            $('#modalWrapper').html(data);
+//        }
+//    });
+//}
 /*
 Rest of file copy-pasted directly from the internet, don't ask me. 
 */
