@@ -8,7 +8,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public int Id { get; set; }
         public Person LeadClient { get; set; }
         public bool Active { get; set; }
-        public List<AssociatedPerson> AssociatedPeopleList { get; set; }
+        //public List<AssociatedPerson> AssociatedPeopleList { get; set; }
         [Display(Name = "Assigning Attorney")]
         public Attorney AssigningAttorney { get; set; }
         [Display(Name = "Volunteer Attorney")]

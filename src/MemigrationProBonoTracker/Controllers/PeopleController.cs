@@ -33,7 +33,7 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 Person = _context.GetPerson(id.Value),
                 Cases = _context.GetCaseListViewModelForPerson(id.Value),
-                AssociatedPeople = _context.GetAssociatedPeopleViewModelForPerson(id.Value)
+                //AssociatedPeople = _context.GetAssociatedPeopleViewModelForPerson(id.Value)
 
             };
             if (model.Person == null)
@@ -103,5 +103,16 @@ namespace MemigrationProBonoTracker.Controllers
             var model = _context.GetPeopleList();
             return PartialView("_PersonSearch", model);
         }
+
+        //public PartialViewResult AssociatedPersonLookupPartial()
+        //{
+        //    var model = _context.GetPeopleList();
+        //    return PartialView("_AssPersonSearch", model);
+        //}
+
+        //public void RemovePersonAssociation(int caseId, int personId)
+        //{
+            
+        //}
     }
 }

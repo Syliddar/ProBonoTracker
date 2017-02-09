@@ -28,7 +28,7 @@ namespace MemigrationProBonoTracker.Services
         int AddPerson(Person @person);
         int UpdatePerson(Person @person);
         int DeletePerson(int id);
-        List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int idValue);
+        //List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int idValue);
 
         AttorneyListingViewModel GetAttorneyListingViewModel(bool? assigningAttorney);
         AttorneyDetailsViewModel GetAttorneyDetails(int id);

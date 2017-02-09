@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MemigrationProBonoTracker.Models.PersonViewModel;
 
 namespace MemigrationProBonoTracker.Models.CaseViewModels
 {
@@ -8,15 +9,22 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public int Id { get; set; }
         public Person LeadClient { get; set; }
         public bool Active { get; set; }
-        public List<AssociatedPerson> AssociatedPeopleList { get; set; }
-        [Display(Name = "Assigning Attorney")]
-        public Attorney AssigningAttorney { get; set; }
-        public int AssigningAttorneyId { get; set; }
+        //public List<AssociatedPersonViewModel> AssociatedPeopleList { get; set; }
+
         public int VolunteerAttorneyId { get; set; }
         [Display(Name = "Volunteer Attorney Name")]
         public string VolunteerAttorneyFullName { get; set; }
         [Display(Name = "Volunteer Attorney Organization")]
         public string VolunteerAttorneyOrganizationName { get; set; }
+
+        public int AssigningAttorneyId { get; set; }
+
+        [Display(Name = "Assigning Attorney Name")]
+        public string AssigningAttorneyFullName { get; set; }
+
+        [Display(Name = "Assigning Attorney Organization")]
+        public string AssigningAttorneyOrganizationName { get; set; }
+
         [Display(Name = "Case Type")]
         public Enums.CaseType Type { get; set; }
         [Display(Name = "Case Events")]

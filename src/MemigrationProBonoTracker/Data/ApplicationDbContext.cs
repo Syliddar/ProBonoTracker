@@ -30,7 +30,7 @@ namespace MemigrationProBonoTracker.Data
             builder.Entity<Case>().HasOne(c => c.AssigningAttorney);
             builder.Entity<Case>().HasOne(c => c.VolunteerAttorney);
             builder.Entity<Case>().HasMany(c => c.CaseEvents);
-            builder.Entity<Case>().HasMany(c => c.AssociatedPeopleList);
+            //builder.Entity<Case>().HasMany(c => c.AssociatedPeopleList);
 
             builder.Entity<CaseEvent>().HasOne(e => e.ParentCase);
 

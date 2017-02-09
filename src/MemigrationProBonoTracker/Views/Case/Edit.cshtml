@@ -60,9 +60,8 @@
                 </div>
             </div>
         </div>
-
         @* ASSIGNING ATTORNEY PANEL *@
-        <div class="row panel panel-primary">
+        @*<div class="row panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Assigning Attorney</h2>
             </div>
@@ -81,8 +80,8 @@
 
                 </div>
             </div>
-        </div>
-        @* ASSIGNING ATTORNEY PANEL *@
+        </div>*@
+        @* VOLUNTEER ATTORNEY PANEL *@
         <div class="row panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Volunteer Attorney</h2>
@@ -105,27 +104,49 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title">Associated People</h2>
-            </div>
-            <div class="panel-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Relationship</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
+
+        @*@* ASSOCIATED PEOPLE PANEL *@
+
+        @*<div class="row panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Associated People</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover" id="AssociatedPeopleTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Relationship</th>
+                                <th>
+                                    <button id="AssociatedPersonSearch" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                    @*<button id="AssPersonAdd" type="button" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var associatedPerson in Model.AssociatedPeopleList)
+                            {
+                                <tr id="@associatedPerson.AssociatedPersonId">
+                                    @Html.HiddenFor(a => associatedPerson.AssociatedPersonId)
+                                    <td>@Html.DisplayFor(a => associatedPerson.FullName)</td>
+                                    <td>@Html.DisplayFor(a => associatedPerson.Relation)</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="AssociatedPersonRemove(@associatedPerson.RelationId)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>*@
+        @* CASE EVENTS PANEL *@
         <div class="row panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Case Events</h2>
@@ -146,7 +167,7 @@
                 </thead>
                 <tbody id="CaseEventsTableBody">
                     @foreach (var caseEvent in Model.CaseEvents)
-                    {
+            {
                         <tr>
                             <td>
                                 @caseEvent.EventDate.ToString("MM/dd/yyyy")
@@ -169,6 +190,7 @@
                 </tbody>
             </table>
         </div>
+        @* CASE NOTES PANEL*@
         <div class="row panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">Case Notes</h2>
@@ -212,14 +234,24 @@
             });
         });
         $("#LaunchClientSearchModal").click(function () {
-            $.ajax({
-                url: '/People/PersonLookupPartial/',
-                success: function (data) {
-                    $('#modalWrapper').html(data);
-                }
+            window.LaunchClientSearchModal();
+            $(".PersonSearchModalChoose").click(function () {
+                var fullname = $(this).closest('tr').children('td.FullName').text();
+                var nationality = $(this).closest('tr').children('td.Nationality').text().trim();
+                var age = $(this).closest('tr').children('#item_Age').val();
+                var gender = $(this).closest('tr').children('#item_Gender').val();
+                var id = this.id;
+                var name = fullname.trim().split(" ");
+                console.log(nationality);
+                $("#LeadClient_FirstName").val(name[0]);
+                $("#LeadClient_LastName").text(name[1]);
+                $("#LeadClient_Id").val(id);
+                $("#LeadClient_Age").val(age);
+                $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
+                $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
+                $('#modalWrapper').modal('hide');
             });
         });
-
         $("#LaunchAddVolunteerAttorneyModal").click(function () {
             $.ajax({
                 url: '/Attorney/CreatePartial/',
@@ -239,10 +271,43 @@
                 }
             });
         });
+        //$("#AssociatedPersonSearch").click(function () {
+        //    LaunchAssPersonSearchModal();
+        //});
     });
 
+    //function AssociatedPersonRemove(id) {
+    //    if (confirm('Are you sure you want to remove the association with this person?')) {
+    //        $.ajax({
+    //            url: '/Case/RemoveAssociatedPerson',
+    //            type: 'POST',
+    //            data: { id: id },
+    //            success: function(data) {
+    //                if (data.success) {
+    //                    var tr = $('tr#' + id);
+    //                    tr.css("background-color", "#FF3700");
+    //                    tr.fadeOut(400, function () {
+    //                        tr.remove();
+    //                    });
+    //                }
+    //            }
 
-    
+    //        });
+
+    //    };
+    //}
+
+    //function BindAssociatedPersonSelectButtons() {
+    //    $(".AssocPersonSearchModalChoose").click(function () {
+    //        var fullname = $(this).closest('tr').children('td.FullName').text();
+    //        var id = this.id;
+    //        var name = fullname.trim();
+    //        var relationship = $("#AssociatedPersonRelationship").val();
+    //        var btncell = '<button type="button" class="btn btn-primary AssocPersonSearchModalChoose" onclick="AssociatedPersonRemove(' + id + ')"><span class="glyphicon glyphicon-remove"></span></button>';
+    //        $("#AssociatedPeopleTable").append('<tr><td>' + name + '</td><td>' + relationship + '</td><td>' + btncell + '</td></tr>');
+    //        $('#modalWrapper').modal('hide');
+    //    });
+    //}
     function BindAttorneySearchModalSelectButtons() {
         $(".AttorneySearchModalChoose").click(function () {
             var fullname = $(this).closest('tr').children('td.FullName').text();

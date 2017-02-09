@@ -121,11 +121,32 @@ namespace MemigrationProBonoTracker.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public PartialViewResult ModalCaseEventCreateSave(CaseEvent @caseEvent)
         {
             _context.UpsertCaseEvent(@caseEvent);
             var model = _context.GetCaseEventList(@caseEvent.CaseId);
             return PartialView("_CaseEventList", model);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult RemoveAssociatedPerson(int id)
+        //{
+        //    var result = Json(1);
+
+
+        //    return result;
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult AddAssociatedPerson(int personId, int caseId)
+        //{
+        //    var result = Json(1);
+
+
+        //    return result;
+        //}
     }
 }

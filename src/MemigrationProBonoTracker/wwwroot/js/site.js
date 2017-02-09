@@ -77,18 +77,28 @@ function PersonContactInfoModal(personId) {
     });
 }
 function AttorneyContactInfoModal(attorneyId) {
-    
     $.ajax({
         url: '/Attorney/GetAttorneyContactInfoPartial/?id=' + attorneyId,
         success: function (data) {
-            
-            console.log(data);
             $('#modalWrapper').html(data);
         }
     });
 }
-
-
+function LaunchPersonSearchModal() {
+    $.ajax({
+        url: '/People/PersonLookupPartial/',
+        success: function (data) {
+            $('#modalWrapper').html(data);
+        }
+    });
+}function LaunchAssPersonSearchModal() {
+    $.ajax({
+        url: '/People/AssociatedPersonLookupPartial/',
+        success: function (data) {
+            $('#modalWrapper').html(data);
+        }
+    });
+}
 /*
 Rest of file copy-pasted directly from the internet, don't ask me. 
 */

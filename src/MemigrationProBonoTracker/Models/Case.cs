@@ -34,7 +34,7 @@ namespace MemigrationProBonoTracker.Models
 
         [Display(Name = "Lead Client")]
         public virtual Person LeadClient { get; set; }
-        public virtual List<AssociatedPerson> AssociatedPeopleList { get; set; }
+        //public virtual List<AssociatedPerson> AssociatedPeopleList { get; set; }
         [Display(Name = "Case Events")]
         public virtual List<CaseEvent> CaseEvents { get; set; }
         public virtual Attorney AssigningAttorney { get; set; }

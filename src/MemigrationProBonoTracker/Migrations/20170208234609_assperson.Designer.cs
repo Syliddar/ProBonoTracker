@@ -9,9 +9,10 @@ using MemigrationProBonoTracker.Models;
 namespace MemigrationProBonoTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170208234609_assperson")]
+    partial class assperson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -65,6 +66,26 @@ namespace MemigrationProBonoTracker.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.AssociatedPerson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CaseId");
+
+                    b.Property<int>("PersonId");
+
+                    b.Property<string>("Relationship");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CaseId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AssociatedPerson");
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.Attorney", b =>
@@ -412,6 +433,18 @@ namespace MemigrationProBonoTracker.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MemigrationProBonoTracker.Models.AssociatedPerson", b =>
+                {
+                    b.HasOne("MemigrationProBonoTracker.Models.Case")
+                        .WithMany("AssociatedPeopleList")
+                        .HasForeignKey("CaseId");
+
+                    b.HasOne("MemigrationProBonoTracker.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MemigrationProBonoTracker.Models.Attorney", b =>

@@ -90,19 +90,27 @@ namespace MemigrationProBonoTracker.Services
                 .Include(c => c.AssigningAttorney)
                 .Include(c => c.VolunteerAttorney)
                 .Include(c => c.CaseEvents)
-                .Include(c => c.AssociatedPeopleList).ThenInclude(p => p.Person)
                 .FirstOrDefault(c => c.Id == id);
+            //.Include(c => c.AssociatedPeopleList).ThenInclude(p => p.Person)
 
             if (dbResult != null)
+            {
+                //var associatedPeopleList = dbResult.AssociatedPeopleList.Select(x => new AssociatedPersonViewModel
+                //{
+                //    AssociatedPersonId = x.Person.Id,
+                //    FullName = x.Person.FullName,
+                //    Relation = x.Relationship
+                //}).ToList();
                 return new CaseDetailsViewModel
                 {
                     Id = dbResult.Id,
                     LeadClient = dbResult.LeadClient,
                     Active = dbResult.Active,
-                    AssociatedPeopleList = dbResult.AssociatedPeopleList,
-                    AssigningAttorney = dbResult.AssigningAttorney,
+                    //AssociatedPeopleList = associatedPeopleList,
+                    AssigningAttorneyFullName = dbResult.AssigningAttorney.FullName,
                     VolunteerAttorneyFullName = dbResult.VolunteerAttorney?.FullName ?? "",
                     VolunteerAttorneyOrganizationName = dbResult.VolunteerAttorney?.OrganizationName ?? "",
+                    AssigningAttorneyOrganizationName = dbResult.AssigningAttorney?.OrganizationName ?? "",
                     VolunteerAttorneyId = dbResult.VolunteerAttorney?.Id ?? 0,
                     AssigningAttorneyId = dbResult.AssigningAttorney.Id,
                     AttorneyWorkedHours = dbResult.AttorneyWorkedHours,
@@ -111,6 +119,7 @@ namespace MemigrationProBonoTracker.Services
                     CaseNotes = dbResult.CaseNotes,
                     CaseLogEntries = _db.LogEntries.Where(l => l.Case == dbResult).ToList(),
                 };
+            }
             return new CaseDetailsViewModel();
         }
         public int AddCase(CreateCaseViewModel @case)
@@ -178,7 +187,12 @@ namespace MemigrationProBonoTracker.Services
                 }
             }
             @case.Active = viewModel.Active;
-            @case.AssociatedPeopleList = viewModel.AssociatedPeopleList;
+            //@case.AssociatedPeopleList = viewModel.AssociatedPeopleList.Select(x => new AssociatedPerson
+            //{
+            //    Id = x.RelationId,
+            //    PersonId = x.AssociatedPersonId,
+            //    Relationship = x.Relation
+            //}).ToList();
             @case.AssigningAttorney = _db.Attorneys.Find(viewModel.AssigningAttorneyId);
             @case.VolunteerAttorney = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
             @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
@@ -312,29 +326,27 @@ namespace MemigrationProBonoTracker.Services
             };
         }
 
-        public List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int id)
-        {
-            var result = new List<AssociatedPersonViewModel>();
-            var dbResult = _db.Cases.Where(ca => ca.LeadClientId == id).Include(ca => ca.AssociatedPeopleList).ThenInclude(ap => ap.Person);
-            foreach (var @case in dbResult)
-            {
-                foreach (var associatedPerson in @case.AssociatedPeopleList)
-                {
-                    if (result.Any(r => r.AssociatedPersonId == associatedPerson.Id) == false)
-                    {
-                        result.Add(new AssociatedPersonViewModel
-                        {
-                            AssociatedPersonId = associatedPerson.Person.Id,
-                            FullName = associatedPerson.Person.FullName,
-                            Relation = associatedPerson.Relationship
-                        });
-                    }
-                }
-            }
-
-
-            return result;
-        }
+        //public List<AssociatedPersonViewModel> GetAssociatedPeopleViewModelForPerson(int id)
+        //{
+        //    var result = new List<AssociatedPersonViewModel>();
+        //    var dbResult = _db.Cases.Where(ca => ca.LeadClientId == id).Include(ca => ca.AssociatedPeopleList).ThenInclude(ap => ap.Person);
+        //    foreach (var @case in dbResult)
+        //    {
+        //        foreach (var associatedPerson in @case.AssociatedPeopleList)
+        //        {
+        //            if (result.Any(r => r.AssociatedPersonId == associatedPerson.Id) == false)
+        //            {
+        //                result.Add(new AssociatedPersonViewModel
+        //                {
+        //                    AssociatedPersonId = associatedPerson.Person.Id,
+        //                    FullName = associatedPerson.Person.FullName,
+        //                    Relation = associatedPerson.Relationship
+        //                });
+        //            }
+        //        }
+        //    }
+        //    return result;
+        //}
 
         #endregion
 
@@ -436,12 +448,12 @@ namespace MemigrationProBonoTracker.Services
                 viewModel.CaseList = _db.Cases
                     .Include(x => x.LeadClient)
                     .Where(x => x.VolunteerAttorneyId == id).Select(x => new AttorneyCasesViewModel
-                        {
-                            Active = x.Active,
-                            CaseId = x.Id,
-                            LeadClientName = x.LeadClient.FullName,
-                            Type = x.Type
-                        }).ToList();
+                    {
+                        Active = x.Active,
+                        CaseId = x.Id,
+                        LeadClientName = x.LeadClient.FullName,
+                        Type = x.Type
+                    }).ToList();
             }
             return viewModel;
         }
