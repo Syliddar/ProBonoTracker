@@ -441,7 +441,7 @@ namespace MemigrationProBonoTracker.Services
         public AttorneyDetailsViewModel GetAttorneyDetails(int id)
         {
             var viewModel = new AttorneyDetailsViewModel();
-            var dbResult = _db.Attorneys.Include(x => x.Phone).Include(x => x.Address).FirstOrDefault(x => x.Id == id);
+            var dbResult = _db.Attorneys.Include(x => x.Phone).Include(x => x.Address).Include(x=>x.Email).FirstOrDefault(x => x.Id == id);
             if (dbResult != null)
             {
                 dbResult.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == dbResult.Id && y.Active);
@@ -484,7 +484,7 @@ namespace MemigrationProBonoTracker.Services
                 AttorneyName = attorney.FullName,
                 AttorneyAddresses = attorney.Address,
                 Notes = attorney.Notes,
-                EmailList = attorney.Email,
+                Email = attorney.Email,
                 PhoneNumbers = attorney.Phone
             };
             return result;
