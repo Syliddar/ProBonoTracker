@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.PersonViewModel;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features.Authentication;
 
 namespace MemigrationProBonoTracker.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
         private readonly IContextService _context;

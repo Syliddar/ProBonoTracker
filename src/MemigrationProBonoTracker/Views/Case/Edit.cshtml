@@ -12,9 +12,19 @@
                 </div>
                 <div class="col-md-6">
                     <div class="pull-right">
-                        <a class="btn btn-info" asp-action="CloseCase" asp-controller="Case" asp-route-caseId="@Model.Id">
-                            Close Case
-                        </a>
+                        @if (Model.Active)
+                        {
+                            <a class="btn btn-info" asp-action="CloseCase" asp-controller="Case" asp-route-caseId="@Model.Id">
+                                Close Case
+                            </a>
+                        }
+                        else
+                        {
+                            <input asp-for="Active" type="checkbox" data-toggle="toggle"
+                                   data-width="120"
+                                   data-on="Re-Open"
+                                   data-off="Case Closed" />
+                        }
                         <button type="submit" class="btn btn-primary">
                             Save
                         </button>
@@ -73,7 +83,7 @@
                     </div>
                 </div>
             </div>
- @* VOLUNTEER ATTORNEY PANEL *@
+            @* VOLUNTEER ATTORNEY PANEL *@
             <div class="col-md-6">
                 <div class="row panel panel-primary">
                     <div class="panel-heading">

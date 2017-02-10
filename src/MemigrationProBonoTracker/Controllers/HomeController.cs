@@ -1,9 +1,11 @@
 ﻿using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MemigrationProBonoTracker.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IContextService _context;

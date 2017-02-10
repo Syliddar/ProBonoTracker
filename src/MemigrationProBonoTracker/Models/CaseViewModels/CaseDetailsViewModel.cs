@@ -37,7 +37,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         [Display(Name="Total Fees Paid")]
         public double FeesPaid { get; set; }
 
-        [Display(Name = "")]
+        [Display(Name = "Is Idiot")]
         public bool DesiredVolunteer{ get; set; }
         [Display(Name = "Interested in Volunteering Again")]
         public bool InterestedVolunteer{ get; set; }

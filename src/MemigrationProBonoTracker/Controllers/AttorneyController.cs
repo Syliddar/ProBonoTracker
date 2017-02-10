@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MemigrationProBonoTracker.Controllers
 {
+    [Authorize]
     public class AttorneyController : Controller
     {
         private readonly IContextService _context;

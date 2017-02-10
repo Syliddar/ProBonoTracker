@@ -86,7 +86,6 @@ namespace MemigrationProBonoTracker.Controllers
                 return RedirectToAction("Details", new {id = @case.Id});
             }
             return View(@case);
-
         }
 
         // POST: Cases/Delete/5
@@ -115,6 +114,12 @@ namespace MemigrationProBonoTracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CloseCase(CaseDetailsViewModel caseDetails)
         {
+            if (ModelState.IsValid)
+            {
+                _context.UpdatePerson(caseDetails.LeadClient);
+                _context.UpdateCase(caseDetails);
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Index", "Home");
         }
         public PartialViewResult CreateCaseEventPartial(int parentId)

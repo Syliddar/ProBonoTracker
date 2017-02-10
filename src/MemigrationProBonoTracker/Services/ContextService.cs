@@ -352,6 +352,7 @@ namespace MemigrationProBonoTracker.Services
 
         #region CaseLogMethods
 
+        
         public CaseLogListViewModel GetCaseLogEntries(int caseId)
         {
             var result = new CaseLogListViewModel
@@ -487,6 +488,13 @@ namespace MemigrationProBonoTracker.Services
                 PhoneNumbers = attorney.Phone
             };
             return result;
+        }
+        public int UpdateAttorneyOnCaseClose(CaseDetailsViewModel @case)
+        {
+            var atty = _db.Attorneys.Find(@case.VolunteerAttorneyId);
+            atty.InterestedVolunteer = @case.InterestedVolunteer;
+            atty.DesiredVolunteer = @case.DesiredVolunteer;
+            return _db.SaveChanges();
         }
 
         #endregion

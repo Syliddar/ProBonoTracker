@@ -1,12 +1,14 @@
 ﻿using System;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MemigrationProBonoTracker.Controllers
 {
+    [Authorize]
     public class CaseLogController : Controller
     {
         private readonly IContextService _context;
