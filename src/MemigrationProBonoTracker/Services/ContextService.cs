@@ -154,6 +154,15 @@ namespace MemigrationProBonoTracker.Services
                 DateCreated = DateTime.Now
             };
             _db.Cases.Add(newCase);
+            newCase.CaseEvents = new List<CaseEvent>();
+            foreach (var caseEvent in @case.CaseEvents)
+            {
+                newCase.CaseEvents.Add(new CaseEvent
+                {
+                    EventDate = caseEvent.EventDate,
+                    Event = caseEvent.Event
+                });
+            }
             _db.SaveChanges();
             var createdLog = new CaseLogEntry
             {
@@ -352,7 +361,7 @@ namespace MemigrationProBonoTracker.Services
 
         #region CaseLogMethods
 
-        
+
         public CaseLogListViewModel GetCaseLogEntries(int caseId)
         {
             var result = new CaseLogListViewModel
@@ -441,7 +450,7 @@ namespace MemigrationProBonoTracker.Services
         public AttorneyDetailsViewModel GetAttorneyDetails(int id)
         {
             var viewModel = new AttorneyDetailsViewModel();
-            var dbResult = _db.Attorneys.Include(x => x.Phone).Include(x => x.Address).Include(x=>x.Email).FirstOrDefault(x => x.Id == id);
+            var dbResult = _db.Attorneys.Include(x => x.Phone).Include(x => x.Address).Include(x => x.Email).FirstOrDefault(x => x.Id == id);
             if (dbResult != null)
             {
                 dbResult.AssignedCases = _db.Cases.Count(y => y.VolunteerAttorney.Id == dbResult.Id && y.Active);

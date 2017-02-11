@@ -141,23 +141,32 @@
             });
         });
         $("#LaunchClientSearchModal").click(function () {
-            LaunchPersonSearchModal();
-            $(".PersonSearchModalChoose").click(function () {
-                var fullname = $(this).closest('tr').children('td.FullName').text();
-                var nationality = $(this).closest('tr').children('td.Nationality').text().trim();
-                var age = $(this).closest('tr').children('#item_Age').val();
-                var gender = $(this).closest('tr').children('#item_Gender').val();
-                var id = this.id;
-                var name = fullname.trim().split(" ");
-                console.log(nationality);
-                $("#LeadClient_FirstName").val(name[0]);
-                $("#LeadClient_LastName").text(name[1]);
-                $("#LeadClient_Id").val(id);
-                $("#LeadClient_Age").val(age);
-                $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
-                $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
-                $('#modalWrapper').modal('hide');
+            $.ajax({
+                url: '/People/PersonLookupPartial/',
+                success: function (data) {
+                    $('#modalWrapper').html(data);
+                    $(".PersonSearchModalChoose").click(function () {
+                        var Row = $(this).closest('tr');
+                        var firstname = Row.children('.fname').val();
+                        var lastname = Row.children('.lname').val();
+                        var nationality = Row.children('td.Nationality').text().trim();
+                        var age = Row.children('#item_Age').val();
+                        var gender = Row.children('#item_Gender').val();
+                        var dob = Row.children('.dob').val().split(' ');
+                        console.log(lastname);
+                        var id = this.id;
+                        $("#LeadClient_FirstName").val(firstname);
+                        $("#LeadClient_LastName").val(lastname);
+                        $("#LeadClient_Id").val(id);
+                        $("#LeadClient_Age").val(age);
+                        $("#LeadClient_DateOfBirth").val(dob[0]);
+                        $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
+                        $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
+                        $('#modalWrapper').modal('hide');
+                    });
+                }
             });
+
         });
         $("#AddCaseEvent").click(function () {
             var len = $('#HiddenTableInput').val();

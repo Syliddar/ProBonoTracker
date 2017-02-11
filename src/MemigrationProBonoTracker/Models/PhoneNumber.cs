@@ -6,7 +6,6 @@ namespace MemigrationProBonoTracker.Models
     {
         public int Id { get; set; }
         [Phone]
-        [UIHint("PhoneNumFormatter")]
         [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
         public Enums.NumberType Type { get; set; }

@@ -108,10 +108,12 @@
                         <div class="col-md-6">
                             <label asp-for="DesiredVolunteer" class="col-md-8 control-label"></label>
                             <div class="col-lg-10">
-                                <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
-                                       data-width="180"
-                                       data-on="Yes"
-                                       data-off="No" />
+                                <div id="IsIdiot" title="Is the volunteer attorney an idiot?">
+                                    <input asp-for="DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                                           data-width="180"
+                                           data-on="Yes"
+                                           data-off="No" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,3 +133,15 @@
         </div>
     </div>
 </form>
+
+<script>
+    $().ready(function () {
+        var options = {
+            delay: { "show": 3000, "hide": 100 },
+            animation: true,
+            placement: 'left'
+        };
+        $("#IsIdiot").tooltip(options);
+    })
+    
+</script>

@@ -1,24 +1,57 @@
 @model MemigrationProBonoTracker.Models.AttorneyViewModels.AttorneyDetailsViewModel
 
 <div class="row">
-    <div class="col-md-12"><h1>@Html.DisplayFor(model => model.Attorney.FullName), @Html.DisplayFor(model => model.Attorney.OrganizationName)</h1></div>
-
-    @if (Model.Attorney.IsAssigningAttorney == false)
-    { <div class="col-md-3"><strong>Assigned Cases:</strong> @Html.DisplayFor(model => model.Attorney.AssignedCases)</div>}
-    <div class="col-md-3"><strong>Bar Number:</strong> @Html.DisplayFor(model => model.Attorney.BarNumber)</div>
-    <div class="col-md-3"><strong>Gender: </strong>@Html.DisplayFor(model => model.Attorney.Gender)</div>
-    <div class="col-md-3">
+    <div class="col-md-12">
         @if (Model.Attorney.IsAssigningAttorney)
         {
-            <strong>Assigning Attorney</strong>
+            <h1>
+                @Html.DisplayFor(model => model.Attorney.FullName)
+            </h1>
         }
         else
         {
-            <strong>Recruited: </strong>@Html.DisplayFor(model => model.Attorney.RecruitmentDate)<text>,</text>
-            <strong>Via</strong> @Html.DisplayFor(model => model.Attorney.RecruitmentMethod)
+            <h1>
+                @Html.DisplayFor(model => model.Attorney.FullName), @Html.DisplayFor(model => model.Attorney.OrganizationName)
+            </h1>
+            
         }
     </div>
+
 </div>
+<div class="row">
+    @if (Model.Attorney.IsAssigningAttorney)
+    {
+        <div class="col-md-4">
+            <h4><strong>Organization: </strong>@Html.DisplayFor(model => model.Attorney.OrganizationName)</h4>
+        </div>
+        <div class="col-md-4">
+            <h4><strong>Gender:</strong> @Html.DisplayFor(model => model.Attorney.Gender)</h4>
+        </div>
+        <div class="col-md-4">
+            <h4 class="pull-right"><strong>Assigning Attorney</strong></h4>
+        </div>
+
+    }
+    else
+    {
+        <div class="col-md-2">
+            <h4><strong>Assigned Cases: </strong>@Html.DisplayFor(model => model.Attorney.AssignedCases)</h4>
+        </div>
+        <div class="col-md-2">
+            <h4><strong>Gender:</strong> @Html.DisplayFor(model => model.Attorney.Gender)</h4>
+        </div>
+        <div class="col-md-3">
+            <h4><strong>Bar Number:</strong> @Html.DisplayFor(model => model.Attorney.BarNumber)</h4>
+        </div>
+        <div class="col-md-5">
+            <h4>
+                <strong>Recruited:</strong> @Html.DisplayFor(model => model.Attorney.RecruitmentDate)<text>,</text>
+                <strong>Via:</strong> @Html.DisplayFor(model => model.Attorney.RecruitmentMethod)
+            </h4>
+        </div>
+    }
+</div>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -27,8 +60,8 @@
                 <h2 class="panel-title">Phone Numbers</h2>
             </div>
             <div class="panel-body">
-                <address class="col-md-4">
-                    <strong>@Html.DisplayFor(x=>x.Attorney.Phone.Type)</strong><br />
+                <address class="col-md-6">
+                    <strong>@Html.DisplayFor(x => x.Attorney.Phone.Type)</strong><br />
                     @Html.DisplayFor(x => x.Attorney.Phone.Number)
                 </address>
             </div>
@@ -62,70 +95,71 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title">Experience/Qualifications</h2>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.HasImmigrationExperience" type="checkbox" data-toggle="toggle"
-                               data-on="Has<br />Immigration<br />Experience"
-                               data-off="No<br />Immigration<br />Experience"
-                               data-width="120"
-                               data-offstyle="info"
-                               disabled="" />
-                    </div>
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.HasJuvenileExperience" type="checkbox" data-toggle="toggle"
-                               data-on="Has<br />Juvenile<br />Experience"
-                               data-off="No<br />Juvenile<br />Experience"
-                               data-width="120"
-                               data-offstyle="info"
-                               disabled="" />
-                    </div>
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.HasProbateExperience" type="checkbox" data-toggle="toggle"
-                               data-on="Has<br />Probate<br />Experience"
-                               data-off="No<br />Probate<br />Experience"
-                               data-width="120"
-                               data-offstyle="info"
-                               disabled="" />
-                    </div>
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.SpeaksSpanish" type="checkbox" data-toggle="toggle"
-                               data-on="Can<br />Speak<br />Spanish"
-                               data-off="Cannot<br />Speak<br />Spanish"
-                               data-width="120"
-                               data-offstyle="info"
-                               disabled="" />
-                    </div>
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.InterestedVolunteer" type="checkbox" data-toggle="toggle"
-                               data-on="Is<br />Interested<br />Volunteer"
-                               data-off="Is<br />Not<br />Interested<br />"
-                               data-width="120"
-                               data-offstyle="info"
-                               disabled="" />
-                    </div>
-                    <div class="col-md-2">
-                        <input asp-for="@Model.Attorney.DesiredVolunteer" type="checkbox" data-toggle="toggle"
-                               data-on="Is<br />Desired<br />Volunteer"
-                               data-off="Is<br />Not<br />Desired<br />"
-                               data-offstyle="info"
-                               data-width="120"
-                               disabled="" />
+@if (Model.Attorney.IsAssigningAttorney == false)
+            {
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Experience/Qualifications</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.HasImmigrationExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Immigration<br />Experience"
+                                   data-off="No<br />Immigration<br />Experience"
+                                   data-width="120"
+                                   data-offstyle="info"
+                                   disabled="" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.HasJuvenileExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Juvenile<br />Experience"
+                                   data-off="No<br />Juvenile<br />Experience"
+                                   data-width="120"
+                                   data-offstyle="info"
+                                   disabled="" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.HasProbateExperience" type="checkbox" data-toggle="toggle"
+                                   data-on="Has<br />Probate<br />Experience"
+                                   data-off="No<br />Probate<br />Experience"
+                                   data-width="120"
+                                   data-offstyle="info"
+                                   disabled="" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.SpeaksSpanish" type="checkbox" data-toggle="toggle"
+                                   data-on="Can<br />Speak<br />Spanish"
+                                   data-off="Cannot<br />Speak<br />Spanish"
+                                   data-width="120"
+                                   data-offstyle="info"
+                                   disabled="" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.InterestedVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-on="Is<br />Interested<br />Volunteer"
+                                   data-off="Is<br />Not<br />Interested<br />"
+                                   data-width="120"
+                                   data-offstyle="info"
+                                   disabled="" />
+                        </div>
+                        <div class="col-md-2">
+                            <input asp-for="@Model.Attorney.DesiredVolunteer" type="checkbox" data-toggle="toggle"
+                                   data-on="Is<br />Desired<br />Volunteer"
+                                   data-off="Is<br />Not<br />Desired<br />"
+                                   data-offstyle="info"
+                                   data-width="120"
+                                   disabled="" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@if (Model.Attorney.IsAssigningAttorney == false)
-{
-   <div class="row">
+
+    <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -163,7 +197,8 @@
         </div>
     </div>
 </div>
-@if (Model.Attorney.IsAssigningAttorney == false) { 
+@if (Model.Attorney.IsAssigningAttorney == false)
+            {
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
@@ -173,27 +208,27 @@
                 <div class="panel-body">
                     <table class="table table-striped table-hover">
                         <thead>
-                        <tr>
-                            <th>Case Type</th>
-                            <th>Lead Client</th>
-                            <th>Active/Closed</th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th>Case Type</th>
+                                <th>Lead Client</th>
+                                <th>Active/Closed</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var caseItem in Model.CaseList)
-                        {
-                            <tr>
-                                <td>@caseItem.Type</td>
-                                <td>@caseItem.LeadClientName</td>
-                                <td>@(caseItem.Active ? "Active" : "Closed")</td>
-                                <td>
-                                    <a class="btn btn-primary"  type="button" asp-controller="Case" asp-action="Details" asp-route-id="@caseItem.CaseId">
-                                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
+                            @foreach (var caseItem in Model.CaseList)
+                            {
+                                <tr>
+                                    <td>@caseItem.Type</td>
+                                    <td>@caseItem.LeadClientName</td>
+                                    <td>@(caseItem.Active ? "Active" : "Closed")</td>
+                                    <td>
+                                        <a class="btn btn-primary" type="button" asp-controller="Case" asp-action="Details" asp-route-id="@caseItem.CaseId">
+                                            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
