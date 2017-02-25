@@ -134,7 +134,8 @@ namespace MemigrationProBonoTracker.Services
                     DateOfBirth = @case.LeadClient.DateOfBirth,
                     Gender = @case.LeadClient.Gender,
                     Nationality = @case.LeadClient.Nationality,
-                    Notes = @case.LeadClient.Notes
+                    Notes = @case.LeadClient.Notes,
+                    AlienNumber = @case.LeadClient.AlienNumber
                 };
                 _db.People.Add(leadClient);
                 _db.SaveChanges();

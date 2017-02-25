@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MemigrationProBonoTracker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

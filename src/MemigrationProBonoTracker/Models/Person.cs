@@ -18,6 +18,9 @@ namespace MemigrationProBonoTracker.Models
         public PersonAddress Address { get; set; }
         public PersonPhoneNumber Phone { get; set; }
 
+        [Display(Name = "Alien Number")]
+        public string AlienNumber { get; set; }
+
         [Display(Name = "Notes")]
         public string Notes { get; set; }
 
@@ -25,7 +28,7 @@ namespace MemigrationProBonoTracker.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { get; set; }
 
-        [Display(Name = "Nationality")]
+        [Display(Name = "Country of Origin")]
         public Country Nationality { get; set; }
 
         [Display(Name = "Gender")]

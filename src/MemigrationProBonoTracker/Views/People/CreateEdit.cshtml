@@ -39,7 +39,11 @@
                         <select asp-for="Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
                         <span asp-validation-for="Nationality" class="text-danger"></span>
                     </div>
-                    <div class="col-lg-6">&nbsp;</div>
+                    <div class="col-lg-6">
+                        <label asp-for="AlienNumber" class="col-md-8 "></label>
+                        <input asp-for="AlienNumber" class="form-control" maxlength="9" />
+                        <span asp-validation-for="AlienNumber" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>

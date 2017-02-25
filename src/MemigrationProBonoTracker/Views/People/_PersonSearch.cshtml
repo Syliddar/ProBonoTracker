@@ -20,10 +20,11 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            @Html.HiddenFor(i => item.DateOfBirth.Date, new {@class="dob"})
-                            @Html.HiddenFor(i => item.FirstName, new {@class="fname"})
-                            @Html.HiddenFor(i => item.LastName, new {@class="lname"})
+                            @Html.HiddenFor(i => item.DateOfBirth.Date, new { @class = "dob" })
+                            @Html.HiddenFor(i => item.FirstName, new { @class = "fname" })
+                            @Html.HiddenFor(i => item.LastName, new { @class = "lname" })
                             @Html.HiddenFor(i => item.Gender)
+                            @Html.HiddenFor(i => item.AlienNumber)
                             <td class="FullName">
                                 @Html.DisplayFor(modelItem => item.FullName)
                             </td>

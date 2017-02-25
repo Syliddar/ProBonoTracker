@@ -20,42 +20,57 @@
             </div>
             <input asp-for="@Model.LeadClient.Id" type="hidden" />
             <div class="panel-body">
-                <div class="form-group col-lg-5">
-                    <label asp-for="@Model.LeadClient.FirstName" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.LeadClient.FirstName" class="form-control" />
-                        <span asp-validation-for="@Model.LeadClient.FirstName" class="text-danger"></span>
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.FirstName" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="@Model.LeadClient.FirstName" class="form-control" />
+                            <span asp-validation-for="@Model.LeadClient.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.LastName" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="@Model.LeadClient.LastName" class="form-control" />
+                            <span asp-validation-for="@Model.LeadClient.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" id="LaunchClientSearchModal" class="btn btn-primary pull-right">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
                     </div>
                 </div>
-                <div class="form-group col-lg-5">
-                    <label asp-for="@Model.LeadClient.LastName" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.LeadClient.LastName" class="form-control" />
-                        <span asp-validation-for="@Model.LeadClient.LastName" class="text-danger"></span>
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.DateOfBirth" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepickerpast" />
+                            <span asp-validation-for="@Model.LeadClient.DateOfBirth" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-                <button type="button" id="LaunchClientSearchModal" class="btn btn-primary pull-right col-lg-1">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-                <div class="form-group col-lg-5">
-                    <label asp-for="@Model.LeadClient.DateOfBirth" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.LeadClient.DateOfBirth" class="form-control datepickerpast" />
-                        <span asp-validation-for="@Model.LeadClient.DateOfBirth" class="text-danger"></span>
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.Gender" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                            <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-lg-5">
-                    <label asp-for="@Model.LeadClient.Gender" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
-                        <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-group col-lg-5">
-                    <label asp-for="@Model.LeadClient.Nationality" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
-                        <span asp-validation-for="@Model.LeadClient.Nationality" class="text-danger"></span>
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.Nationality" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
+                            <span asp-validation-for="@Model.LeadClient.Nationality" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label asp-for="@Model.LeadClient.AlienNumber" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="@Model.LeadClient.AlienNumber" class="form-control" maxlength="9" />
+                            <span asp-validation-for="@Model.LeadClient.AlienNumber" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -153,12 +168,13 @@
                         var age = Row.children('#item_Age').val();
                         var gender = Row.children('#item_Gender').val();
                         var dob = Row.children('.dob').val().split(' ');
-                        console.log(lastname);
+                        var alienNum = Row.children('#item_AlienNumber').val();
                         var id = this.id;
                         $("#LeadClient_FirstName").val(firstname);
                         $("#LeadClient_LastName").val(lastname);
                         $("#LeadClient_Id").val(id);
                         $("#LeadClient_Age").val(age);
+                        $("#LeadClient_AlienNumber").val(alienNum);
                         $("#LeadClient_DateOfBirth").val(dob[0]);
                         $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
                         $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
