@@ -203,6 +203,7 @@ namespace MemigrationProBonoTracker.Services
             //    PersonId = x.AssociatedPersonId,
             //    Relationship = x.Relation
             //}).ToList();
+            @case.Type = viewModel.Type;
             @case.AssigningAttorney = _db.Attorneys.Find(viewModel.AssigningAttorneyId);
             @case.VolunteerAttorney = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
             @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
