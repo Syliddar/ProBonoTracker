@@ -3,6 +3,6 @@
   &lt;Assembly Path="C:\Users\Jason\.nuget\packages\Microsoft.EntityFrameworkCore.Design.Core\1.0.0-preview2-final\lib\net451\Microsoft.EntityFrameworkCore.Design.Core.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/Coords/@EntryValue">(Doc Ln 8 Col 8)</s:String>
-	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/FileId/@EntryValue">C5579F1D-3567-48C9-BB8C-09F11FAD577E/d:Views/d:Case/f:Details.cshtml</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/Coords/@EntryValue">(Doc Ln 10 Col 96)</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/FileId/@EntryValue">C5579F1D-3567-48C9-BB8C-09F11FAD577E/d:Views/d:Shared/f:_LoginPartial.cshtml</s:String>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark5/Owner/@EntryValue">NumberedBookmarkManager</s:String></wpf:ResourceDictionary>
