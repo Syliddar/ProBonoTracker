@@ -44,7 +44,7 @@ namespace MemigrationProBonoTracker.Controllers
                 return NotFound();
             }
 
-            return View(model);
+            return View("Details",model);
         }
 
         // GET: People/Edit/5
@@ -72,10 +72,21 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-               _context.UpdatePerson(person);
-                return RedirectToAction("Index");
+                if (person.Id == 0)
+                {
+                    _context.AddPerson(person);
+
+                }
+                else
+                {
+                    _context.UpdatePerson(person);
+                }
+                return RedirectToAction("Details","People",new {id = person.Id});
             }
-            return View(person);
+            else
+            {
+                return View("CreateEdit", person);
+            }
         }
 
 
@@ -115,7 +126,7 @@ namespace MemigrationProBonoTracker.Controllers
 
         //public void RemovePersonAssociation(int caseId, int personId)
         //{
-            
+
         //}
     }
 }
