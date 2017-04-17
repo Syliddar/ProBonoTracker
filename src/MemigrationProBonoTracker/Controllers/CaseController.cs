@@ -56,7 +56,7 @@ namespace MemigrationProBonoTracker.Controllers
         public IActionResult Create(CreateCaseViewModel @case)
         {
             var caseId = _context.AddCase(@case);
-            return RedirectToAction("Details", new {id = caseId });
+            return RedirectToAction("Details", new { id = caseId });
         }
 
         // GET: Cases/Edit/5
@@ -83,7 +83,7 @@ namespace MemigrationProBonoTracker.Controllers
             {
                 _context.UpdatePerson(@case.LeadClient);
                 _context.UpdateCase(@case);
-                return RedirectToAction("Details", new {id = @case.Id});
+                return RedirectToAction("Details", new { id = @case.Id });
             }
             return View(@case);
         }
@@ -116,11 +116,10 @@ namespace MemigrationProBonoTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.UpdatePerson(caseDetails.LeadClient);
-                _context.UpdateCase(caseDetails);
+                _context.CloseCase(caseDetails);
                 return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("CloseCase", "Case", new { caseId = caseDetails.Id });
         }
         public PartialViewResult CreateCaseEventPartial(int parentId)
         {

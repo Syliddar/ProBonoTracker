@@ -210,6 +210,20 @@ namespace MemigrationProBonoTracker.Services
             @case.CaseNotes = viewModel.CaseNotes;
             return _db.SaveChanges();
         }
+
+        public int CloseCase(CaseDetailsViewModel viewModel)
+        {
+            var @case = _db.Cases.Find(viewModel.Id);
+            @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
+            @case.FeesPaid = viewModel.FeesPaid;
+            @case.CaseNotes = viewModel.CaseNotes;
+
+            var atty = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
+            atty.InterestedVolunteer = viewModel.InterestedVolunteer;
+            atty.DesiredVolunteer = viewModel.DesiredVolunteer;
+
+            return _db.SaveChanges();
+        }
         public int DeleteCase(int id)
         {
             var @case = _db.Cases.First(c => c.Id == id);
@@ -486,7 +500,6 @@ namespace MemigrationProBonoTracker.Services
             _db.Attorneys.Remove(@attorney);
             return _db.SaveChanges();
         }
-
         public AttorneyContactInfoViewModel GetAttorneyContactInfo(int id)
         {
             var attorney = _db.Attorneys.Include(a => a.Address).Include(a => a.Phone).Include(a => a.Email).First(a => a.Id == id);
@@ -499,13 +512,6 @@ namespace MemigrationProBonoTracker.Services
                 PhoneNumbers = attorney.Phone
             };
             return result;
-        }
-        public int UpdateAttorneyOnCaseClose(CaseDetailsViewModel @case)
-        {
-            var atty = _db.Attorneys.Find(@case.VolunteerAttorneyId);
-            atty.InterestedVolunteer = @case.InterestedVolunteer;
-            atty.DesiredVolunteer = @case.DesiredVolunteer;
-            return _db.SaveChanges();
         }
 
         #endregion

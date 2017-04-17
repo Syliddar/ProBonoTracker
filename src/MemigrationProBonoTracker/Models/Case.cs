@@ -9,7 +9,7 @@ namespace MemigrationProBonoTracker.Models
     {
         public int Id { get; set; }
         public bool Active { get; set; }
-        
+
         [ForeignKey("LeadClient")]
         public int LeadClientId { get; set; }
 
@@ -19,13 +19,17 @@ namespace MemigrationProBonoTracker.Models
         [ForeignKey("VolunteerAttorney")]
         public int? VolunteerAttorneyId { get; set; }
 
-        
+
         [Display(Name = "Volunteer Hours Worked")]
         public double AttorneyWorkedHours { get; set; }
 
+        [Display(Name = "Fees Paid")]
+        [DataType(DataType.Currency)]
+        public float FeesPaid { get; set; }
+
         [Display(Name = "Case Type")]
         public Enums.CaseType Type { get; set; }
-        
+
         [Display(Name = "Case Notes")]
         public string CaseNotes { get; set; }
         [Display(Name = "Date Created")]

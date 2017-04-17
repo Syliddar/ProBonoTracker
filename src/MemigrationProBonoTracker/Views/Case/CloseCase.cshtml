@@ -6,6 +6,7 @@
 
 <form class="form" asp-action="CloseCase">
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x=>x.VolunteerAttorneyId)
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-md-6">

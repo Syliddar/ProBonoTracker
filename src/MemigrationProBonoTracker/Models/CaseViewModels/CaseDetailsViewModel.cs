@@ -34,8 +34,10 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         [Display(Name = "Case Notes")]
         public string CaseNotes { get; set; }
         public List<CaseLogEntry> CaseLogEntries { get; set; }
+
         [Display(Name="Total Fees Paid")]
-        public double FeesPaid { get; set; }
+        [DataType(DataType.Currency)]
+        public float FeesPaid { get; set; }
 
         [Display(Name = "Desired for future volunteering")]
         public bool DesiredVolunteer{ get; set; }

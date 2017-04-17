@@ -15,6 +15,7 @@ namespace MemigrationProBonoTracker.Services
         CaseListViewModel GetCaseListViewModelForPerson(int personId);
         CaseDetailsViewModel GetCaseDetails(int id);
         List<CaseListItem> GetOpenCasesWithoutVolunteerAttorneys();
+        int CloseCase(CaseDetailsViewModel caseDetails);
 
         int UpsertCaseEvent(CaseEvent @event);
         int DeleteCaseEvent(int eventId);
@@ -37,8 +38,6 @@ namespace MemigrationProBonoTracker.Services
         int UpdateAttorney(Attorney @attorney);
         int DeleteAttorney(int id);
         AttorneyContactInfoViewModel GetAttorneyContactInfo(int id);
-        int UpdateAttorneyOnCaseClose(CaseDetailsViewModel @case);
-        
 
 
         CaseLogListViewModel GetCaseLogEntries(int caseId);
