@@ -217,10 +217,14 @@ namespace MemigrationProBonoTracker.Services
             @case.AttorneyWorkedHours = viewModel.AttorneyWorkedHours;
             @case.FeesPaid = viewModel.FeesPaid;
             @case.CaseNotes = viewModel.CaseNotes;
+            @case.Active = false;
 
-            var atty = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
-            atty.InterestedVolunteer = viewModel.InterestedVolunteer;
-            atty.DesiredVolunteer = viewModel.DesiredVolunteer;
+            if (viewModel.VolunteerAttorneyId != 0)
+            {
+                var atty = _db.Attorneys.Find(viewModel.VolunteerAttorneyId);
+                atty.InterestedVolunteer = viewModel.InterestedVolunteer;
+                atty.DesiredVolunteer = viewModel.DesiredVolunteer;
+            }
 
             return _db.SaveChanges();
         }

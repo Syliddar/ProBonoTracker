@@ -15,7 +15,7 @@
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/42a126c4-b0f8-4b95-b8e1-9477318a580c/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MemigrationProBonoTracker</ApplicationInsightsAnnotationResourceId>
-    <ApplicationInsightsResourceId>/subscriptions/42a126c4-b0f8-4b95-b8e1-9477318a580c/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MemigrationProBonoTracker</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/42a126c4-b0f8-4b95-b8e1-9477318a580c/resourcegroups/MemigrationPBT/providers/microsoft.insights/components/MemigrationPBT</ApplicationInsightsResourceId>
   </PropertyGroup>
   <ItemGroup>
     <DnxInvisibleContent Include="bower.json" />
