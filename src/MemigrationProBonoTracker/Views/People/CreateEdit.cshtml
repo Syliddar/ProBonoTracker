@@ -8,6 +8,9 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Person</h2>
             </div>
+            <div class="col-lg-12">
+                <span asp-validation=""></span>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-6">
@@ -120,7 +123,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <a asp-action="Index">Back to List</a>
+               @if (Model.Id != 0)
+               {
                 <a class="delete" id="@Model.Id">Delete</a>
+               }
                 <input type="submit" value="Save" class="btn btn-primary pull-right" />
             </div>
         </div>
@@ -130,6 +136,7 @@
 <script>
     $().ready(function () {
         $(".phonemask").mask("(999) 999-9999");
+        $("#AlienNumber").mask("A 999-999-999");
         $(".delete").click(function () {
             var id = this.id;
             console.log(id);

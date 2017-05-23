@@ -3,65 +3,94 @@
     <div class="col-lg-12">
         <h2>@Html.DisplayFor(x => x.LeadClient.FullName) - @Html.DisplayFor(x => x.Type) <a class="pull-right btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a></h2>
     </div>
+</div>
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Lead Client</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.LeadClient.FullName) <br />
+                        @Html.DisplayFor(x => x.LeadClient.FullName)
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.LeadClient.DateOfBirth)<br />
+                        @Html.DisplayFor(x => x.LeadClient.DateOfBirth)
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.LeadClient.Gender)<br />
+                        @Html.DisplayFor(x => x.LeadClient.Gender)
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.LeadClient.Nationality)<br />
+                        @Html.DisplayFor(x => x.LeadClient.Nationality)
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.LeadClient.AlienNumber) <br/>
+                        @Html.DisplayFor(x => x.LeadClient.AlienNumber)
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.Active)<br />
+                        @(Model.Active ? "Open" : "Closed")
+                    </div>
+                    <div class="col-lg-5">
+                        @Html.LabelFor(x => x.Type)<br />
+                        @Html.DisplayFor(x => x.Type)
+                    </div>
+                </div>
 
+
+                <div class="col-lg-2">
+                    <div class="row">
+                        <button type="button" onclick="PersonContactInfoModal(@Model.LeadClient.Id)" class="pull-left btn btn-primary">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <a asp-action="Details" asp-controller="People" asp-route-id="@Model.LeadClient.Id" class="pull-left btn btn-primary">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                @Html.LabelFor(x => x.CaseNotes)
+                <textarea style="max-width: 1080px" readonly cols="2" rows="8" asp-for="@Model.CaseNotes" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Lead Client</h3>
+                <h3 class="panel-title">Assigning Attorney</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-10">
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.LeadClient.FullName) <br />
-                            @Html.DisplayFor(x => x.LeadClient.FullName)
-                        </div>
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.LeadClient.DateOfBirth)<br />
-                            @Html.DisplayFor(x => x.LeadClient.DateOfBirth)
-                        </div>
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.LeadClient.Gender)<br />
-                            @Html.DisplayFor(x => x.LeadClient.Gender)
-                        </div>
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.LeadClient.Nationality)<br />
-                            @Html.DisplayFor(x => x.LeadClient.Nationality)
-                        </div>
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.LeadClient.AlienNumber)
-                            @Html.DisplayFor(x => x.LeadClient.AlienNumber)
-                        </div>
-                        <div class="col-lg-3">
-                            @Html.LabelFor(x => x.Active)<br />
-                            @(Model.Active ? "Open" : "Closed")
-                        </div>
-                        <div class="col-lg-5">
-                            @Html.LabelFor(x => x.Type)<br />
-                            @Html.DisplayFor(x => x.Type)
-                        </div>
+                        <h2>@Html.DisplayFor(x => x.AssigningAttorneyFullName) <br /> @Html.DisplayFor(x => x.AssigningAttorneyOrganizationName)</h2>
                     </div>
-
-
                     <div class="col-lg-2">
                         <div class="row">
-                            <button type="button" onclick="PersonContactInfoModal(@Model.LeadClient.Id)" class="pull-left btn btn-primary">
-                                <span class="glyphicon glyphicon-info-sign"></span>
-                            </button>
+                            <div class="col-lg-12"><button type="button" onclick="AttorneyContactInfoModal(@Model.AssigningAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button></div>
                         </div>
                         <br />
                         <div class="row">
-                            <a asp-action="Details" asp-controller="People" asp-route-id="@Model.LeadClient.Id" class="pull-left btn btn-primary">
-                                <span class="glyphicon glyphicon-arrow-right"></span>
-                            </a>
+                            <div class="col-lg-12">
+                                <a asp-action="Details" asp-controller="Attorney" asp-route-id="@Model.AssigningAttorneyId" class="pull-right btn btn-primary">
+                                    <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    @Html.LabelFor(x => x.CaseNotes)
-                    <textarea style="max-width: 1080px" readonly cols="2" rows="8" asp-for="@Model.CaseNotes" class="form-control"></textarea>
-                </div>
             </div>
+
         </div>
     </div>
     <div class="col-lg-6">
@@ -109,35 +138,6 @@
                     </div>
                 </div>
             }
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Assigning Attorney</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-10">
-                        <h2>@Html.DisplayFor(x => x.AssigningAttorneyFullName) <br /> @Html.DisplayFor(x => x.AssigningAttorneyOrganizationName)</h2>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="row">
-                            <div class="col-lg-12"><button type="button" onclick="AttorneyContactInfoModal(@Model.AssigningAttorneyId)" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span></button></div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a asp-action="Details" asp-controller="Attorney" asp-route-id="@Model.AssigningAttorneyId" class="pull-right btn btn-primary">
-                                    <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

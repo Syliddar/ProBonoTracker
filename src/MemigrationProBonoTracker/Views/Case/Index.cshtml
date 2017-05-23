@@ -36,7 +36,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.CaseId">Edit</a><br/>
                     <a asp-action="Details" asp-route-id="@item.CaseId">Details</a><br/>
-                    <a id="@item.CaseId">Delete</a>
+                    <a href="#" id="@item.CaseId" class="DeleteCase">Delete</a>
                 </td>
             </tr>
         }
@@ -45,7 +45,25 @@
 <script>
     $().ready(function () {
         $.fn.dataTable.moment('DD MMM YYYY');
+        $(".DeleteCase").click(function () {
+            var id = this.id;
+            console.log(id);
+            if (confirm('Are you sure you want to DELETE this Case?')) {
 
+                $.ajax({
+                    url: '/Case/Delete/',
+                    type: 'POST',
+                    data: {
+                        "__RequestVerificationToken": $("input[name=__RequestVerificationToken]").val(),
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.result == 'Redirect')
+                            window.location = data.url;
+                    }
+                });
+            }
+        });
         var table = $('#CaseTable').DataTable({
             columnDefs: [
                 { type: 'non-empty-string', targets: 4 },

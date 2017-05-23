@@ -1,8 +1,8 @@
 using System;
-using Microsoft.AspNetCore.Mvc;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MemigrationProBonoTracker.Controllers
 {
@@ -95,7 +95,7 @@ namespace MemigrationProBonoTracker.Controllers
         {
             _context.DeleteCase(id);
 
-            return RedirectToAction("Index");
+            return Json(new { result = "Redirect", url = Url.Action("Index", "Case") });
         }
 
         [HttpPost]

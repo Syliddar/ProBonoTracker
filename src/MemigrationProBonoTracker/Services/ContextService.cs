@@ -6,7 +6,6 @@ using MemigrationProBonoTracker.Models.CaseViewModels;
 using System.Linq;
 using MemigrationProBonoTracker.Models.AttorneyViewModels;
 using MemigrationProBonoTracker.Models.PersonViewModel;
-using Microsoft.DotNet.Cli.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemigrationProBonoTracker.Services
@@ -135,7 +134,7 @@ namespace MemigrationProBonoTracker.Services
                     Gender = @case.LeadClient.Gender,
                     Nationality = @case.LeadClient.Nationality,
                     Notes = @case.LeadClient.Notes,
-                    AlienNumber = @case.LeadClient.AlienNumber
+                    AlienNumber = @case.LeadClient.AlienNumber.TrimStart('A').Trim()
                 };
                 _db.People.Add(leadClient);
                 _db.SaveChanges();
@@ -230,8 +229,12 @@ namespace MemigrationProBonoTracker.Services
         }
         public int DeleteCase(int id)
         {
-            var @case = _db.Cases.First(c => c.Id == id);
+            var @case = _db.Cases
+                .Include(c => c.CaseEvents)
+                .First(c => c.Id == id);
+            var logEntries = _db.LogEntries.Where(e => e.CaseId ==@case.Id);
             _db.Cases.Remove(@case);
+            _db.LogEntries.RemoveRange(logEntries);
             return _db.SaveChanges();
         }
         public List<CaseEventViewModel> GetUpcomingCaseEvents()

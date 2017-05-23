@@ -147,6 +147,7 @@
 
 <script>
     $(function () {
+        $("#LeadClient_AlienNumber").mask("A999-999-999");
         $("#LaunchAssigningAttorneySearchModal").click(function () {
             $.ajax({
                 url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + true,

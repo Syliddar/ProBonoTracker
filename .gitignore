@@ -5,9 +5,16 @@
 /src/MemigrationProBonoTracker/bin/
 /src/MemigrationProBonoTracker/obj/
 /.vs/*
+<<<<<<< Updated upstream
 MemigrationProBonoTracker.xprog.user
 src/MemigrationProBonoTracker/project.lock.json
 /src/MemigrationProBonoTracker/Properties/PublishProfiles/publish-module.psm1
 /src/MemigrationProBonoTracker/Properties/PublishProfiles/MemigrationPBT - Web Deploy.pubxml.user
 /src/MemigrationProBonoTracker/Properties/PublishProfiles/MemigrationPBT - Web Deploy.pubxml
 /src/MemigrationProBonoTracker/Properties/PublishProfiles/MemigrationPBT - Web Deploy-publish.ps1
+=======
+/src/MemigrationProBonoTracker.xprog.user
+/src/MemigrationProBonoTracker/project.lock.json
+/src/MemigrationProBonoTracker/Properties/PublishProfiles
+/src/appsettings.json
+>>>>>>> Stashed changes
