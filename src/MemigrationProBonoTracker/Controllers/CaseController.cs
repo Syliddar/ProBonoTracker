@@ -2,10 +2,12 @@ using System;
 using MemigrationProBonoTracker.Models;
 using MemigrationProBonoTracker.Models.CaseViewModels;
 using MemigrationProBonoTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MemigrationProBonoTracker.Controllers
 {
+    [Authorize]
     public class CaseController : Controller
     {
         private readonly IContextService _context;
@@ -55,8 +57,12 @@ namespace MemigrationProBonoTracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateCaseViewModel @case)
         {
-            var caseId = _context.AddCase(@case);
-            return RedirectToAction("Details", new { id = caseId });
+            if (ModelState.IsValid)
+            {
+                var caseId = _context.AddCase(@case);
+                return RedirectToAction("Details", new { id = caseId });
+            }
+            return Create();
         }
 
         // GET: Cases/Edit/5

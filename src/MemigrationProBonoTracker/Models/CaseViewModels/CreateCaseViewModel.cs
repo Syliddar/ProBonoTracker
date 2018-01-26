@@ -13,6 +13,9 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
         public Attorney AssigningAttorney { get; set; }
         [Display(Name = "Volunteer Attorney")]
         public Attorney VolunteerAttorney { get; set; }
+
+        [Required(ErrorMessage = "Assigning Attorney is Required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Assigning Attorney is Required.")]
         public int AssigningAttorneyId { get; set; }
         public int VolunteerAttorneyId { get; set; }
 

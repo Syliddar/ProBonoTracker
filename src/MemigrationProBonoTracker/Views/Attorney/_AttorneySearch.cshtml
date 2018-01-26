@@ -46,7 +46,9 @@
 
 <script>
     $().ready(function () {
-        $('#AttorneyTable').DataTable();
+        $('#AttorneyTable').DataTable({
+            "paging": false
+        });
         $('#modalWrapper').modal('show');
         $(".AttorneySearchModalChoose").click(function () {
             var fullname = $(this).closest('tr').children('td.FullName').text();
