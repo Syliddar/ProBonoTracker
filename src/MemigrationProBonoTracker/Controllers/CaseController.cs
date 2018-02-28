@@ -62,6 +62,14 @@ namespace MemigrationProBonoTracker.Controllers
                 var caseId = _context.AddCase(@case);
                 return RedirectToAction("Details", new { id = caseId });
             }
+            else
+            {
+                if (@case.AssigningAttorneyId == 0)
+                {
+                    ModelState.AddModelError("AssigningAttorneyId", "An Assigning Attorney must be selected.");
+                }
+
+            }
             return Create();
         }
 

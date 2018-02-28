@@ -155,15 +155,18 @@ namespace MemigrationProBonoTracker.Services
             };
             _db.Cases.Add(newCase);
             newCase.CaseEvents = new List<CaseEvent>();
-            foreach (var caseEvent in @case.CaseEvents)
+            if (@case.CaseEvents != null)
             {
-                newCase.CaseEvents.Add(new CaseEvent
+                foreach (var caseEvent in @case.CaseEvents)
                 {
-                    EventDate = caseEvent.EventDate,
-                    Event = caseEvent.Event
-                });
+                    newCase.CaseEvents.Add(new CaseEvent
+                    {
+                        EventDate = caseEvent.EventDate,
+                        Event = caseEvent.Event
+                    });
+                }
+                _db.SaveChanges();
             }
-            _db.SaveChanges();
             var createdLog = new CaseLogEntry
             {
                 CaseId = newCase.Id,

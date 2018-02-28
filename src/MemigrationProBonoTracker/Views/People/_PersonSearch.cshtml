@@ -50,7 +50,10 @@
 
 <script>
     $().ready(function () {
-        $("#PersonTable").DataTable();
+        $("#PersonTable").DataTable({
+            "paging": false
+        });
+
         $('#modalWrapper').modal('show');
     });
 </script>
