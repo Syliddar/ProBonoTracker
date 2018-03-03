@@ -18,3 +18,5 @@ src/MemigrationProBonoTracker/project.lock.json
 /src/MemigrationProBonoTracker/Properties/PublishProfiles
 /src/appsettings.json
 >>>>>>> Stashed changes
+/node_modules
+/package-lock.json
