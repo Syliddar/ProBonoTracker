@@ -11,7 +11,9 @@ namespace MemigrationProBonoTracker.Models
         public int CaseId { get; set; }
         public string Event { get; set; }
 
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime EventDate { get; set; }
 
         public virtual Case ParentCase { get; set; }

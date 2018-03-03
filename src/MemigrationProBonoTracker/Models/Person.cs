@@ -33,8 +33,9 @@ namespace MemigrationProBonoTracker.Models
         public string Notes { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Date of Birth")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]        
         public DateTime DateOfBirth { get; set; }
 
         [Required]

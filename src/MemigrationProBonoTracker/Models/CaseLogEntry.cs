@@ -11,8 +11,9 @@ namespace MemigrationProBonoTracker.Models
         [ForeignKey("CaseId")]
         public int CaseId { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]       
         [Display(Name = "Entry Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EntryDate { get; set; }
 
         [Display(Name = "Log Entry")]

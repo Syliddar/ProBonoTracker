@@ -42,6 +42,7 @@ namespace MemigrationProBonoTracker.Models
 
         [Display(Name = "Recruitment Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime RecruitmentDate { get; set; }
 
         [Display(Name = "CLC Memphis Contributions")]
