@@ -2,7 +2,7 @@
 
 $().ready(function () {
     $("#ajaxLoader").hide();
-    initDatePickers();
+    //initDatePickers();
     $(document).bind("ajaxSend", function () {
         $("#ajaxLoader").show();
     }).bind("ajaxComplete", function () {
@@ -40,33 +40,34 @@ function bindRemoveEventRow() {
             }
         });
 }
-function initDatePickers() {
-    $(".datepickerfuture").datepicker({
-        format: "mm/dd/yyyy",
-        startDate: "-1d",
-        todayBtn: "linked",
-        keyboardNavigation: "true",
-        autoclose: true,
-        todayHighlight: true
-    });
-    $(".datepickerpast").datepicker({
-        format: "mm/dd/yyyy",
-        startDate: "1/1/1900",
-        endDate: "0d",
-        todayBtn: "linked",
-        keyboardNavigation: "true",
-        autoclose: true,
-        todayHighlight: true
-    });
-    $(".datepicker").datepicker({
-        format: "mm/dd/yyyy",
-        startDate: "1/1/1900",
-        todayBtn: "linked",
-        keyboardNavigation: "true",
-        autoclose: true,
-        todayHighlight: true
-    });
-}
+
+//function initDatePickers() {
+//    $(".datepickerfuture").datepicker({
+//        format: "mm/dd/yyyy",
+//        startDate: "-1d",
+//        todayBtn: "linked",
+//        keyboardNavigation: "true",
+//        autoclose: true,
+//        todayHighlight: true
+//    });
+//    $(".datepickerpast").datepicker({
+//        format: "mm/dd/yyyy",
+//        startDate: "1/1/1900",
+//        endDate: "0d",
+//        todayBtn: "linked",
+//        keyboardNavigation: "true",
+//        autoclose: true,
+//        todayHighlight: true
+//    });
+//    $(".datepicker").datepicker({
+//        format: "mm/dd/yyyy",
+//        startDate: "1/1/1900",
+//        todayBtn: "linked",
+//        keyboardNavigation: "true",
+//        autoclose: true,
+//        todayHighlight: true
+//    });
+//}
 
 function PersonContactInfoModal(personId) {
     $.ajax({

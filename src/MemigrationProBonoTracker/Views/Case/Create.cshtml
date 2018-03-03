@@ -168,15 +168,16 @@
                         var nationality = Row.children('td.Nationality').text().trim();
                         var age = Row.children('#item_Age').val();
                         var gender = Row.children('#item_Gender').val();
-                        var dob = Row.children('.dob').val().split(' ');
+                        var rawdob = Row.children('.dob').val().split(' ');
                         var alienNum = Row.children('#item_AlienNumber').val();
                         var id = this.id;
+                        var dob = new Date(rawdob[0]);
                         $("#LeadClient_FirstName").val(firstname);
                         $("#LeadClient_LastName").val(lastname);
                         $("#LeadClient_Id").val(id);
                         $("#LeadClient_Age").val(age);
                         $("#LeadClient_AlienNumber").val(alienNum);
-                        $("#LeadClient_DateOfBirth").val(dob[0]);
+                        document.getElementById('LeadClient_DateOfBirth').value = dob.getFullYear() + "-" + String("00" + dob.getMonth()).slice(-2) + "-" + String("00" + dob.getDate()).slice(-2);
                         $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
                         $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
                         $('#modalWrapper').modal('hide');
