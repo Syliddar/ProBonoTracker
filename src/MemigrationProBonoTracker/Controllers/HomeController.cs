@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MemigrationProBonoTracker.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
-        private IContextService _context;
+        private readonly IContextService _context;
         public HomeController(IContextService context)
         {
             _context = context;
         }
+
+        [Authorize]
         public IActionResult Index()
         {
             var model = new HomeViewModel

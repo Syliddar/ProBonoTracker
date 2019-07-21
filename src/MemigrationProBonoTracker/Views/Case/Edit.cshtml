@@ -1,6 +1,6 @@
 @model MemigrationProBonoTracker.Models.CaseViewModels.CaseDetailsViewModel
 <form asp-action="Edit">
-  
+
     @Html.AntiForgeryToken()
     <div class="row">
         <h1>Edit Case</h1>
@@ -10,6 +10,7 @@
                 <select asp-for="@Model.Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
                 <span asp-validation-for="@Model.Type" class="text-danger"></span>
                 <input hidden asp-for="Id" />
+                <input hidden asp-for="Active" />
             </div>
             <div class="col-md-6">
                 <div class="pull-right">
@@ -84,7 +85,7 @@
                     <div class="form-group col-lg-5">
                         <label asp-for="@Model.LeadClient.AlienNumber" class="col-md-4 control-label"></label>
                         <div class="col-md-10">
-                            <input asp-for="@Model.LeadClient.AlienNumber" class="form-control" maxlength="9" />
+                            <input asp-for="@Model.LeadClient.AlienNumber" class="form-control" />
                             <span asp-validation-for="@Model.LeadClient.AlienNumber" class="text-danger"></span>
                         </div>
                     </div>
@@ -273,7 +274,15 @@
 }
 <script>
     $(function () {
+        $("#LeadClient_AlienNumber").mask("A999-999-999");
         bindRemoveEventRow();
+        var dob = new Date('@Model.LeadClient.DateOfBirth');
+        console.log(dob);
+        var datestr = moment(dob).format("YYYY-MM-DD");
+        console.log(datestr);
+            //= dob.getFullYear() + "-" + String("00" + dob.getMonth() + 1).slice(-2) + "-" + String("00" + dob.getDate()).slice(-2);
+        console.log(datestr);
+        document.getElementById('LeadClient_DateOfBirth').value = datestr;
         $("#LaunchAssigningAttorneySearchModal").click(function () {
             $.ajax({
                 url: '/Attorney/GetAttorneyLookupPartial/?assigning=' + true, success: function (data) {
@@ -320,11 +329,11 @@
                         var gender = $(this).closest('tr').children('#item_Gender').val();
                         var id = this.id;
                         var name = fullname.trim().split(" ");
-                        console.log(nationality);
+                        var dob = new Date(rawdob[0]);
                         $("#LeadClient_FirstName").val(name[0]);
                         $("#LeadClient_LastName").text(name[1]);
                         $("#LeadClient_Id").val(id);
-                        $("#LeadClient_Age").val(age);
+                        document.getElementById('LeadClient_DateOfBirth').value = dob.getFullYear() + "-" + String("00" + dob.getMonth()).slice(-2) + "-" + String("00" + dob.getDate()).slice(-2);
                         $("#LeadClient_Gender option").filter(function () { return this.text == gender; }).attr('selected', true);
                         $("#LeadClient_Nationality option").filter(function () { return this.text == nationality; }).attr('selected', true);
                         $('#modalWrapper').modal('hide');

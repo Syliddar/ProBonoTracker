@@ -137,6 +137,11 @@
     $().ready(function () {
         $(".phonemask").mask("(999) 999-9999");
         $("#AlienNumber").mask("A 999-999-999");
+        var dob = new Date('@Model.DateOfBirth');
+        console.log(dob);
+        var datestr = moment(dob).format("YYYY-MM-DD");
+        console.log(datestr);
+        document.getElementById('DateOfBirth').value = datestr;
         $(".delete").click(function () {
             var id = this.id;
             console.log(id);
