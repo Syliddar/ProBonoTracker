@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-6">
                             <strong>Gender: </strong>
-                            <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                            <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<PBTEnums.Gender>()" class="form-control"></select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -35,7 +35,7 @@
                         <div class="col-md-6">
 
                             <strong>Via</strong>
-                            <select asp-for="@Model.RecruitmentMethod" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
+                            <select asp-for="@Model.RecruitmentMethod" asp-items="Html.GetEnumSelectList<PBTEnums.RecruitmentMethod>()" class="form-control"></select>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                                     <input asp-for="@Model.Phone.Number" class="form-control" placeholder="Phone Number" />
                                 </div>
                                 <div class="col-md-4">
-                                    <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
+                                    <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<PBTEnums.NumberType>()" class="form-control"></select>
                                 </div>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                             <div class="form-group">
                                 <label asp-for="Gender" class="control-label"></label>
                                 <div class="col-md-10">
-                                    <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                                    <select asp-for="Gender" asp-items="Html.GetEnumSelectList<PBTEnums.Gender>()" class="form-control"></select>
                                     <span asp-validation-for="Gender" class="text-danger" />
                                 </div>
                             </div>
@@ -234,7 +234,7 @@
                             <div class="form-group">
                                 <label asp-for="RecruitmentMethod" class="control-label"></label>
                                 <div class="col-md-10">
-                                    <select asp-for="RecruitmentMethod" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
+                                    <select asp-for="RecruitmentMethod" asp-items="Html.GetEnumSelectList<PBTEnums.RecruitmentMethod>()" class="form-control"></select>
                                     <span asp-validation-for="RecruitmentMethod" class="text-danger" />
                                 </div>
                             </div>

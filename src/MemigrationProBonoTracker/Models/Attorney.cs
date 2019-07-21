@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static MemigrationProBonoTracker.Models.Enums;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models
 {

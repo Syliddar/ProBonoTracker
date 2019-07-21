@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models.CaseViewModels
 {
@@ -13,7 +14,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
     {
         public int CaseId { get; set; }
         public string ClientName { get; set; }
-        public Enums.CaseType CaseType { get; set; }
+        public CaseType CaseType { get; set; }
         public string AssigningAttorneyName { get; set; }
         public string VolunteerAttorneyName { get; set; }
         public DateTime CaseCreatedDate { get; set; }

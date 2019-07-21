@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models.CaseViewModels
 {
@@ -21,7 +22,7 @@ namespace MemigrationProBonoTracker.Models.CaseViewModels
 
 
         [Display(Name = "Case Type")]
-        public Enums.CaseType Type { get; set; }
+        public CaseType Type { get; set; }
         [Display(Name = "Case Events")]
         public List<CaseEvent> CaseEvents { get; set; }
         [Display(Name = "Volunteer Hours Worked")]

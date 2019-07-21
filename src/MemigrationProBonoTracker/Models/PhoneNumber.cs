@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models
 {
@@ -8,7 +9,7 @@ namespace MemigrationProBonoTracker.Models
         [Phone]
         [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
-        public Enums.NumberType Type { get; set; }
+        public NumberType Type { get; set; }
     }
 
     public class AttorneyPhoneNumber
@@ -17,6 +18,6 @@ namespace MemigrationProBonoTracker.Models
         [Phone]
         [UIHint("PhoneNumFormatter")]
         public string Number { get; set; }
-        public Enums.NumberType Type { get; set; }
+        public NumberType Type { get; set; }
     }
 }

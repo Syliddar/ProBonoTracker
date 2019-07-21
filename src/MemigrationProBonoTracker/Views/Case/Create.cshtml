@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label asp-for="Type" class="col-md-4 control-label"></label>
                 <div class="col-md-10">
-                    <select asp-for="Type" asp-items="Html.GetEnumSelectList<Enums.CaseType>()" class="form-control"></select>
+                    <select asp-for="Type" asp-items="Html.GetEnumSelectList<PBTEnums.CaseType>()" class="form-control"></select>
                     <span asp-validation-for="Type" class="text-danger"></span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <div class="form-group col-lg-5">
                         <label asp-for="@Model.LeadClient.Gender" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                            <select asp-for="@Model.LeadClient.Gender" asp-items="Html.GetEnumSelectList<PBTEnums.Gender>()" class="form-control"></select>
                             <span asp-validation-for="@Model.LeadClient.Gender" class="text-danger"></span>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="form-group col-lg-5">
                         <label asp-for="@Model.LeadClient.Nationality" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
+                            <select asp-for="@Model.LeadClient.Nationality" asp-items="Html.GetEnumSelectList<PBTEnums.Country>()" class="form-control"></select>
                             <span asp-validation-for="@Model.LeadClient.Nationality" class="text-danger"></span>
                         </div>
                     </div>

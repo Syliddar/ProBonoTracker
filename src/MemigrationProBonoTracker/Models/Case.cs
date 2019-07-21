@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models
 {
@@ -28,7 +29,10 @@ namespace MemigrationProBonoTracker.Models
         public float FeesPaid { get; set; }
 
         [Display(Name = "Case Type")]
-        public Enums.CaseType Type { get; set; }
+        public CaseType Type { get; set; }
+
+        [Display(Name = "Consulting Status")]
+        public ConsultingStatus ConsultStatus { get; set; }
 
         [Display(Name = "Case Notes")]
         public string CaseNotes { get; set; }

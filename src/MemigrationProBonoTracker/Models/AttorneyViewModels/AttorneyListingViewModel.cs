@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models.AttorneyViewModels
 {
@@ -13,7 +14,7 @@ namespace MemigrationProBonoTracker.Models.AttorneyViewModels
         public int Id { get; set; }
         public int AssignedCases { get; set; }
         public string FullName { get; set; }
-        public Enums.Gender Gender { get; set; }
+        public Gender Gender { get; set; }
         public string OrganizationName { get; set; }
         public bool InterestedVolunteer { get; set; }
         public bool DesiredVolunteer { get; set; }

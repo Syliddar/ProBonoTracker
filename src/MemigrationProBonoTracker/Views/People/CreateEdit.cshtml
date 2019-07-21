@@ -32,14 +32,14 @@
                     </div>
                     <div class="col-lg-6">
                         <label asp-for="Gender" class="col-md-8 "></label>
-                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<PBTEnums.Gender>()" class="form-control"></select>
                         <span asp-validation-for="Gender" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <label asp-for="Nationality" class="col-md-8 "></label>
-                        <select asp-for="Nationality" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
+                        <select asp-for="Nationality" asp-items="Html.GetEnumSelectList<PBTEnums.Country>()" class="form-control"></select>
                         <span asp-validation-for="Nationality" class="text-danger"></span>
                     </div>
                     <div class="col-lg-6">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-lg-6">
                         <label class="col-md-8">Phone Type</label>
-                        <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
+                        <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<PBTEnums.NumberType>()" class="form-control"></select>
                         <span asp-validation-for="@Model.Phone.Type" class="text-danger"></span>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="col-md-8">Country</label>
-                        <select asp-for="@Model.Address.Country" asp-items="Html.GetEnumSelectList<Enums.Country>()" class="form-control"></select>
+                        <select asp-for="@Model.Address.Country" asp-items="Html.GetEnumSelectList<PBTEnums.Country>()" class="form-control"></select>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-3">
                 <strong>Gender: </strong>
-                <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<Enums.Gender>()" class="form-control"></select>
+                <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList<PBTEnums.Gender>()" class="form-control"></select>
             </div>
             <div class="col-md-3"><br/>
                 <input asp-for="IsAssigningAttorney" type="checkbox" data-toggle="toggle"
@@ -39,7 +39,7 @@
             <div class="col-md-6">
 
                 <strong>Via</strong>
-                <select asp-for="@Model.RecruitmentMethod" asp-items="Html.GetEnumSelectList<Enums.RecruitmentMethod>()" class="form-control"></select>
+                <select asp-for="@Model.RecruitmentMethod" asp-items="Html.GetEnumSelectList<PBTEnums.RecruitmentMethod>()" class="form-control"></select>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                         <input asp-for="@Model.Phone.Number" class="form-control" placeholder="Phone Number" />
                     </div>
                     <div class="col-md-4">
-                        <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<Enums.NumberType>()" class="form-control"></select>
+                        <select asp-for="@Model.Phone.Type" asp-items="Html.GetEnumSelectList<PBTEnums.NumberType>()" class="form-control"></select>
                     </div>
                 </div>
             </div>

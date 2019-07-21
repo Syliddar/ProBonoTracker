@@ -1,4 +1,4 @@
-﻿using static MemigrationProBonoTracker.Models.Enums;
+﻿using static MemigrationProBonoTracker.Models.PBTEnums;
 
 namespace MemigrationProBonoTracker.Models
 {

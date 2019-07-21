@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MemigrationProBonoTracker.Models
 {
-    public class Enums
+    public class PBTEnums
     {
         public enum CaseType
         {
@@ -36,6 +36,19 @@ namespace MemigrationProBonoTracker.Models
             RemovalDefense,
             [Display(Name = "Other")]
             Other
+        }
+
+        public enum ConsultingStatus
+        {
+            [Display(Name = "Case Rejected Before Consult")]
+            RejectedBeforeConsult,
+            [Display(Name = "Consult Complete - Accepted")]
+            ConsultCompleteAccepted,
+            [Display(Name = "Consult Complete - Rejected")]
+            ConsultCompleteRejected,
+            [Display(Name = "Consult Scheduled")]
+            ConsultScheduled,
+            Unresponsive
         }
 
         public enum Gender
